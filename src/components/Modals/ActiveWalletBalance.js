@@ -66,7 +66,7 @@ export default function ActiveWalletBalanceModal({ activeWalletBalance, activeWa
                 </DialogTitle>
                 <DialogContent>
                     <Box display={"flex"} flexWrap={"wrap"}>
-                        {box.map(v => (<Box border={"1px solid black"} borderRadius={"4px"} padding={"7px 10px"} textAlign={"center"} mr={2} mb={2} style={{ cursor: "pointer" }}>
+                        {box.map(v => (<Box border={"1px solid black"} key={v?.title} borderRadius={"4px"} padding={"7px 10px"} textAlign={"center"} mr={2} mb={2} style={{ cursor: "pointer" }}>
                             <Typography>{v?.title}</Typography>
                         </Box>))}
                     </Box>
