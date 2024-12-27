@@ -18,7 +18,7 @@ const SelectDropdown = ({ options, value, onChange,icon, title ,requried,topStyl
 
       {options?.map(option => (
 
-        <option key={option.value} value={option.value} >
+        <option className='option' key={option.value} value={option.value} >
 
           {option.label}
 

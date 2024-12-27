@@ -23,7 +23,7 @@ const TableTop = () => {
                     </Box>
                 </Box>
             </Box> */}
-    {openFilter && <Box p={2} pb={4} style={{backgroundColor : "#f5f5f5"}}>
+    {openFilter && <Box  pb={4} style={{backgroundColor : "#f5f5f5"}}>
       <Box>
         <Typography fontSize={"24px"} fontWeight={600} pb={2}>Affiliate Analytics</Typography>
         <Grid container spacing={2}>

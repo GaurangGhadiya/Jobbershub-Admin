@@ -10,9 +10,21 @@
 
     width: 100%;
 
-    /* border-radius: 30px; */
+    border-radius: 4px;
     margin-top: -3px;
 
+  }
+
+  .inputField select {
+    /* width: 100%; */
+    /* height: auto; */
+    /* padding: 10px; */
+    /* line-height: 1.5;  */
+  }
+
+  .option {
+    line-height: 1.5;
+    padding: 10px !important; 
   }
 
   .icon {
@@ -48,10 +60,12 @@
   }
 
   .input {
+    /* appearance: none; */
+
 
     margin-left: -1px;
 
-   /* border-radius: 30px; */
+   border-radius: 4px;
 
     display: block;
 

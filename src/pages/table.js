@@ -153,9 +153,9 @@ const StickyTable = () => {
 
     return (
        <Layout>
-         <>
+         <Box p={2} style={{backgroundColor : "#f5f5f5"}} >
             <TableTop />
-            <Box backgroundColor="#FFE9DD" px={3} py={1} color={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+            <Box backgroundColor="#FFE9DD" className="topborder" px={3} py={1} color={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                 <Box>
                     <Typography fontSize={20} color={"#000000"} fontWeight={900}>Affiliate members</Typography>
                 </Box>
@@ -175,7 +175,7 @@ const StickyTable = () => {
             </Box>
             {openFilter && <Filter />}
             <Box height={"20px"} backgroundColor={"#F5F5F5"}></Box>
-            <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={2}>
+            <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={2} backgroundColor={"white"} className="topborder">
                 <Box display={"flex"} justifyContent={"start"} alignItems={"center"}>
                     <Typography>Show</Typography>
                     <Box mx={1}>
@@ -216,7 +216,7 @@ const StickyTable = () => {
     fontSize: '16px',
   }}>
 
-                <Table stickyHeader style={{ tableLayout: 'fixed', width: '100%' }}>
+                <Table stickyHeader style={{ tableLayout: 'fixed', width: '100%', backgroundColor : "white" }}>
                     <TableHead >
                         <TableRow>
                             <TableCell style={{ position: 'sticky', left: 0, backgroundColor: '#fff', zIndex: 10, width: 55, textAlign: 'center' }}>#</TableCell>
@@ -351,8 +351,6 @@ const StickyTable = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            </Box>
-           
             <TablePagination
                 rowsPerPageOptions={[]}
                 component="div"
@@ -361,10 +359,13 @@ const StickyTable = () => {
                 page={0}
                 onPageChange={() => { }}
                 onRowsPerPageChange={() => { }}
+                style={{backgroundColor : "white"}}
             />
+            </Box>
+           
             <CustomizetableModal Customizetable={Customizetable} CustomizetableClose={CustomizetableClose} handleChange={handleChange} selectedTableRow={selectedTableRow} pinnedTableRow={pinnedTableRow} handleChangePin={handleChangePin} setAfterSubmitSelectedRow={setAfterSubmitSelectedRow} setselectedTableRow={setselectedTableRow}/>
 
-        </>
+        </Box>
        </Layout>
     );
 };

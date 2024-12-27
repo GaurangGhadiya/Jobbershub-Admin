@@ -12,7 +12,7 @@ import { Box, Checkbox, FormControlLabel, FormGroup, Grid } from '@mui/material'
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { PushPin, PushPinOutlined } from '@mui/icons-material';
+import { Close, PushPin, PushPinOutlined } from '@mui/icons-material';
 
 
 
@@ -47,8 +47,11 @@ export default function CustomizetableModal({ Customizetable, CustomizetableClos
                 fullWidth={true}
                 maxWidth={'sm'}
             >
-                <DialogTitle sx={{ m: 0, p: 2, pb: 1 }} fontSize={"23px"}>
-                    Customize Table
+                <DialogTitle sx={{ m: 0, p: 2, pb: 1 }}  display={"flex"} justifyContent={'space-between'} alignItems={"center"}>
+                    <Typography fontSize={"20px"}>Customize Table</Typography>
+                    <Box onClick={CustomizetableClose} backgroundColor="#F7F5DD" style={{cursor : "pointer"}} borderRadius={"4px"} height={30} width={30} display={"flex"} justifyContent={'center'} alignItems={"center"}>
+                        <Close style={{color : '#707070', fontSize:"20px"}}/>
+                    </Box>
                 </DialogTitle>
                 <hr />
 

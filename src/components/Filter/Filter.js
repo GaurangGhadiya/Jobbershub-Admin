@@ -392,7 +392,7 @@ const Filter = () => {
     };
 console.log('filterValue', filterValue)
     return (
-        <Box style={{ backgroundColor: "white" }} mb={3} pt={2}>
+        <Box style={{ backgroundColor: "white" }} className="bottomborder" mb={3} pt={2}>
             <Grid container spacing={2} p={2} pt={0} >
                 <Grid item sm={12} md={2}>
                     {/* <SelectDropdown
@@ -403,7 +403,7 @@ console.log('filterValue', filterValue)
                     placeholder="Registration Past 7 days"
 
                 /> */}
-                    <Box onClick={registrationPastDaysOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={registrationPastDaysOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Registration Past 7 days</Typography>
                         <ArrowDropDownIcon />
 
@@ -417,7 +417,7 @@ console.log('filterValue', filterValue)
                     options={options}
                     placeholder="Authorization Past 7 days"
                 /> */}
-                    <Box onClick={authorizationPastDaysOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={authorizationPastDaysOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Authorization Past 7 days</Typography>
                         <ArrowDropDownIcon />
 
@@ -435,7 +435,7 @@ console.log('filterValue', filterValue)
                 </Grid>
                 {filterValue?.selectSearch && <Grid item sm={12} md={2}>
                     <InputFieldWithIcon
-                        // icon={<SearchIcon />}
+                  
                         value={filterValue?.searchValue || ""}
                         name="searchValue"
                         onChange={handleChange}
@@ -463,7 +463,7 @@ console.log('filterValue', filterValue)
                 </Grid>}
                 <Grid item sm={12} md={2}>
                    
-                    <Box onClick={stateOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} 
+                    <Box onClick={stateOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} 
                     style={{ cursor: "pointer", border  : searchFilter?.includes("state") ? "2px solid blue" : "1px solid #CDCDCD" }}
                     >
                         <Typography fontSize={"14px"} color={"#707070"}>State</Typography>
@@ -472,7 +472,7 @@ console.log('filterValue', filterValue)
                 </Grid>
                 <Grid item sm={12} md={2}>
                    
-                    <Box onClick={districtOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} 
+                    <Box onClick={districtOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} 
                     style={{ cursor: "pointer", border  : searchFilter?.includes("district") ? "2px solid blue" : "1px solid #CDCDCD" }}
                     >
                         <Typography fontSize={"14px"} color={"#707070"}>District</Typography>
@@ -481,7 +481,7 @@ console.log('filterValue', filterValue)
                 </Grid>
                 <Grid item sm={12} md={2}>
                    
-                    <Box onClick={talukaOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"}
+                    <Box onClick={talukaOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"}
                     style={{ cursor: "pointer", border  : searchFilter?.includes("taluka") ? "2px solid blue" : "1px solid #CDCDCD" }}
                     >
                         <Typography fontSize={"14px"} color={"#707070"}>Taluka</Typography>
@@ -496,7 +496,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Affiliate Rank"
                     /> */}
-                      <Box onClick={affiliateRankOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} 
+                      <Box onClick={affiliateRankOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} 
                     style={{ cursor: "pointer", border  : searchFilter?.includes("affiliate rank") ? "2px solid blue" : "1px solid #CDCDCD" }}
                     >
                         <Typography fontSize={"14px"} color={"#707070"}>Affiliate Rank</Typography>
@@ -511,7 +511,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Affiliate Type"
                     /> */}
-                          <Box onClick={affiliateTypeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                          <Box onClick={affiliateTypeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Affiliate Type</Typography>
                         <ArrowDropDownIcon />
                         </Box>
@@ -524,7 +524,7 @@ console.log('filterValue', filterValue)
                     options={options}
                     placeholder="Sponsor Type"
                 />
-                    <Box onClick={sponserTypeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={sponserTypeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Sponsor Type</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -537,14 +537,14 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Sponsor Rank"
                     /> */}
-                     <Box onClick={sponserRankOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={sponserRankOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Sponsor Rank</Typography>
                         <ArrowDropDownIcon />
                     </Box>
                 </Grid>
                 <Grid item sm={12} md={2}>
                 
-                     <Box onClick={teamOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={teamOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Team</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -557,7 +557,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Total Pending Leads"
                     /> */}
-                    <Box onClick={pendingLeadsOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={pendingLeadsOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Pending Leads </Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -570,7 +570,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Self Purchase DV This Month"
                     /> */}
-                    <Box onClick={selfPurchaseDVOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={selfPurchaseDVOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Self Purchase DC</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -583,7 +583,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Direct Purchase DV This Month"
                     />
-                     <Box onClick={directPurchaseDVOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={directPurchaseDVOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Direct Purchase DV This Month</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -596,7 +596,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Authorized Members This Month"
                     /> */}
-                     <Box onClick={authorizedMembersOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={authorizedMembersOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>My 1st Level Total Purchase DV</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -609,7 +609,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Second Level Authorized Members This Month"
                     /> */}
-                     <Box onClick={secondLevelMembersOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={secondLevelMembersOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Authorized Members in Second Level</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -622,7 +622,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Second Level Authorized Members This Month"
                     /> */}
-                     <Box onClick={totalActiveIncomeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={totalActiveIncomeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Total Active Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -635,7 +635,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Second Level Authorized Members This Month"
                     /> */}
-                     <Box onClick={totalPassiveIncomeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={totalPassiveIncomeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Total Passive Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -648,7 +648,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Second Level Authorized Members This Month"
                     /> */}
-                     <Box onClick={dematActiveIncomeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={dematActiveIncomeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Demat A/C Active Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -661,7 +661,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Second Level Authorized Members This Month"
                     /> */}
-                     <Box onClick={coursesActiveIncomeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={coursesActiveIncomeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Courses Active Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -674,7 +674,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Second Level Authorized Members This Month"
                     /> */}
-                     <Box onClick={insuranceActiveIncomeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={insuranceActiveIncomeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Insurance Active Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -687,7 +687,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Second Level Authorized Members This Month"
                     /> */}
-                     <Box onClick={investmentActiveIncomeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={investmentActiveIncomeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Investment Active income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -700,7 +700,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="My Second Level Authorized Members This Month"
                     /> */}
-                     <Box onClick={primeRequestOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={primeRequestOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Prime Request</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -713,7 +713,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="KYC Status"
                     /> */}
-                     <Box onClick={KYCStatusOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={KYCStatusOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>KYC Status</Typography>
                         <ArrowDropDownIcon />
                         </Box>
@@ -726,7 +726,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Nominee Status"
                     /> */}
-                     <Box onClick={nomineeStatusOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={nomineeStatusOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Nominee Status</Typography>
                         <ArrowDropDownIcon />
                         </Box>
@@ -739,7 +739,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Affiliate Status"
                     /> */}
-                      <Box onClick={affiliateStatusOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                      <Box onClick={affiliateStatusOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Affiliate Status</Typography>
                         <ArrowDropDownIcon />
                         </Box>
@@ -752,7 +752,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search SmartPe Wallet Balance"
                     /> */}
-                      <Box onClick={smartpeWalletBalanceOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                      <Box onClick={smartpeWalletBalanceOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Search SmartPe Wallet Balance</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -765,7 +765,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Total Earning"
                     /> */}
-                     <Box onClick={totalEarningOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={totalEarningOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Total Earning</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -778,7 +778,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Main Active Wallet Balance"
                     /> */}
-                     <Box onClick={activeWalletBalanceOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={activeWalletBalanceOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Main Active Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -791,7 +791,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Main Passive Wallet Balance"
                     /> */}
-                      <Box onClick={passiveWalletBalanceOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                      <Box onClick={passiveWalletBalanceOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Main Passive Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -805,7 +805,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Reward Income"
                     /> */}
-                    <Box onClick={rewardIncomeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={rewardIncomeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}> Reward Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -818,7 +818,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Reward Income"
                     /> */}
-                    <Box onClick={salaryOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={salaryOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}> Salary Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -831,7 +831,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Royalty Income"
                     /> */}
-                     <Box onClick={royaltyIncomeOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={royaltyIncomeOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}> Royalty Income</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -844,7 +844,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search SIP/MF Funds"
                     /> */}
-                     <Box onClick={SIPMFFundsOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={SIPMFFundsOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Search SIP/MF Funds</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -857,7 +857,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Laptop Funds"
                     /> */}
-                     <Box onClick={laptopFundsOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={laptopFundsOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Search Laptop Funds</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -870,7 +870,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Bike Funds"
                     /> */}
-                    <Box onClick={bickFundsOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={bickFundsOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Search Bick Funds</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -883,7 +883,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Car Funds"
                     /> */}
-                     <Box onClick={carFundsOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={carFundsOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Search Car Funds</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -896,7 +896,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search House Funds"
                     /> */}
-                    <Box onClick={houseFundsOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={houseFundsOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Search House Funds</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -909,7 +909,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search House Funds"
                     /> */}
-                    <Box onClick={insuranceFundsOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={insuranceFundsOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Search Insurance Funds</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -922,7 +922,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search House Funds"
                     /> */}
-                    <Box onClick={childHigherEducationFundOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={childHigherEducationFundOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Child Higher Education Fund</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -935,7 +935,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search House Funds"
                     /> */}
-                    <Box onClick={marriageBurdenReliefFundOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                    <Box onClick={marriageBurdenReliefFundOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Marriage Burden Relief Fund</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -948,7 +948,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Total Withdrawal"
                     /> */}
-                      <Box onClick={totalWithdrawalOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                      <Box onClick={totalWithdrawalOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}> Total Withdrawal</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -961,7 +961,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search TDS Balance"
                     /> */}
-                     <Box onClick={tdsBalanceOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                     <Box onClick={tdsBalanceOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}> TDS Balance</Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -974,7 +974,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Search Paid TDS"
                     /> */}
-                      <Box onClick={paidTcsOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                      <Box onClick={paidTcsOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}> Paid TDS </Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -988,7 +988,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Total Unauthorized Leads"
                     />
-                         <Box onClick={unauthorizedOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                         <Box onClick={unauthorizedOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Total Unauthorized Leads </Typography>
                         <ArrowDropDownIcon />
                     </Box>
@@ -1001,7 +1001,7 @@ console.log('filterValue', filterValue)
                         options={options}
                         placeholder="Total Authorized Leads"
                     />
-                       <Box onClick={authorizedOpen} borderRadius={"1px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
+                       <Box onClick={authorizedOpen} borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"2px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Total Authorized Leads </Typography>
                         <ArrowDropDownIcon />
                     </Box>
