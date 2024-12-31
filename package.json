@@ -35,6 +35,7 @@
     "fs": "^0.0.1-security",
     "js-cookie": "^3.0.5",
     "mdi-material-ui": "^7.7.0",
+    "moment": "^2.30.1",
     "next": "^13.4.19",
     "node-html-parser": "^6.1.9",
     "nprogress": "^0.2.0",

@@ -3,13 +3,14 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
-import { Box } from '@mui/material';
+import { Box, Checkbox, DialogTitle, InputAdornment, TextField } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
+import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 
@@ -36,16 +37,32 @@ export default function KYCStatusModal({ KYCStatus, KYCStatusClose }) {
                 // fullWidth={true}
                 // maxWidth={'xxs'}
             >
-
+ <DialogTitle>
+                    KYC Status
+                </DialogTitle>
                 <DialogContent>
-                    
+                <TextField
+                        id="input-with-icon-textfield"
+                        placeholder='Search'
+                        label=""
+                        style={{marginLeft : "15px", marginBottom : "10px"}}
+                        InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <SearchIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        variant="standard"
+                    />
 
                     <Box display={"flex"} justifyContent={"space-between"} px={2}>
-                        <Box>
-                                <Typography mt={1} >Select All</Typography>
-                                <Typography mt={2.5}>Not Applied</Typography>
-                                <Typography mt={2.5}>Auto Approved</Typography>
-                                <Typography mt={2}>Auto Rejected</Typography>
+                    <Box>
+                            <Box mt={1} display={"flex"} alignItems={"center"} justifyContent={"start"}><PushPinOutlinedIcon /><Typography ml={1}>All</Typography></Box>
+                            <Box mt={2.5} display={"flex"} alignItems={"center"} justifyContent={"start"}><PushPinOutlinedIcon /><Typography ml={1}>Auto Accepted</Typography></Box>
+                            <Box mt={2.5} display={"flex"} alignItems={"center"} justifyContent={"start"}><PushPinOutlinedIcon /><Typography ml={1}>Auto Rejected</Typography></Box>
+                            <Box mt={2.2} display={"flex"} alignItems={"center"} justifyContent={"start"}><PushPinOutlinedIcon /><Typography ml={1}>Not Applied</Typography></Box>
+
                         </Box>
                         <FormControl>
                         <RadioGroup
@@ -54,20 +71,20 @@ export default function KYCStatusModal({ KYCStatus, KYCStatusClose }) {
                             name="position"
                             defaultValue="top"
                         >
-                            <FormControlLabel labelPlacement="start" value="female" control={<Radio />} label="" />
-                            <FormControlLabel labelPlacement="start" value="male" control={<Radio />} label="" />
-                            <FormControlLabel labelPlacement="start" value="other" control={<Radio />} label="" />
-                            <FormControlLabel labelPlacement="start" value="other" control={<Radio />} label="" />
+                            <FormControlLabel labelPlacement="start" value="female" control={<Checkbox />} label="" />
+                            <FormControlLabel labelPlacement="start" value="male" control={<Checkbox />} label="" />
+                            <FormControlLabel labelPlacement="start" value="other" control={<Checkbox />} label="" />
+                            <FormControlLabel labelPlacement="start" value="other" control={<Checkbox />} label="" />
                         </RadioGroup>
                     </FormControl>
                     </Box>
 
 
                     <Box width={"100%"} display={"flex"} justifyContent={"space-around"} mt={4}>
-                        <Box style={{ cursor: "pointer", padding: "11px 29px", border: "2px solid #FF9F59" }} borderRadius={"4px"} width={"70px"} mr={1} onClick={KYCStatusClose}>
+                        <Box style={{ cursor: "pointer", padding: "11px 29px", border: "2px solid #FF9F59" }} borderRadius={"4px"} width={"120px"} mr={1} onClick={KYCStatusClose}>
                             <Typography color={"#FF9F59"} fontSize={"18px"} textAlign={"center"} fontWeight={500}>Reset</Typography>
                         </Box>
-                        <Box style={{ cursor: "pointer", padding: "11px 29px", backgroundColor: "#FF9F59" }} borderRadius={"4px"} width={"70px"} ml={1} onClick={KYCStatusClose}>
+                        <Box style={{ cursor: "pointer", padding: "11px 29px", backgroundColor: "#FF9F59" }} borderRadius={"4px"} width={"120px"} ml={1} onClick={KYCStatusClose}>
                             <Typography color={"white"} fontSize={"18px"} textAlign={"center"} fontWeight={500}>Submit</Typography>
                         </Box>
                     </Box>
