@@ -1,0 +1,42 @@
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    display: inline-block;
+  }
+  
+  .button.primary {
+    background-color: #1976D0;
+    color: white;
+  }
+  
+  .button.primary:hover {
+    background-color: #1565c0; /* Darken the primary color on hover */
+  }
+  
+  .button.secondary {
+    background-color: #2E7D32;
+    color: white;
+  }
+  
+  .button.secondary:hover {
+    background-color: #1b5e20; /* Darken the secondary color on hover */
+  }
+  .button.error {
+    background-color: #D32F2F;
+    color: white;
+  }
+  
+  .button.error:hover {
+    background-color: #c62828; /* Darken the secondary color on hover */
+  }
+  
+  .button:focus {
+    outline: none;
+  }
+  
