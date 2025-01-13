@@ -82,7 +82,7 @@ export default function SponserRankModal({filterData, setFilterData, sponserRank
                         >
        <FormControlLabel labelPlacement="start"  control={<Checkbox checked={stateArray?.every(v => v?.checked)} onClick={(e) => setStateArray(stateArray?.map(k =>  ({name : k?.name ,checked:true} )))}/>} label="" />
 
-                         {stateArray?.map(v =><FormControlLabel labelPlacement="start"  control={<Checkbox checked={v?.checked} onClick={(e) => setStateArray(stateArray?.map(k => k?.name == v?.name ? {name : k?.name ,checked: e.target.checked} : k))}/>} label="" />)}
+                         {stateArray?.map((v,id) =><FormControlLabel key={id} labelPlacement="start"  control={<Checkbox checked={v?.checked} onClick={(e) => setStateArray(stateArray?.map(k => k?.name == v?.name ? {name : k?.name ,checked: e.target.checked} : k))}/>} label="" />)}
 
                         </RadioGroup>
                         </FormControl>

@@ -13,8 +13,10 @@ import SellerTableTop from '@/components/TableTop.js/SellerTableTop';
 import axios from 'axios';
 import CourseTableTop from '@/components/TableTop.js/CourseTableTop';
 import CourseFilter from '@/components/Filter/CourseFilter';
+import { useRouter } from 'next/router';
 
 const Course = () => {
+    const router = useRouter()
     const [openFilter, setOpenFilter] = useState(true);
     const [Customizetable, setCustomizetable] = useState(false)
     const [selectedTableRow, setselectedTableRow] = useState({
@@ -188,9 +190,10 @@ const Course = () => {
                     <Typography fontSize={20} color={"#000000"} fontWeight={900}>My Courses</Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                    <Box borderRadius={"4px"} padding={"5px 10px"} backgroundColor={"#ED6A0F"} style={{ cursor: "pointer" }}>
+                    <Box borderRadius={"4px"} padding={"5px 10px"} backgroundColor={"#ED6A0F"} style={{ cursor: "pointer" }} onClick={() => router.push("/add-course")}>
                         <Typography fontSize={15} fontWeight={600} display={"flex"} justifyContent={"space-between"} alignItems={"center"} color={"white"}>
                             {/* <ExposureIcon />&nbsp;   */}
+
                               Add Course</Typography>
                     </Box>
                     {/* <Box borderRadius={"10px"} padding={"5px 10px"} backgroundColor={"#F7F5DD"} ml={2} style={{ cursor: "pointer" }}>

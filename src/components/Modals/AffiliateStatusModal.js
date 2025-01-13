@@ -80,7 +80,7 @@ export default function AffiliateStatusModal({filterData, setFilterData,  affili
                         >
        <FormControlLabel labelPlacement="start"  control={<Checkbox checked={stateArray?.every(v => v?.checked)} onClick={(e) => setStateArray(stateArray?.map(k =>  ({name : k?.name ,checked:true} )))}/>} label="" />
 
-{stateArray?.map(v =><FormControlLabel labelPlacement="start"  control={<Checkbox checked={v?.checked} onClick={(e) => setStateArray(stateArray?.map(k => k?.name == v?.name ? {name : k?.name ,checked: e.target.checked} : k))}/>} label="" />)}
+{stateArray?.map((v,id) =><FormControlLabel labelPlacement="start" key={id}  control={<Checkbox checked={v?.checked} onClick={(e) => setStateArray(stateArray?.map(k => k?.name == v?.name ? {name : k?.name ,checked: e.target.checked} : k))}/>} label="" />)}
 
                         </RadioGroup>
                     </FormControl>

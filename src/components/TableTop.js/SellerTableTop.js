@@ -88,18 +88,31 @@ const SellerTableTop = ({countData}) => {
         <CountBox title="Total TDS Paid" count={formatIndianNumber(countData?.resultspaid?.[0]?.tdspaid_income?.toFixed(2))} color={"#D9F7E8"} icon={"/icon3.png"}/>
         </Grid>
       </Box>}
+ 
      {countData?.resultskycanalytics?.length > 0 &&  <Box>
-        <Typography fontSize={"24px"} fontWeight={600} py={2} mt={2}>Reacharge and bbps</Typography>
+        <Typography fontSize={"24px"} fontWeight={600} py={2} mt={2}>KYC Analytics</Typography>
         <Grid container spacing={2}>
 
-        <CountBox title="Total Recharge" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.approved_kyc)} color={"#E5E4FF"} icon={"/icon1.png"} />
-        <CountBox title="Success Recharge" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.notapproved_kyc)} color={"#FFF3D6"} icon={"/icon2.png"} />
-        <CountBox title="Fail Recharge" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.rejected_kyc)} color={"#D9F7E8"} icon={"/icon3.png"} />
-        <CountBox title="Total Bill Payment" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.manual_kyc)} color={"#FFDED1"} icon={"/icon4.png"}/>
+        <CountBox title="KYC Auto Approved" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.approved_kyc)} color={"#E5E4FF"} icon={"/icon1.png"} />
+        <CountBox title="KYC Not Approved" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.notapproved_kyc)} color={"#FFF3D6"} icon={"/icon2.png"} />
+        <CountBox title="Auto Rejected KYC" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.rejected_kyc)} color={"#D9F7E8"} icon={"/icon3.png"} />
+        <CountBox title="Total Manual KYC" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.manual_kyc)} color={"#FFDED1"} icon={"/icon4.png"}/>
+        <CountBox title="KYC Not Applied" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.notapplied_kyc)}  color={"#CEFFFD"} icon={"/icon5.png"}  />
         </Grid>
       </Box>}
      {countData?.resultskycanalytics?.length > 0 &&  <Box>
-        <Typography fontSize={"24px"} fontWeight={600} py={2} mt={2}>KYC Analytics</Typography>
+        <Typography fontSize={"24px"} fontWeight={600} py={2} mt={2}>Customer Support Analytics</Typography>
+        <Grid container spacing={2}>
+
+        <CountBox title="KYC Auto Approved" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.approved_kyc)} color={"#E5E4FF"} icon={"/icon1.png"} />
+        <CountBox title="KYC Not Approved" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.notapproved_kyc)} color={"#FFF3D6"} icon={"/icon2.png"} />
+        <CountBox title="Auto Rejected KYC" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.rejected_kyc)} color={"#D9F7E8"} icon={"/icon3.png"} />
+        <CountBox title="Total Manual KYC" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.manual_kyc)} color={"#FFDED1"} icon={"/icon4.png"}/>
+        <CountBox title="KYC Not Applied" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.notapplied_kyc)}  color={"#CEFFFD"} icon={"/icon5.png"}  />
+        </Grid>
+      </Box>}
+     {countData?.resultskycanalytics?.length > 0 &&  <Box>
+        <Typography fontSize={"24px"} fontWeight={600} py={2} mt={2}>Activation & Distribution Analytics</Typography>
         <Grid container spacing={2}>
 
         <CountBox title="KYC Auto Approved" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.approved_kyc)} color={"#E5E4FF"} icon={"/icon1.png"} />
