@@ -13,6 +13,7 @@ import Step5 from './Step5';
 import Step4 from './Step4';
 import Step3 from './Step3';
 import Step2 from './Step2';
+import { useRouter } from 'next/router';
 
 
 const steps = [
@@ -28,13 +29,27 @@ const steps = [
 ];
 
 const CustomConnector = styled(StepConnector)(({ theme }) => ({
-    '& .MuiStepConnector-line': {
-        borderColor: '#FF8C38', // Change the color of the connector line
+    [`& .MuiStepConnector-line`]: {
+      borderColor: "#FFE4D0", // Default color for inactive
+      borderWidth: 2,
     },
-}));
+    [`&.Mui-active .MuiStepConnector-line`]: {
+      borderColor: "#FF8C38", // Active color
+    },
+    [`&.Mui-completed .MuiStepConnector-line`]: {
+      borderColor: "#FF8C38", // Completed color
+    },
+  }));
 
 const AddCourse = () => {
+    const route = useRouter()
     const [step, setStep] = useState(0)
+    const [formData, setFormData] = useState({})
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormData({...formData, [name] : value})
+    }
     return (
         <Layout>
             <Box p={2} style={{ backgroundColor: "white" }}>
@@ -80,9 +95,10 @@ const AddCourse = () => {
                             </Step>
                         ))}
                     </Stepper>
+                    <Box backgroundColor="#A2A1A833" height={"1px"} mt={1}></Box>
                     
 
-                    <Box mt={4}>
+                    <Box mt={3}>
                         {step == 0 && <Step1 />}
                         {step == 1 && <Step2 />}
                         {step == 2 && <Step3 />}
@@ -95,8 +111,8 @@ const AddCourse = () => {
                     </Box>
                 <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} my={5}>
 
-                    <Box border={"1px solid #A2A1A8"} style={{cursor : "pointer"}} onClick={() => setStep(step-1)} borderRadius={"10px"}><Typography fontSize={"16px"} color={"black"} px={3} py={1}>Back</Typography></Box>
-                    <Box backgroundColor={"#FF8C38"} style={{cursor : "pointer"}} onClick={() => setStep(step+1)} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Next</Typography></Box>
+                    <Box border={"1px solid #A2A1A8"} style={{cursor : "pointer"}} onClick={() => {step == 0 ? route.push("/course") :setStep(step-1)}} borderRadius={"10px"}><Typography fontSize={"16px"} color={"black"} px={3} py={1}>Back</Typography></Box>
+                    <Box backgroundColor={"#FF8C38"} style={{cursor : "pointer"}} onClick={() => {step == 8 ? {} : setStep(step+1)}} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Next</Typography></Box>
                 </Box>
                 </Box>
 

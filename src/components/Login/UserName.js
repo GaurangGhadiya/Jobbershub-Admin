@@ -242,7 +242,9 @@ const UserName = ({ handleChange }) => {
                     Cookies.set('employee_role', employeeRole, { expires: 1 });
                     Cookies.set('employee_id', employee_id, { expires: 1 })
                     //localStorage.setItem('menu', JSON.stringify(response.data.employeeMenu));
-                    route.push('/dashboard');
+                    // route.push('/dashboard');
+                    route.push('/table');
+                    
                 }else{
 
                 }

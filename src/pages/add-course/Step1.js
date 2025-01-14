@@ -24,8 +24,6 @@ const HiddenInput = styled('input')({
 
 const Step1 = () => {
 
-
-
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
