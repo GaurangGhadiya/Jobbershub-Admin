@@ -3,6 +3,7 @@ import { Box, Grid, Table, TableBody, TableCell, TableContainer, TableHead, Tabl
 import React from 'react'
 import { styled } from '@mui/material/styles';
 import UploadIcon from '@mui/icons-material/CloudUpload';
+import TextFieldComponent from '@/components/TextFieldComponent';
 
 const IconWrapper = styled('div')(({ theme }) => ({
   textAlign: 'center',
@@ -44,7 +45,7 @@ const Step4 = () => {
         </IconWrapper>
       </label>
       </Grid>
-        <Grid item sx={12} md={5}>
+        {/* <Grid item sx={12} md={5}>
         <Title title={"Upload Introductory Video"} />
         <HiddenInput
           type="file"
@@ -58,11 +59,19 @@ const Step4 = () => {
             <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography>
           </IconWrapper>
         </label>
-        </Grid>
+        </Grid> */}
 
 
 
     </Grid>
+    <Box mt={2}></Box>
+    <Title title={"Introductory Video Link"} />
+    <TextFieldComponent
+            name="Introductory Video Link"
+            // value={""}
+            // onChange={() => { }}
+            placeholder='Introductory Video Link'
+          />
     <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{cursor : "pointer"}}  borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>
 
     <Box overflow={"hidden"}>

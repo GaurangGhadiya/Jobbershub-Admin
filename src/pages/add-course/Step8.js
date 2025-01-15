@@ -46,6 +46,17 @@ const Step8 = () => {
           placeholder='Time Duration'
         />
 
+<br />
+<br />
+<br />
+
+<TextFieldComponent
+            name="Upload  Video Link"
+            // value={""}
+            // onChange={() => { }}
+            placeholder='Upload  Video Link'
+          />
+
 <Grid container spacing={2} mt={2}>
       <Grid item sx={12} md={5}>
       <Title title={"Upload Video Thumbnail"} />
@@ -62,7 +73,7 @@ const Step8 = () => {
         </IconWrapper>
       </label>
       </Grid>
-        <Grid item sx={12} md={5}>
+        {/* <Grid item sx={12} md={5}>
         <Title title={"Upload  Video Link"} />
         <HiddenInput
           type="file"
@@ -76,7 +87,7 @@ const Step8 = () => {
             <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography>
           </IconWrapper>
         </label>
-        </Grid>
+        </Grid> */}
 
 
 

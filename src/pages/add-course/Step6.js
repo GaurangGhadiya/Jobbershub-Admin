@@ -99,8 +99,18 @@ const Step6 = () => {
       
       <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>2.Marketing Videos</Typography>
 
-
-      <Title title={"Upload Marketing Videos"} />
+      <Box mt={2}></Box>
+    {/* <Title title={"Introductory Video Link"} /> */}
+    <TextFieldComponent
+            name="Upload Marketing Video Link"
+            // value={""}
+            // onChange={() => { }}
+            placeholder='Upload Marketing Video Link'
+          />
+          <br />
+<br />
+<br />
+      {/* <Title title={"Upload Marketing Videos"} />
       <HiddenInput
         type="file"
         id="file-upload"
@@ -112,7 +122,7 @@ const Step6 = () => {
           <Typography color={"#16151C"} fontSize={"14px"} fontWeight={300}>Drag & Drop or choose file to upload</Typography>
           <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography>
         </IconWrapper>
-      </label>
+      </label> */}
 
 <TextFieldComponent
   name="category"
