@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Box, Typography, FormControl, Select, MenuItem, CircularProgress, IconButton, Menu, Button, Pagination } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, Typography, FormControl, Select, MenuItem, CircularProgress, IconButton, Menu, Pagination } from '@mui/material';
 import Filter from '@/components/Filter/Filter';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
@@ -8,7 +8,6 @@ import DownloadIcon from '@mui/icons-material/Download';
 import TableTop from '@/components/TableTop.js';
 import CustomizetableModal from '@/components/Modals/CustomizeTableModal';
 import Layout from '@/components/Layout/Layout';
-import { useEffect } from 'react';
 import axios from 'axios';
 import { formatDate } from '../../utils/formatDate';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
@@ -245,6 +244,7 @@ const StickyTable = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [actionData, setActionData] = useState({})
     const [totlaPage, setTotlaPage] = useState(0)
+    const [totalCount, setTotalCount] = useState(0)
      const [smartpeWalletBalance, setsmartpeWalletBalance] = React.useState(false);
         const [totalEarning, settotalEarning] = React.useState(false);
         const [mainActiveIncome, setmainActiveIncome] = useState(false)
@@ -295,7 +295,7 @@ const StickyTable = () => {
 
     const [filterData, setFilterData] = useState({
         page: 1,
-        pageSize: 10,
+        pagesize: 10,
         reg_date_filter: "tillDate",
         authorization_date_filter: "tillDate",
         self_dv_filter: "tillDate",
@@ -414,6 +414,7 @@ const StickyTable = () => {
                 console.log('api response', res?.data?.data)
                 setTableData(res?.data?.data)
                 setTotlaPage(res?.data?.totalPages)
+                setTotalCount(res?.data?.totalCount)
                 setLoading(false)
 
             }).catch(e => {
@@ -435,7 +436,7 @@ const StickyTable = () => {
     useEffect(() => {
         getTableData()
         // getCount()
-    }, [filterData?.page, filterData?.pageSize])
+    }, [filterData?.page, filterData?.pagesize])
 
   
    
@@ -663,8 +664,8 @@ const StickyTable = () => {
                         <Box mx={1}>
                             <FormControl sx={{ m: 1, minWidth: 90 }}>
                                 <Select
-                                    value={filterData?.pageSize}
-                                    onChange={(e) => setFilterData({ ...filterData, pageSize: e.target.value })}
+                                    value={filterData?.pagesize}
+                                    onChange={(e) => setFilterData({ ...filterData, pagesize: e.target.value })}
                                     displayEmpty
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     sx={{
@@ -1013,7 +1014,9 @@ const StickyTable = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <Box display={"flex"} justifyContent={"end"}><Pagination count={totlaPage} page={filterData?.page} onChange={(e, v) => setFilterData({ ...filterData, page: v })} />
+                    <Box display={"flex"} justifyContent={"end"} alignItems={"center"}>
+                        <Typography>Total Records : {totalCount}</Typography>
+                        <Pagination count={totlaPage} page={filterData?.page} onChange={(e, v) => setFilterData({ ...filterData, page: v })} />
                     </Box>
                 </Box> : <Box display={"flex"} justifyContent={"center"} alignItems={"center"} height={"500px"}><CircularProgress /></Box>}
 

@@ -59,7 +59,7 @@ const Step1 = () => {
             value={''}
             onChange={() => { }}
             name="category"
-            placeholder="Choose a category"
+            // placeholder="Choose a category"
           />
 
         </Grid>
@@ -101,7 +101,7 @@ const Step1 = () => {
             value={''}
             onChange={() => { }}
             name="category"
-            placeholder="Select Course Validity Type"
+            // placeholder="Select Course Validity Type"
           />
         </Grid>
         <Grid item sx={12} md={4}>
@@ -115,7 +115,7 @@ const Step1 = () => {
             value={''}
             onChange={() => { }}
             name="category"
-            placeholder="Select language"
+            // placeholder="Select language"
           />
         </Grid>
         <Grid item sx={12} md={4}>
@@ -129,7 +129,7 @@ const Step1 = () => {
             value={''}
             onChange={() => { }}
             name="category"
-            placeholder="10"
+            // placeholder="10"
           />
         </Grid>
         <Grid item sx={12} md={8}>
@@ -143,7 +143,7 @@ const Step1 = () => {
             value={''}
             onChange={() => { }}
             name="category"
-            placeholder="Course validity Type"
+            // placeholder="Course validity Type"
           />
         </Grid>
         <Grid item sx={12} md={12}>

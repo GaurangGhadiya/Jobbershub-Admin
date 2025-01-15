@@ -49,8 +49,8 @@ const PendingList = () => {
                         <Box mx={1}>
                             <FormControl sx={{ m: 1, minWidth: 120 }}>
                                 <Select
-                                    // value={filterData?.pageSize}
-                                    // onChange={(e) => setFilterData({...filterData,pageSize:e.target.value })}
+                                    // value={filterData?.pagesize}
+                                    // onChange={(e) => setFilterData({...filterData,pagesize:e.target.value })}
                                     displayEmpty
                                     inputProps={{ 'aria-label': 'Without label' }}
                                 >

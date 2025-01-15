@@ -315,7 +315,7 @@ export default function Layout({ children }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const settings = ["Chnage Password", "Feedback to CEO", "Send Anonyms Feedback", "Reward & Recognitions", "Company Vision & Mission", "Company Milestone Calander", "Logout"];
+  const settings = ["Change Password", "Feedback to CEO", "Send Anonymous Feedback", "Reward & Recognitions", "Company Vision & Mission", "Company Milestone Calander", "Logout"];
   const handleFullScreen = () => {
     const element = document.documentElement; // Use the entire document or a specific element
     if (element.requestFullscreen) {

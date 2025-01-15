@@ -110,10 +110,10 @@ useEffect(() => {
                             <Grid item sx={2} sm={2} md={2.5}><Typography className='value'>{userData?.getSponsor?.ref_mobile || "-"}</Typography></Grid>
                             <Grid item sx={2} sm={2} md={1}></Grid>
                             <Grid item sx={2} sm={2} md={2}><Typography className='title'>Nominee Status</Typography></Grid>
-                            <Grid item sx={4} sm={4} md={4}><Typography className='value'>Test Data</Typography></Grid>
+                            <Grid item sx={4} sm={4} md={4}><Typography className='value'>{userData?.getKyc?.nominee_status || "-"}</Typography></Grid>
 
                             <Grid item sx={2} sm={2} md={2.5}><Typography className='title'>KYC Status</Typography></Grid>
-                            <Grid item sx={2} sm={2} md={2.5}><Typography className='value'>Test Data</Typography></Grid>
+                            <Grid item sx={2} sm={2} md={2.5}><Typography className='value'>{userData?.getKyc?.kyc_status || "-"}</Typography></Grid>
                             <Grid item sx={2} sm={2} md={1}></Grid>
                             <Grid item sx={2} sm={2} md={2}><Typography className='title'>Instagram ID</Typography></Grid>
                             <Grid item sx={4} sm={4} md={4}><Typography className='value'>{userData?.instagram_id || "-"}</Typography></Grid>
@@ -167,8 +167,8 @@ useEffect(() => {
                         <Typography fontSize={"24px"} fontWeight={600} pb={2}>Monthly Performence Analytics  </Typography>
                         <Grid container spacing={2}>
 
-                            <CountBox title="Self Purchase DV" count={userData?.selfdiv?.toFixed(2)} color={"#E5E4FF"} icon={"/icon1.png"} />
-                            <CountBox title="My First Level Total DV" count={userData?.firstdiv?.toFixed(2)} color={"#FFF3D6"} icon={"/icon2.png"} />
+                            <CountBox title="Self Purchase DV" count={(+userData?.selfdiv)?.toFixed(2)} color={"#E5E4FF"} icon={"/icon1.png"} />
+                            <CountBox title="My First Level Total DV" count={(+userData?.firstdiv)?.toFixed(2)} color={"#FFF3D6"} icon={"/icon2.png"} />
                             <CountBox title="Authorized Member In Direct" count={userData?.authorizedmember?.toFixed(2)} color={"#D9F7E8"} icon={"/icon3.png"} />
                             <CountBox title="2nd Level Authorized Member" count={userData?.authorizedmember2nd?.toFixed(2)} color={"#FFDED1"} icon={"/icon4.png"} />
                             <CountBox title="Demat A/C Active Income" count={userData?.dematactive?.toFixed(2)} color={"#CEFFFD"} icon={"/icon5.png"} />

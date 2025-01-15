@@ -876,7 +876,7 @@ const CourseFilter = ({ filterData, setFilterData, getTableData ,filterValue, se
                     <Box style={{ cursor: "pointer", padding: "5px 19px", border: "2px solid #FF9F59" }} borderRadius={"4px"} width={"140px"} mr={1} onClick={() => {
                         setFilterData({
                             page: 1,
-                            pageSize: 10,
+                            pagesize: 10,
                             reg_date_filter: "tillDate",
                             authorization_date_filter: "tillDate",
                             self_dv_filter: "tillDate",
@@ -894,7 +894,7 @@ const CourseFilter = ({ filterData, setFilterData, getTableData ,filterValue, se
                         });
                         getTableData({
                             page: 1,
-                            pageSize: 10,
+                            pagesize: 10,
                             reg_date_filter: "tillDate",
                             authorization_date_filter: "tillDate",
                             self_dv_filter: "tillDate",

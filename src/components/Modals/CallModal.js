@@ -207,8 +207,8 @@ export default function CallModal({ openCallModal, handleCallModalClose }) {
                                             <FormControl sx={{ minWidth: 90 }}>
                                                 <Select
                                                     value={2}
-                                                    // value={filterData?.pageSize}
-                                                    // onChange={(e) => setFilterData({ ...filterData, pageSize: e.target.value })}
+                                                    // value={filterData?.pagesize}
+                                                    // onChange={(e) => setFilterData({ ...filterData, pagesize: e.target.value })}
                                                     displayEmpty
                                                     inputProps={{ 'aria-label': 'Without label' }}
                                                     sx={{

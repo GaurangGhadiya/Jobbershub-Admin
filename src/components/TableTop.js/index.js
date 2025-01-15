@@ -100,14 +100,14 @@ const TableTop = ({countData}) => {
         <CountBox title="Total TDS Paid" count={formatIndianNumber(countData?.resultspaid?.[0]?.tdspaid_income?.toFixed(2))} color={"#D9F7E8"} icon={"/icon3.png"}/>
         </Grid>
       </Box>}
-     {countData?.resultskycanalytics?.length > 0 &&  <Box>
-        <Typography fontSize={"24px"} fontWeight={600} py={2} mt={2}>Reacharge and bbps</Typography>
+     {countData?.totalBillPayment &&  <Box>
+        <Typography fontSize={"24px"} fontWeight={600} py={2} mt={2}>Recharge and BBPS</Typography>
         <Grid container spacing={2}>
 
-        <CountBox title="Total Recharge" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.approved_kyc)} color={"#E5E4FF"} icon={"/icon1.png"} />
-        <CountBox title="Success Recharge" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.notapproved_kyc)} color={"#FFF3D6"} icon={"/icon2.png"} />
-        <CountBox title="Fail Recharge" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.rejected_kyc)} color={"#D9F7E8"} icon={"/icon3.png"} />
-        <CountBox title="Total Bill Payment" count={formatIndianNumber(countData?.resultskycanalytics?.[0]?.manual_kyc)} color={"#FFDED1"} icon={"/icon4.png"}/>
+        <CountBox title="Total Recharge" count={formatIndianNumber(countData?.totalRAmount)} color={"#E5E4FF"} icon={"/icon1.png"} cc={countData?.totalRCount}/>
+        <CountBox title="Success Recharge" count={formatIndianNumber(countData?.totalSuccessAmount)} color={"#FFF3D6"} icon={"/icon2.png"} cc={countData?.totalSuccessCount}/>
+        <CountBox title="Fail Recharge" count={formatIndianNumber(countData?.totalFailedAmount)} color={"#D9F7E8"} icon={"/icon3.png"} cc={countData?.totalFailedCount}/>
+        <CountBox title="Total Bill Payment" count={formatIndianNumber(countData?.totalBillPayment)} color={"#FFDED1"} icon={"/icon4.png"} cc={countData?.totalBillPaymentCount}/>
         </Grid>
       </Box>}
      {countData?.resultskycanalytics?.length > 0 &&  <Box>

@@ -47,26 +47,26 @@ export default function CountFilterModalModal({ filterData,setFilterData, countF
                         <Box>
                             <Box display={"flex"} flexWrap={"wrap"}>
                                 {box.map(v => (<Box key={v?.title} borderRadius={"4px"} padding={"7px 10px"} textAlign={"center"} mr={2} mb={2}
-                                 style={{ cursor: "pointer", border : v?.value == filterData?.reg_date_filter ? "1px solid #ED6A0F" :"1px solid black",
+                                 style={{ cursor: "pointer", border : v?.value == filterData?.filter_type ? "1px solid #ED6A0F" :"1px solid black",
 
-                                    color : v?.value == filterData?.reg_date_filter ? "#ED6A0F" :"black",
+                                    color : v?.value == filterData?.filter_type ? "#ED6A0F" :"black",
                                   }}
-                                    onClick={() => setFilterData({ ...filterData, reg_date_filter : v?.value})}
+                                    onClick={() => setFilterData({ ...filterData, filter_type : v?.value})}
                         >
                                 <Typography>{v?.title}</Typography>
                             </Box>))}
                         </Box>
-                       {filterData?.reg_date_filter == "custom" &&  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                       {filterData?.filter_type == "custom" &&  <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Box mr={1}>
                                     <Typography>From</Typography>
-                                    <DesktopDatePicker value={dayjs(filterData?.reg_start_date) ?? dayjs('2025-01-01')}
-                                        onChange={(newValue) => setFilterData({ ...filterData, reg_start_date : dayjs(newValue).format("YYYY-MM-DD")})} />
+                                    <DesktopDatePicker value={dayjs(filterData?.start_date) ?? dayjs('2025-01-01')}
+                                        onChange={(newValue) => setFilterData({ ...filterData, start_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                                 <Box ml={1}>
                                     <Typography>To</Typography>
-                                    <DesktopDatePicker value={dayjs(filterData?.reg_end_date) ?? dayjs('2025-01-01')}
-                                        onChange={(newValue) => setFilterData({ ...filterData, reg_end_date : dayjs(newValue).format("YYYY-MM-DD")})} />
+                                    <DesktopDatePicker value={dayjs(filterData?.end_date) ?? dayjs('2025-01-01')}
+                                        onChange={(newValue) => setFilterData({ ...filterData, end_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                             </Box>
                         </LocalizationProvider>}

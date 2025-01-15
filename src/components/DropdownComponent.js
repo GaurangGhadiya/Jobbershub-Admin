@@ -4,7 +4,7 @@ const DropdownComponent = ({
   value = '', // Default value
   onChange,
   options = [], // Dropdown options
-  placeholder = 'Select an option', // Default placeholder
+  placeholder = '', // Default placeholder
   className = '', // Default empty className
   style = {}, // Inline styles
   ...props
@@ -20,6 +20,7 @@ const DropdownComponent = ({
         border: '1px solid #C9D4F0',
         borderRadius: '10px',
         width: '100%',
+        height : '40px',
         outline: 'none', // Removes focus border
         ...style, // Merge custom styles
       }}

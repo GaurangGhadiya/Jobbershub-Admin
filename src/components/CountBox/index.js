@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
-const CountBox = ({ title, count, color, icon }) => {
+const CountBox = ({ title, count, color, icon , cc=0}) => {
     return (
         <>
             <Grid item sx={12} md={2.4}>
@@ -19,11 +19,13 @@ const CountBox = ({ title, count, color, icon }) => {
 
                     </Box>
                   
-                    <Box display={"flex"} justifyContent={"start"} mt={2}>
+                   {cc ?
+                   <><Typography mt={2}>from {cc} transactions</Typography></>
+                   : <Box display={"flex"} justifyContent={"start"} mt={2}>
                         <Image src={"/up.png"} height={15} width={20}/>&nbsp;&nbsp;&nbsp;
                     <Typography fontSize={14} color={"#01B351"}>8.5%</Typography>&nbsp;&nbsp;&nbsp;
                     <Typography fontSize={14} color={"#2C3941"}>Up From yesterday</Typography>
-                    </Box>
+                    </Box>}
 
                 </Box>
             </Grid>
