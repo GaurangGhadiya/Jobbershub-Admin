@@ -60,12 +60,12 @@ export default function AuthorizationPastDaysModal({filterData,setFilterData, au
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Box mr={1}>
                                     <Typography>From</Typography>
-                                    <DesktopDatePicker value={dayjs(filterData?.authorization_start_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(filterData?.authorization_start_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setFilterData({ ...filterData, authorization_start_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                                 <Box ml={1}>
                                     <Typography>To</Typography>
-                                    <DesktopDatePicker value={dayjs(filterData?.authorization_end_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(filterData?.authorization_end_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setFilterData({ ...filterData, authorization_end_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                             </Box>
@@ -105,11 +105,11 @@ export default function AuthorizationPastDaysModal({filterData,setFilterData, au
                         <Box display={"flex"} justifyContent={"space-between"}>
                             <Box mr={1}>
                                 <Typography>From</Typography>
-                                <DesktopDatePicker defaultValue={dayjs('2022-04-17')} />
+                                <DesktopDatePicker format='DD-MM-YYYY' defaultValue={dayjs('2022-04-17')} />
                             </Box>
                             <Box ml={1}>
                                 <Typography>To</Typography>
-                                <DesktopDatePicker defaultValue={dayjs('2022-04-17')} />
+                                <DesktopDatePicker format='DD-MM-YYYY' defaultValue={dayjs('2022-04-17')} />
                             </Box>
                         </Box>
                     </LocalizationProvider>

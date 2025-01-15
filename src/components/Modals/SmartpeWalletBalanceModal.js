@@ -71,12 +71,12 @@ export default function SmartpeWalletBalanceModal({filterData,setFilterData, sma
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Box mr={1}>
                                     <Typography>From</Typography>
-                                    <DesktopDatePicker value={dayjs(internalState?.smartpay_start_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(internalState?.smartpay_start_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setInternalState({ ...internalState, smartpay_start_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                                 <Box ml={1}>
                                     <Typography>To</Typography>
-                                    <DesktopDatePicker value={dayjs(internalState?.smartpay_end_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(internalState?.smartpay_end_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setInternalState({ ...internalState, smartpay_end_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                             </Box>

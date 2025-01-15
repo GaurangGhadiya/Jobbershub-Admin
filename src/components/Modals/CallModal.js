@@ -342,7 +342,7 @@ export default function CallModal({ openCallModal, handleCallModalClose }) {
                                             <Typography color={"#727272"} fontSize={14} fontWeight={400}>Select Date</Typography>
                                             {/* <Box border={"1px solid #E4E4E4"}><Typography color={"#727272"} fontSize={12} fontWeight={300} py={0.5} px={3}>1/1/2025</Typography></Box>
                                     <CalendarMonthIcon style={{ color: "#FF8C38" }} /> */}
-                                            <DesktopDatePicker
+                                            <DesktopDatePicker format='DD-MM-YYYY'
                                                 open={isDatePickerOpen} // Control open state
                                                 onClose={() => setIsDatePickerOpen(false)} // Close when the dialog is dismissed
                                                 value={filterData?.reg_end_date ? dayjs(filterData.reg_end_date) : null}

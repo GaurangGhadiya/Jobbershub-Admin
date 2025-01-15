@@ -58,11 +58,11 @@ export default function SellerRegistrationPastDaysModal({ registrationPastDays, 
                         <Box display={"flex"} justifyContent={"space-between"}>
                             <Box mr={1}>
                                 <Typography>From</Typography>
-                                <DesktopDatePicker defaultValue={dayjs('2022-04-17')} />
+                                <DesktopDatePicker format='DD-MM-YYYY' defaultValue={dayjs('2022-04-17')} />
                             </Box>
                             <Box ml={1}>
                                 <Typography>To</Typography>
-                                <DesktopDatePicker defaultValue={dayjs('2022-04-17')} />
+                                <DesktopDatePicker format='DD-MM-YYYY' defaultValue={dayjs('2022-04-17')} />
                             </Box>
                         </Box>
                     </LocalizationProvider>

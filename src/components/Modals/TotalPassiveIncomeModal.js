@@ -71,12 +71,12 @@ export default function TotalPassiveIncomeModal({filterData,setFilterData, total
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Box mr={1}>
                                     <Typography>From</Typography>
-                                    <DesktopDatePicker value={dayjs(internalState?.passive_income_start_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(internalState?.passive_income_start_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setInternalState({ ...internalState, passive_income_start_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                                 <Box ml={1}>
                                     <Typography>To</Typography>
-                                    <DesktopDatePicker value={dayjs(internalState?.passive_income_end_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(internalState?.passive_income_end_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setInternalState({ ...internalState, passive_income_end_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                             </Box>

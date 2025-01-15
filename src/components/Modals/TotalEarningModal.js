@@ -70,12 +70,12 @@ export default function TotalEarningModal({filterData,setFilterData,  totalEarni
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Box mr={1}>
                                     <Typography>From</Typography>
-                                    <DesktopDatePicker value={dayjs(internalState?.totalearning_start_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(internalState?.totalearning_start_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setInternalState({ ...internalState, totalearning_start_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                                 <Box ml={1}>
                                     <Typography>To</Typography>
-                                    <DesktopDatePicker value={dayjs(internalState?.totalearning_end_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(internalState?.totalearning_end_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setInternalState({ ...internalState, totalearning_end_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                             </Box>

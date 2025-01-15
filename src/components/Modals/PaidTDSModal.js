@@ -70,12 +70,12 @@ export default function PaidTCSModal({filterData,setFilterData, paidTcs, paidTcs
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Box mr={1}>
                                     <Typography>From</Typography>
-                                    <DesktopDatePicker value={dayjs(internalState?.tds_paid_start_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(internalState?.tds_paid_start_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setInternalState({ ...internalState, tds_paid_start_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                                 <Box ml={1}>
                                     <Typography>To</Typography>
-                                    <DesktopDatePicker value={dayjs(internalState?.tds_paid_end_date) ?? dayjs('2025-01-01')}
+                                    <DesktopDatePicker format='DD-MM-YYYY' value={dayjs(internalState?.tds_paid_end_date) ?? dayjs('2025-01-01')}
                                         onChange={(newValue) => setInternalState({ ...internalState, tds_paid_end_date : dayjs(newValue).format("YYYY-MM-DD")})} />
                                 </Box>
                             </Box>
