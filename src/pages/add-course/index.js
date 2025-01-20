@@ -45,6 +45,7 @@ const AddCourse = () => {
     const route = useRouter()
     const [step, setStep] = useState(0)
     const [formData, setFormData] = useState({})
+    
 
     const handleChange = (e) => {
         const {name, value} = e.target;

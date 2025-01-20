@@ -1,6 +1,6 @@
 import Title from '@/components/Title'
 import { Box, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material/styles';
 import UploadIcon from '@mui/icons-material/CloudUpload';
 import TextFieldComponent from '@/components/TextFieldComponent';
@@ -19,32 +19,76 @@ const HiddenInput = styled('input')({
 });
 
 const Step4 = () => {
+  const [formData, setFormData] = useState({})
+  const [tableData, setTableData] = useState([])
+  const [editData, setEditData] = useState({})
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      alert(`File selected: ${file.name}`);
-      // Add your file handling logic here
+  const handleChange = (e) => {
+    console.log(e)
+    if (e.target.type == "file") {
+      const file = event.target.files[0];
+      if (file) {
+        setFormData({ ...formData, "photo": file })
+
+        // alert(`File selected: ${file.name}`);
+      }
+    } else {
+      const { name, value } = e.target
+
+      setFormData({ ...formData, [name]: value })
     }
-  };
+  }
+
+  console.log('tableData', tableData)
+  const handleAdd = () => {
+    setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
+    setFormData({})
+  }
+
+  const handleEdit = (row) => {
+    setEditData(row)
+    setFormData(row)
+  }
+
+  const handleDelete = (id) => {
+    let data = [...tableData]
+    let newData = data?.filter(v => v?.id != id)
+    setTableData(newData)
+  }
+
+  const handleUpdate = () => {
+    let data = [...tableData]
+    let newData = data?.map(v => v?.id == editData?.id ? formData : v)
+    setTableData(newData)
+    setEditData({})
+    setFormData({})
+  }
   return (
     <>
-    <Grid container spacing={2}>
-      <Grid item sx={12} md={5}>
-      <Title title={"Upload Thumbnail"} />
-      <HiddenInput
-        type="file"
-        id="file-upload"
-        onChange={handleFileUpload}
-      />
-      <label htmlFor="file-upload" style={{width : "100%", display : "block"}}>
-        <IconWrapper>
-          <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
-          <Typography color={"#16151C"} fontSize={"14px"} fontWeight={300}>Drag & Drop or choose file to upload</Typography>
-          <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography>
-        </IconWrapper>
-      </label>
-      </Grid>
+      <Grid container spacing={2}>
+        <Grid item sx={12} md={5}>
+          <Title title={"Upload Thumbnail"} />
+          <HiddenInput
+            type="file"
+            id="file-upload"
+            name='photo'
+            onChange={handleChange}
+          />
+          <label htmlFor="file-upload" style={{ width: "100%", display: "block" }}>
+            {!formData?.photo ? <IconWrapper>
+              <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
+              <Typography color={"#16151C"} fontSize={"14px"} fontWeight={300}>Drag & Drop or choose file to upload</Typography>
+              <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography>
+            </IconWrapper> :
+              <IconWrapper >
+                {formData?.photo && <img src={URL.createObjectURL(formData?.photo)} width={"250px"} style={{ height: "150px", marginTop: "-30px" }} />}
+                <Box position="absolute" top={50} left={100}>
+                  <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
+
+                </Box>
+              </IconWrapper>}
+          </label>
+        </Grid>
         {/* <Grid item sx={12} md={5}>
         <Title title={"Upload Introductory Video"} />
         <HiddenInput
@@ -63,65 +107,66 @@ const Step4 = () => {
 
 
 
-    </Grid>
-    <Box mt={2}></Box>
-    <Title title={"Introductory Video Link"} />
-    <TextFieldComponent
-            name="Introductory Video Link"
-            // value={""}
-            // onChange={() => { }}
-            placeholder='Introductory Video Link'
-          />
-    <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{cursor : "pointer"}}  borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>
+      </Grid>
+      <Box mt={2}></Box>
+      <Title title={"Introductory Video Link"} />
+      <TextFieldComponent
+        name="link"
+        value={formData?.link ?? ""}
+        onChange={handleChange}
+        placeholder='Introductory Video Link'
+      />
+      {editData?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
+        <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
-    <Box overflow={"hidden"}>
-                <TableContainer component={Box} id="step4" style={{
-                    // maxHeight: '600px ', // Fixed height for vertical scroll
-                    maxWidth: '100%', // Optional: Limit the width if necessary
-                    overflowX: 'auto', // Enable horizontal scrolling only inside the table container
-                    overflowY: 'auto', // Enable vertical scrolling inside the table container
-                    fontSize: '16px',
-                }}>
+      {tableData?.length > 0 && <Box overflow={"hidden"}>
+        <TableContainer component={Box} id="step4" style={{
+          // maxHeight: '600px ', // Fixed height for vertical scroll
+          maxWidth: '100%', // Optional: Limit the width if necessary
+          overflowX: 'auto', // Enable horizontal scrolling only inside the table container
+          overflowY: 'auto', // Enable vertical scrolling inside the table container
+          fontSize: '16px',
+        }}>
 
-                    <Table stickyHeader style={{ tableLayout: 'fixed', width: '100%', backgroundColor: "white" }} sx={{
-                        borderCollapse: "separate", // Ensure no border styles from default behavior
-                    }}
-                    >
-                        <TableHead >
-                            <TableRow>
-                                <TableCell style={{ borderRight: "none" }} width={20} >#</TableCell>
-                                <TableCell style={{ borderRight: "none" }} width={120} >Thumbnail</TableCell>
-                                <TableCell style={{ borderRight: "none" }} width={120} >Introductory Video Link</TableCell>
-                                <TableCell style={{ borderRight: "none" }} width={120} >Action</TableCell>
-                            </TableRow>
+          <Table stickyHeader style={{ tableLayout: 'fixed', width: '100%', backgroundColor: "white" }} sx={{
+            borderCollapse: "separate", // Ensure no border styles from default behavior
+          }}
+          >
+            <TableHead >
+              <TableRow>
+                <TableCell style={{ borderRight: "none" }} width={20} >#</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Thumbnail</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Introductory Video Link</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Action</TableCell>
+              </TableRow>
 
-                        </TableHead>
+            </TableHead>
 
-                        <TableBody>
-                            {[1,2,3,4]?.map((row, id) => (
-                                <TableRow
-                                    hover
-                                    key={id}
-                                    style={{ textAlign: "left" }}>
-                                    <TableCell style={{ borderRight: "none" }} align="left">{id+1}</TableCell>
-                                    <TableCell style={{ borderRight: "none" }} align="left">{ "Benifit"}</TableCell>
-                                    <TableCell style={{ borderRight: "none" }} align="left">{"Lorem ipsum dollar sit amet"}</TableCell>
-                                    <TableCell style={{ borderRight: "none" }} align="left">
-                                      <Box display={"flex"}>
-                                        <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} >Edit</Typography></Box>
-                                        <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} >Delete</Typography></Box>
-                                      </Box>
-                                    </TableCell>
-                                   
-                                </TableRow>
-                            ))}
+            <TableBody>
+              {tableData?.map((row, id) => (
+                <TableRow
+                  hover
+                  key={id}
+                  style={{ textAlign: "left" }}>
+                  <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left"><img src={row?.photo ? URL.createObjectURL(row?.photo) : null} width={150} style={{ height: "70px" }} /></TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.link}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">
+                      <Box display={"flex"}>
+                        <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
+                        <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(row?.id)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      </Box>
+                  </TableCell>
 
-                        </TableBody>
+                </TableRow>
+              ))}
+
+            </TableBody>
 
 
-                    </Table>
-                </TableContainer>
-            </Box>
+          </Table>
+        </TableContainer>
+      </Box>}
 
     </>
   )

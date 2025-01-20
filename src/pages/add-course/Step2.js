@@ -2,44 +2,59 @@ import SelectDropdown from '@/components/DropdownComponent';
 import TextFieldComponent from '@/components/TextFieldComponent'
 import Title from '@/components/Title'
 import { Grid, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 
 const Step2 = () => {
+  const [formData, setFormData] = useState({})
+
+  const handleChange = (e) => {
+    console.log(e)
+    if (e.target.type == "file") {
+      const file = event.target.files[0];
+      if (file) {
+        setFormData({ ...formData, "photo": file })
+      }
+    } else {
+      const { name, value } = e.target
+
+      setFormData({ ...formData, [name]: value })
+    }
+  }
   return (
     <Grid container spacing={2}>
       <Grid item sx={12} md={4}>
         <Title title={"GST Amount 18% "} />
         <TextFieldComponent
-          name="category"
-          // value={""}
-          // onChange={() => { }}
+          name="gst_amount"
+          value={formData?.gst_amount}
+          onChange={handleChange}
           placeholder='18% FIXED ON COURSES'
         />
       </Grid>
       <Grid item sx={12} md={4}>
         <Title title={"GST Name"} />
         <TextFieldComponent
-          name="category"
-          // value={""}
-          // onChange={() => { }}
+          name="gst_name"
+          value={formData?.gst_name}
+          onChange={handleChange}
           placeholder='TRADEMAGIC INDIA PVT LTD'
         />
       </Grid>
       <Grid item sx={12} md={4}>
         <Title title={"GST Number"} />
         <TextFieldComponent
-          name="category"
-          // value={""}
-          // onChange={() => { }}
+          name="gst_number"
+          value={formData?.gst_number}
+          onChange={handleChange}
           placeholder='AZJPG2064A'
         />
       </Grid>
       <Grid item sx={12} md={4}>
         <Title title={"Academy Address"} />
         <TextFieldComponent
-          name="category"
-          // value={""}
-          // onChange={() => { }}
+          name="academy_address"
+          value={formData?.academy_address}
+          onChange={handleChange}
           placeholder='Above iron sport,canada Nashik.'
         />
       </Grid>
@@ -51,10 +66,9 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
-          name="category"
-          // placeholder="Tutor Percentage - 50%=4100"
+          value={formData?.tutor_percentage}
+          onChange={handleChange}
+          name="tutor_percentage"
         />
 
       </Grid>
@@ -68,9 +82,9 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
-          name="category"
+          value={formData?.marketing_fee_type}
+          onChange={handleChange}
+          name="marketing_fee_type"
         // placeholder="Marketing fee / Flat Percentage"
         />
 
@@ -83,9 +97,9 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
-          name="category"
+          value={formData?.company_marketing_fee}
+          onChange={handleChange}
+          name="company_marketing_fee"
         // placeholder="Company Marketing fee 50%"
         />
 
@@ -98,14 +112,14 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
-          name="category"
+          value={formData?.slotting_fee}
+          onChange={handleChange}
+          name="slotting_fee"
         // placeholder="Slotting Fee"
         />
 
       </Grid>
-      <Grid item sx={12} md={4}>
+      {/* <Grid item sx={12} md={4}>
         <Title title={"Cashback Type"} />
         <SelectDropdown
           options={[
@@ -113,8 +127,8 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
+          value={formData?.}
+          // onChange={handleChange}}
           name="category"
         // placeholder="Select Cashback Type"
         />
@@ -128,8 +142,8 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
+          value={formData?.}
+          // onChange={handleChange}}
           name="category"
         // placeholder="Offer"
         />
@@ -143,8 +157,8 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
+          value={formData?.}
+          // onChange={handleChange}}
           name="category"
         // placeholder="Cashback"
         />
@@ -158,8 +172,8 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
+          value={formData?.}
+          // onChange={handleChange}}
           name="category"
         // placeholder="Distribution"
         />
@@ -173,12 +187,12 @@ const Step2 = () => {
             { value: 'banana', label: 'Banana' },
             { value: 'cherry', label: 'Cherry' },
           ]}
-          value={''}
-          onChange={() => { }}
+          value={formData?.}
+          // onChange={handleChange}}
           name="category"
         // placeholder="Tutor Percentage - 50%=4100"
         />
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }
