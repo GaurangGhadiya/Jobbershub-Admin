@@ -1,11 +1,34 @@
 import TextFieldComponent from '@/components/TextFieldComponent'
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 
-const Step5 = () => {
+const Step5 = ({ formDataMain, setFormDataMain, step, setStep }) => {
+  const route = useRouter()
+
   const [formData, setFormData] = useState({})
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
+
+   useEffect(() => {
+      setFormData({ ...formDataMain })
+    }, [formDataMain])
+
+  const handleNext = () => {
+    if (step == 8) {
+
+    } else {
+      setFormDataMain({ ...formDataMain, courses_title: tableData?.map(v => v?.courses_title), courses_description: tableData?.map(v => v?.courses_description) })
+      setStep(step + 1)
+    }
+  }
+  const handleBack = () => {
+    if (step == 0) {
+      route.push("/course")
+    } else {
+      setStep(step - 1)
+    }
+  }
 
   const handleChange = (e) => {
     console.log(e)
@@ -51,8 +74,8 @@ const Step5 = () => {
     <>    <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>Create Details</Typography>
 
       <TextFieldComponent
-        name="title"
-        value={formData?.title ?? ""}
+        name="courses_title"
+        value={formData?.courses_title ?? ""}
         onChange={handleChange}
         placeholder='title'
       />
@@ -61,8 +84,8 @@ const Step5 = () => {
       <br />
 
       <TextFieldComponent
-        name="description"
-        value={formData?.description ?? ""}
+        name="courses_description"
+        value={formData?.courses_description ?? ""}
         onChange={handleChange}
         placeholder='Description'
       />
@@ -86,7 +109,7 @@ const Step5 = () => {
             <TableHead >
               <TableRow>
                 <TableCell style={{ borderRight: "none" }} width={20} >#</TableCell>
-                <TableCell style={{ borderRight: "none" }} width={120} >Thumbnail</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Title</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Description</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Action</TableCell>
               </TableRow>
@@ -100,8 +123,8 @@ const Step5 = () => {
                   key={id}
                   style={{ textAlign: "left" }}>
                   <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.title}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.description}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.courses_title}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.courses_description}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
@@ -118,7 +141,11 @@ const Step5 = () => {
           </Table>
         </TableContainer>
       </Box>}
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} my={5}>
 
+        <Box border={"1px solid #A2A1A8"} style={{ cursor: "pointer" }} onClick={() => handleBack()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"black"} px={3} py={1}>Back</Typography></Box>
+        <Box backgroundColor={"#FF8C38"} style={{ cursor: "pointer" }} onClick={() => handleNext()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Next</Typography></Box>
+      </Box>
     </>
   )
 }

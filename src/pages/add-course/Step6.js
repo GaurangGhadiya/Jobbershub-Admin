@@ -1,8 +1,9 @@
 import TextFieldComponent from '@/components/TextFieldComponent'
 import { Box, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UploadIcon from '@mui/icons-material/CloudUpload';
 import Title from '@/components/Title';
+import { useRouter } from 'next/router';
 
 
 const IconWrapper = styled('div')(({ theme }) => ({
@@ -18,7 +19,8 @@ const HiddenInput = styled('input')({
   display: 'none',
 });
 
-const Step6 = () => {
+const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
+  const router = useRouter()
   const [formData, setFormData] = useState({})
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
@@ -28,6 +30,26 @@ const Step6 = () => {
   const [formData3, setFormData3] = useState({})
   const [tableData3, setTableData3] = useState([])
   const [editData3, setEditData3] = useState({})
+
+ useEffect(() => {
+    setFormData({ ...formDataMain })
+  }, [formDataMain])
+  
+  const handleNext = () => {
+    if (step == 8) {
+
+    } else {
+      setFormDataMain({ ...formDataMain, image_titles: tableData?.map(v => v?.image_titles), image_descriptions: tableData?.map(v => v?.image_descriptions), market_short_video: tableData2?.map(v => v?.market_short_video), market_short_title: tableData2?.map(v => v?.market_short_title), market_short_desc: tableData2?.map(v => v?.market_short_desc), market_brochure_link: tableData3?.map(v => v?.market_brochure_link), market_brochure_title: tableData3?.map(v => v?.market_brochure_title), market_brochure_desc: tableData3?.map(v => v?.market_brochure_desc) })
+      setStep(step + 1)
+    }
+  }
+  const handleBack = () => {
+    if (step == 0) {
+      route.push("/course")
+    } else {
+      setStep(step - 1)
+    }
+  }
 
   const handleChange = (e) => {
     console.log(e)
@@ -130,7 +152,7 @@ const Step6 = () => {
     setFormData3(row)
   }
 
-  const handleDelete3= (id) => {
+  const handleDelete3 = (id) => {
     let data = [...tableData3]
     let newData = data?.filter(v => v?.id != id)
     setTableData3(newData)
@@ -147,8 +169,8 @@ const Step6 = () => {
     <>    <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>1.Marketing Images</Typography>
 
       <TextFieldComponent
-        name="title"
-        value={formData?.title ?? ""}
+        name="image_titles"
+        value={formData?.image_titles ?? ""}
         onChange={handleChange}
         placeholder='title'
       />
@@ -157,8 +179,8 @@ const Step6 = () => {
       <br />
 
       <TextFieldComponent
-        name="description"
-        value={formData?.description ?? ""}
+        name="image_descriptions"
+        value={formData?.image_descriptions ?? ""}
         onChange={handleChange}
         placeholder='Description'
       />
@@ -183,7 +205,7 @@ const Step6 = () => {
               <TableRow>
                 <TableCell style={{ borderRight: "none" }} width={20} >#</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Title</TableCell>
-                <TableCell style={{ borderRight: "none" }} width={120} >Image</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Description</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Action</TableCell>
               </TableRow>
 
@@ -196,8 +218,8 @@ const Step6 = () => {
                   key={id}
                   style={{ textAlign: "left" }}>
                   <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.title}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.description}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.image_titles}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.image_descriptions}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
@@ -220,8 +242,8 @@ const Step6 = () => {
       <Box mt={2}></Box>
       {/* <Title title={"Introductory Video Link"} /> */}
       <TextFieldComponent
-        name="link"
-        value={formData2?.link ?? ""}
+        name="market_short_video"
+        value={formData2?.market_short_video ?? ""}
         onChange={handleChange2}
         placeholder='Upload Marketing Video Link'
       />
@@ -243,8 +265,8 @@ const Step6 = () => {
       </label> */}
 
       <TextFieldComponent
-        name="title"
-        value={formData2?.title ?? ""}
+        name="market_short_title"
+        value={formData2?.market_short_title ?? ""}
         onChange={handleChange2}
         placeholder='title'
       />
@@ -253,13 +275,13 @@ const Step6 = () => {
       <br />
 
       <TextFieldComponent
-        name="description"
-        value={formData2?.description ?? ""}
+        name="market_short_desc"
+        value={formData2?.market_short_desc ?? ""}
         onChange={handleChange2}
         placeholder='Description'
       />
 
-{editData2?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate2} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
+      {editData2?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate2} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd2} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData2?.length > 0 && <Box overflow={"hidden"} mb={3}>
@@ -292,10 +314,10 @@ const Step6 = () => {
                   key={id}
                   style={{ textAlign: "left" }}>
                   <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.title}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.link}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.market_short_title}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.market_short_video}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
-                  <Box display={"flex"}>
+                    <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit2(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
                       <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete2(row?.id)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
@@ -314,8 +336,18 @@ const Step6 = () => {
       <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>3.Marketing Brochures</Typography>
 
       <TextFieldComponent
-        name="title"
-        value={formData3?.title ?? ""}
+        name="market_brochure_link"
+        value={formData3?.market_brochure_link ?? ""}
+        onChange={handleChange3}
+        placeholder='Upload video link'
+      />
+      <br />
+      <br />
+      <br />
+
+      <TextFieldComponent
+        name="market_brochure_title"
+        value={formData3?.market_brochure_title ?? ""}
         onChange={handleChange3}
         placeholder='title'
       />
@@ -324,13 +356,13 @@ const Step6 = () => {
       <br />
 
       <TextFieldComponent
-        name="description"
-        value={formData3?.description ?? ""}
+        name="market_brochure_desc"
+        value={formData3?.market_brochure_desc ?? ""}
         onChange={handleChange3}
         placeholder='Description'
       />
 
-{editData3?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate3} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
+      {editData3?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate3} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd3} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData3?.length > 0 && <Box overflow={"hidden"}>
@@ -350,7 +382,7 @@ const Step6 = () => {
               <TableRow>
                 <TableCell style={{ borderRight: "none" }} width={20} >#</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Title</TableCell>
-                <TableCell style={{ borderRight: "none" }} width={120} >Brochure</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Description</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Action</TableCell>
               </TableRow>
 
@@ -363,10 +395,10 @@ const Step6 = () => {
                   key={id}
                   style={{ textAlign: "left" }}>
                   <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.title}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.description}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.market_brochure_title}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.market_brochure_desc}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
-                  <Box display={"flex"}>
+                    <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit3(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
                       <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete3(row?.id)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
@@ -381,6 +413,11 @@ const Step6 = () => {
           </Table>
         </TableContainer>
       </Box>}
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} my={5}>
+
+        <Box border={"1px solid #A2A1A8"} style={{ cursor: "pointer" }} onClick={() => handleBack()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"black"} px={3} py={1}>Back</Typography></Box>
+        <Box backgroundColor={"#FF8C38"} style={{ cursor: "pointer" }} onClick={() => handleNext()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Next</Typography></Box>
+      </Box>
     </>
   )
 }

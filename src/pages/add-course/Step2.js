@@ -1,11 +1,18 @@
 import SelectDropdown from '@/components/DropdownComponent';
 import TextFieldComponent from '@/components/TextFieldComponent'
 import Title from '@/components/Title'
-import { Grid, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Grid, Typography, Box } from '@mui/material'
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
 
-const Step2 = () => {
+const Step2 = ({ formDataMain, setFormDataMain, step, setStep }) => {
+  const route = useRouter()
+
   const [formData, setFormData] = useState({})
+
+   useEffect(() => {
+      setFormData({ ...formDataMain })
+    }, [formDataMain])
 
   const handleChange = (e) => {
     console.log(e)
@@ -18,6 +25,22 @@ const Step2 = () => {
       const { name, value } = e.target
 
       setFormData({ ...formData, [name]: value })
+    }
+  }
+
+  const handleNext = () => {
+    if (step == 8) {
+
+    } else {
+      setFormDataMain({ ...formDataMain, ...formData })
+      setStep(step + 1)
+    }
+  }
+  const handleBack = () => {
+    if (step == 0) {
+      route.push("/course")
+    } else {
+      setStep(step - 1)
     }
   }
   return (
@@ -59,64 +82,51 @@ const Step2 = () => {
         />
       </Grid>
       <Grid item sx={12} md={4}>
-        <Title title={"Tutor Percentage - 50%=4100 "} />
-        <SelectDropdown
-          options={[
-            { value: 'apple', label: 'Apple' },
-            { value: 'banana', label: 'Banana' },
-            { value: 'cherry', label: 'Cherry' },
-          ]}
-          value={formData?.tutor_percentage}
-          onChange={handleChange}
-          name="tutor_percentage"
-        />
-
-      </Grid>
-      <Grid item sx={12} md={4}>
-      </Grid>
-      <Grid item sx={12} md={4}>
-        <Title title={"Marketing fee Type "} />
-        <SelectDropdown
-          options={[
-            { value: 'apple', label: 'Apple' },
-            { value: 'banana', label: 'Banana' },
-            { value: 'cherry', label: 'Cherry' },
-          ]}
-          value={formData?.marketing_fee_type}
-          onChange={handleChange}
-          name="marketing_fee_type"
-        // placeholder="Marketing fee / Flat Percentage"
-        />
-
-      </Grid>
-      <Grid item sx={12} md={4}>
         <Title title={"Company Marketing fee 50% "} />
-        <SelectDropdown
-          options={[
-            { value: 'apple', label: 'Apple' },
-            { value: 'banana', label: 'Banana' },
-            { value: 'cherry', label: 'Cherry' },
-          ]}
+        <TextFieldComponent
+          name="company_marketing_fee"
           value={formData?.company_marketing_fee}
           onChange={handleChange}
-          name="company_marketing_fee"
-        // placeholder="Company Marketing fee 50%"
+          placeholder='50'
         />
+       
 
       </Grid>
       <Grid item sx={12} md={4}>
+        <Title title={"Tutor Percentage - 50%=4100 "} />
+        <TextFieldComponent
+          name="tutor_percentage"
+          value={formData?.tutor_percentage}
+          onChange={handleChange}
+          placeholder='50'
+        />
+       
+
+      </Grid>
+        <Grid item sx={12} md={4}>
+          <Title title={"Marketing fee Type "} />
+          <SelectDropdown
+            options={[
+              { value: 'Flat Fees', label: 'Flat Fees' },
+              { value: 'Percentage Fees', label: 'Percentage Fees' },
+            ]}
+            value={formData?.marketing_fee_type}
+            onChange={handleChange}
+            name="marketing_fee_type"
+          // placeholder="Marketing fee / Flat Percentage"
+          />
+
+        </Grid>
+      
+      <Grid item sx={12} md={4}>
         <Title title={"Slotting fee"} />
-        <SelectDropdown
-          options={[
-            { value: 'apple', label: 'Apple' },
-            { value: 'banana', label: 'Banana' },
-            { value: 'cherry', label: 'Cherry' },
-          ]}
+        <TextFieldComponent
+          name="slotting_fee"
           value={formData?.slotting_fee}
           onChange={handleChange}
-          name="slotting_fee"
-        // placeholder="Slotting Fee"
+          placeholder='50'
         />
+      
 
       </Grid>
       {/* <Grid item sx={12} md={4}>
@@ -193,6 +203,11 @@ const Step2 = () => {
         // placeholder="Tutor Percentage - 50%=4100"
         />
       </Grid> */}
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} my={5} width={"100%"} px={2}>
+
+        <Box border={"1px solid #A2A1A8"} style={{ cursor: "pointer" }} onClick={() => handleBack()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"black"} px={3} py={1}>Back</Typography></Box>
+        <Box backgroundColor={"#FF8C38"} style={{ cursor: "pointer" }} onClick={() => handleNext()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Next</Typography></Box>
+      </Box>
     </Grid>
   )
 }

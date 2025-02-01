@@ -1,12 +1,37 @@
 import TextFieldComponent from '@/components/TextFieldComponent'
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 
-const Step9 = () => {
+const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => {
+  const route = useRouter()
 
   const [formData, setFormData] = useState({})
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
+
+   useEffect(() => {
+      setFormData({ ...formDataMain })
+    }, [formDataMain])
+
+  const handleNext = () => {
+    if (step == 8) {
+      setFormDataMain({ ...formDataMain, study_material_title : tableData?.map(v => v?.study_material_title), study_material_desc: tableData?.map(v => v?.study_material_desc)})
+      finalSubmit({ ...formDataMain, study_material_title : tableData?.map(v => v?.study_material_title), study_material_desc: tableData?.map(v => v?.study_material_desc)})
+
+
+    } else {
+      setFormDataMain({ ...formDataMain, study_material_title : tableData?.map(v => v?.study_material_title), study_material_desc: tableData?.map(v => v?.study_material_desc)})
+      setStep(step + 1)
+    }
+  }
+  const handleBack = () => {
+    if (step == 0) {
+      route.push("/course")
+    } else {
+      setStep(step - 1)
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -41,8 +66,8 @@ const Step9 = () => {
     <>    <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>Study Material</Typography>
 
       <TextFieldComponent
-        name="title"
-        value={formData?.title ?? ""}
+        name="study_material_title"
+        value={formData?.study_material_title ?? ""}
         onChange={handleChange}
         placeholder='title'
       />
@@ -51,8 +76,8 @@ const Step9 = () => {
       <br />
 
       <TextFieldComponent
-        name="description"
-        value={formData?.description ?? ""}
+        name="study_material_desc"
+        value={formData?.study_material_desc ?? ""}
         onChange={handleChange}
         placeholder='Description'
       />
@@ -90,8 +115,8 @@ const Step9 = () => {
                   key={id}
                   style={{ textAlign: "left" }}>
                   <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.title}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.description}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.study_material_title}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.study_material_desc}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }}><Typography color={'white'} >Edit</Typography></Box>
@@ -108,7 +133,11 @@ const Step9 = () => {
           </Table>
         </TableContainer>
       </Box>}
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} my={5}>
 
+        <Box border={"1px solid #A2A1A8"} style={{ cursor: "pointer" }} onClick={() => handleBack()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"black"} px={3} py={1}>Back</Typography></Box>
+        <Box backgroundColor={"#FF8C38"} style={{ cursor: "pointer" }} onClick={() => handleNext()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Next</Typography></Box>
+      </Box>
     </>)
 }
 

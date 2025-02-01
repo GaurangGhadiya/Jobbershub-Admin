@@ -1,12 +1,14 @@
 import Title from '@/components/Title'
 import { Box, Grid, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles';
 import UploadIcon from '@mui/icons-material/CloudUpload';
 import TextFieldComponent from '@/components/TextFieldComponent';
 import TextAreaComponent from '@/components/TextAreaComponent';
 import SelectDropdown from '@/components/DropdownComponent';
-
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 const IconWrapper = styled('div')(({ theme }) => ({
   textAlign: 'center',
@@ -22,8 +24,14 @@ const HiddenInput = styled('input')({
 });
 
 
-const Step1 = () => {
+const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
+  const route = useRouter()
   const [formData, setFormData] = useState({})
+
+  useEffect(() => {
+    setFormData({ ...formDataMain })
+  }, [formDataMain])
+  
 
   const handleChange = (e) => {
     console.log(e)
@@ -38,6 +46,21 @@ const Step1 = () => {
       setFormData({ ...formData, [name]: value })
     }
   }
+  const handleNext = () => {
+    if (step == 8) {
+
+    } else {
+      setFormDataMain({ ...formDataMain, ...formData })
+      setStep(step + 1)
+    }
+  }
+  const handleBack = () => {
+    if (step == 0) {
+      route.push("/course")
+    } else {
+      setStep(step - 1)
+    }
+  }
   return (
     <Box>
       <Title title={"Add Course Image"} />
@@ -47,16 +70,18 @@ const Step1 = () => {
         name='photo'
         onChange={handleChange}
       />
-      <label htmlFor="file-upload" style={{ width: "250px", display: "block", position : "relative" }}>
+      <label htmlFor="file-upload" style={{ width: "250px", display: "block", position: "relative" }}>
         {!formData?.photo ? <IconWrapper>
-          <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
-          <Typography color={"#16151C"} fontSize={"14px"} fontWeight={300}>Drag & Drop or choose file to upload</Typography>
-          <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography>
+          {/* <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br /> */}
+          <Image src="/Button.png" width={50} height={50} />
+          <Typography color={"#FF9F59"} fontSize={"14px"} fontWeight={300}>choose file to upload</Typography>
+          {/* <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography> */}
         </IconWrapper> :
           <IconWrapper >
-            {formData?.photo && <img src={URL.createObjectURL(formData?.photo)} width={"250px"} style={{ height: "150px", marginTop: "-30px" }} />}
-            <Box position="absolute" top={50} left={100}>
-              <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
+            {formData?.photo && <img src={URL.createObjectURL(formData?.photo)} width={"250px"} style={{ height: "145px", marginTop: "-30px", padding : "5px" }} />}
+            <Box position="absolute" top={40} left={33}  backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
+              <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
+              <Typography color={"#FF9F59"}>Chnage image</Typography>
 
             </Box>
           </IconWrapper>}
@@ -68,11 +93,12 @@ const Step1 = () => {
           <Title title={"Category "} />
           <SelectDropdown
             options={[
-              { value: 'apple', label: 'Apple' },
+              { value: 'Cources', label: 'Cources' },
               { value: 'banana', label: 'Banana' },
               { value: 'cherry', label: 'Cherry' },
             ]}
             value={formData?.category_id}
+            disabled
             onChange={handleChange}
             name="category_id"
           // placeholder="Choose a category"
@@ -110,9 +136,9 @@ const Step1 = () => {
           <Title title={"Course validity Type "} />
           <SelectDropdown
             options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'cherry', label: 'Cherry' },
+              { value: 'Single Validity', label: 'Single Validity' },
+              { value: 'Lifetime validity', label: 'Lifetime validity' },
+              { value: 'Custom Validity', label: 'Custom Validity' },
             ]}
             value={formData?.course_validity}
             onChange={handleChange}
@@ -124,9 +150,10 @@ const Step1 = () => {
           <Title title={"Language "} />
           <SelectDropdown
             options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'cherry', label: 'Cherry' },
+              { value: 'English', label: 'English' },
+              { value: 'Hindi', label: 'Hindi' },
+              { value: 'Marathi', label: 'Marathi' },
+              { value: 'Gujrati', label: 'Gujrati' },
             ]}
             value={formData?.language}
             onChange={handleChange}
@@ -136,32 +163,15 @@ const Step1 = () => {
         </Grid>
         <Grid item sx={12} md={4}>
           <Title title={"Total Chapters "} />
-          <SelectDropdown
-            options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'cherry', label: 'Cherry' },
-            ]}
+         
+          <TextFieldComponent
+            name="total_chapter"
             value={formData?.total_chapter}
             onChange={handleChange}
-            name="total_chapter"
-          // placeholder="10"
+            placeholder='10'
           />
+         
         </Grid>
-        {/* <Grid item sx={12} md={8}>
-          <Title title={"Course validity Type "} />
-          <SelectDropdown
-            options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'cherry', label: 'Cherry' },
-            ]}
-            value={formData?.}
-            onChange={handleChange}
-            name="category"
-          // placeholder="Course validity Type"
-          />
-        </Grid> */}
         <Grid item sx={12} md={12}>
           <Title title={"Description "} />
           <TextAreaComponent
@@ -173,6 +183,12 @@ const Step1 = () => {
         </Grid>
 
       </Grid>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} my={5}>
+
+        <Box border={"1px solid #A2A1A8"} style={{ cursor: "pointer" }} onClick={() => handleBack()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"black"} px={3} py={1}>Back</Typography></Box>
+        <Box backgroundColor={"#FF8C38"} style={{ cursor: "pointer" }} onClick={() => handleNext()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Next</Typography></Box>
+      </Box>
+
     </Box>
   )
 }
