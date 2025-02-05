@@ -10,7 +10,7 @@ import classNames from "classnames";
 import { Login, RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
 import Image from "next/image";
 import { Carousel } from 'react-responsive-carousel';
-import ResetPassword from "./ResetPassword";
+// import ResetPassword from "./ResetPassword";
 
 
 
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
                                     </Box>
 
                                     <TabPanel value="1">
-                                        <ResetPassword handleChange={handleChange} />
+                                        {/* <ResetPassword handleChange={handleChange} /> */}
                                     </TabPanel>
 
                                     

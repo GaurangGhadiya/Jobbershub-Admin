@@ -60,6 +60,11 @@ import PaidTCSModal from '@/components/Modals/PaidTDSModal';
 import TravelFundsModal from '@/components/Modals/TravelFundsModal';
 import MainActiveIncomeModal from '@/components/Modals/MainActiveIncomeModal';
 import MainPassiveIncomeModal from '@/components/Modals/MainPassiveIncomeModal';
+import ChangePasswordActionModal from '@/components/Modals/ChangePasswordModal';
+import BlockUnblockActionModal from '@/components/Modals/BlockUnblockActionModal';
+import toast from 'react-hot-toast';
+import jsonToFormData from '../../utils/JsonToFormData';
+import KYCActionModal from '@/components/Modals/KYCActionModal';
 const ITEM_HEIGHT = 48;
 const StyledMenu = styled((props) => (
     <Menu
@@ -245,45 +250,47 @@ const StickyTable = () => {
     const [actionData, setActionData] = useState({})
     const [totlaPage, setTotlaPage] = useState(0)
     const [totalCount, setTotalCount] = useState(0)
-     const [smartpeWalletBalance, setsmartpeWalletBalance] = React.useState(false);
-        const [totalEarning, settotalEarning] = React.useState(false);
-        const [mainActiveIncome, setmainActiveIncome] = useState(false)
-        const [mainPassiveIncome, setmainPassiveIncome] = useState(false)
+    const [smartpeWalletBalance, setsmartpeWalletBalance] = React.useState(false);
+    const [totalEarning, settotalEarning] = React.useState(false);
+    const [mainActiveIncome, setmainActiveIncome] = useState(false)
+    const [mainPassiveIncome, setmainPassiveIncome] = useState(false)
     const [primeRequest, setprimeRequest] = React.useState(false);
-            const [totalWithdrawal, settotalWithdrawal] = React.useState(false);
-            const [royaltyIncome, setroyaltyIncome] = React.useState(false);
-            const [rewardIncome, setrewardIncome] = React.useState(false);
-            const [SIPMFFunds, setSIPMFFunds] = React.useState(false);
-            const [laptopFunds, setlaptopFunds] = React.useState(false);
-            const [bickFunds, setbickFunds] = React.useState(false);
-            const [carFunds, setcarFunds] = React.useState(false);
-            const [houseFunds, sethouseFunds] = React.useState(false);
-            const [travelFunds, settravelFunds] = useState(false)
-            const [insuranceFunds, setinsuranceFunds] = React.useState(false);
-            const [childHigherEducationFund, setchildHigherEducationFund] = React.useState(false);
-            const [marriageBurdenReliefFund, setmarriageBurdenReliefFund] = React.useState(false);
-                const [salary, setsalary] = React.useState(false);
-            
-            const [tdsBalance, settdsBalance] = React.useState(false);
-            const [paidTcs, setpaidTcs] = React.useState(false);
+    const [totalWithdrawal, settotalWithdrawal] = React.useState(false);
+    const [royaltyIncome, setroyaltyIncome] = React.useState(false);
+    const [rewardIncome, setrewardIncome] = React.useState(false);
+    const [SIPMFFunds, setSIPMFFunds] = React.useState(false);
+    const [laptopFunds, setlaptopFunds] = React.useState(false);
+    const [bickFunds, setbickFunds] = React.useState(false);
+    const [carFunds, setcarFunds] = React.useState(false);
+    const [houseFunds, sethouseFunds] = React.useState(false);
+    const [travelFunds, settravelFunds] = useState(false)
+    const [insuranceFunds, setinsuranceFunds] = React.useState(false);
+    const [childHigherEducationFund, setchildHigherEducationFund] = React.useState(false);
+    const [marriageBurdenReliefFund, setmarriageBurdenReliefFund] = React.useState(false);
+    const [salary, setsalary] = React.useState(false);
+    const [changePasswordModal, setChangePasswordModal] = useState(false)
+    const [blockUnblockModal, setBlockUnblockModal] = useState(false)
+    const [tdsBalance, settdsBalance] = React.useState(false);
+    const [paidTcs, setpaidTcs] = React.useState(false);
     const open = Boolean(anchorEl);
-      const [openChatModal, setOpenChatModal] = React.useState(false)
-      const [openCallModal, setOpenCallModal] = React.useState(false)
-    
-        const handlechatModalOpen = () => {
-            setOpenChatModal(true);
-        };
-    
-        const handlechatModalClose = () => {
-            setOpenChatModal(false);
-        };
-        const handleCallModalOpen = () => {
-            setOpenCallModal(true);
-        };
-    
-        const handleCallModalClose = () => {
-            setOpenCallModal(false);
-        };
+    const [openChatModal, setOpenChatModal] = React.useState(false)
+    const [openCallModal, setOpenCallModal] = React.useState(false)
+    const [kycModal, setKycModal] = useState(false)
+
+    const handlechatModalOpen = () => {
+        setOpenChatModal(true);
+    };
+
+    const handlechatModalClose = () => {
+        setOpenChatModal(false);
+    };
+    const handleCallModalOpen = () => {
+        setOpenCallModal(true);
+    };
+
+    const handleCallModalClose = () => {
+        setOpenCallModal(false);
+    };
     const handleClickAction = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -291,7 +298,7 @@ const StickyTable = () => {
         setAnchorEl(null);
     };
 
-   
+
 
     const [filterData, setFilterData] = useState({
         page: 1,
@@ -357,9 +364,26 @@ const StickyTable = () => {
         setpinnedTableRow({ ...pinnedTableRow, [name]: checked });
     };
 
+    const handleTopFilter = async(data) => {
+        let body = {
+
+        }
+        setLoading(true)
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/user-summary-dashboard`,data).then(res => {
+            console.log('api response', res)
+            setCountData(res?.data)
+            setLoading(false)
+
+        }).catch(e => {
+            setLoading(false)
+
+            console.log('e', e)
+        })
+    }
+
     const getCount = async () => {
         setLoading(true)
-        await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/user-summary-dashboard`).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/user-summary-dashboard`, {}).then(res => {
             console.log('api response', res)
             setCountData(res?.data)
             setLoading(false)
@@ -373,8 +397,9 @@ const StickyTable = () => {
     }
     const PrimeRequestClick = async (status) => {
         setLoading(true)
+        console.log('actionData', actionData)
         let body = {
-            "user_id": 1,
+            "user_id": actionData?.user_id,
             "status": +status,
             "updated_by": 1
         }
@@ -386,17 +411,23 @@ const StickyTable = () => {
             setAnchorEl(null);
             setActionData()
             getTableData()
+            toast.success(res?.data?.message || "Status change successfuly")
             // setLoading(false)
 
         }).catch(e => {
             setLoading(false)
-
+            toast.error("Failed to update data")
+            CustomizetableClose()
+            primeRequestClose()
+            setAnchorEl(null);
+            setActionData()
+            // getTableData()
             console.log('e', e)
         })
 
     }
     console.log('countData', countData)
-    const getTableData = async (defaultData ) => {
+    const getTableData = async (defaultData) => {
         try {
             setLoading(true)
             console.log('filterValue', filterValue)
@@ -405,8 +436,8 @@ const StickyTable = () => {
                 let keyy = filterValue?.selectSearch
                 body = { ...body, [keyy]: filterValue?.searchValue }
             }
-            console.log('error', body,defaultData?.page)
-            if(defaultData?.page){
+            console.log('error', body, defaultData?.page)
+            if (defaultData?.page) {
 
                 body = defaultData
             }
@@ -438,9 +469,78 @@ const StickyTable = () => {
         // getCount()
     }, [filterData?.page, filterData?.pagesize])
 
-  
-   
- 
+    const handleChangePassword = async (data, setFormData) => {
+        // handleCloseAction()
+        // const {mobile, new, confirm} = data
+        if (data?.new != data?.confirm) {
+            toast.error("New password and Confirm password not match")
+        } else {
+            const body = {
+                mobile: data?.mobile,
+                password: data?.new,
+                confirmPassword: data?.confirm
+            }
+            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/users/admin-reset-password`, body).then(res => {
+                console.log('prime request response', res)
+                setAnchorEl(null);
+                setActionData()
+                setChangePasswordModal(false)
+                setFormData({})
+                toast.success('Password Updated successfuly')
+
+            }).catch(e => {
+                setLoading(false)
+                toast.error("Failed to change password")
+                setAnchorEl(null);
+                setChangePasswordModal(false)
+                setFormData({})
+                setActionData()
+                console.log('e', e)
+            })
+        }
+    }
+    const handleBlockUnblock = async (formData1, setFormData1, files, setFiles) => {
+
+        const formData = new FormData();
+
+        // Append file(s) (assuming `files` is an array or a single file)
+        if (Array.isArray(files)) {
+            files.forEach((file, index) => {
+                formData.append(`proof[${index}]`, file);
+            });
+        } else {
+            formData.append("proof", files);
+        }
+
+        // Append other form fields
+        formData.append("id", actionData?.user_id);
+        formData.append("action", "action");
+        formData.append("status", "2"); // Ensure numbers are converted to strings
+        formData.append("reason", formData1?.reason || "");
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/users/update-user-status`, formData).then(res => {
+            setAnchorEl(null);
+            setActionData()
+            setBlockUnblockModal(false)
+            setFormData1({})
+            setFiles([])
+            toast.success('User Status Updated Successful')
+
+        }).catch(e => {
+            setLoading(false)
+            toast.error("Failed to change user status")
+            setAnchorEl(null);
+            setBlockUnblockModal(false)
+            setFormData1({})
+            setFiles([])
+            setActionData()
+            console.log('e', e)
+        })
+
+    }
+
+
+
+
     const smartpeWalletBalanceOpen = () => {
         setsmartpeWalletBalance(!smartpeWalletBalance);
     };
@@ -465,7 +565,7 @@ const StickyTable = () => {
     const mainPassiveIncomeClose = () => {
         setmainPassiveIncome(false);
     };
-   
+
     const totalWithdrawalOpen = () => {
         settotalWithdrawal(!totalWithdrawal);
     };
@@ -556,7 +656,7 @@ const StickyTable = () => {
     const pendingLeadsClose = () => {
         setpendingLeads(false);
     };
- 
+
     const selfPurchaseDVOpen = () => {
         setselfPurchaseDV(!selfPurchaseDV);
     };
@@ -575,7 +675,7 @@ const StickyTable = () => {
     const secondLevelMembersClose = () => {
         setsecondLevelMembers(false);
     };
-   
+
     const teamOpen = () => {
         setteam(!team);
     };
@@ -625,19 +725,22 @@ const StickyTable = () => {
         setinvestmentActiveIncome(false);
     };
     const primeRequestOpen = () => {
-        setprimeRequest(!primeRequestOpen);
+        setprimeRequest(!primeRequest);
+        setPrimeRequestModal(true)
     };
     const primeRequestClose = () => {
         setprimeRequest(false);
+        setPrimeRequestModal(false)
+
     };
-  
+
     console.log('tableData', tableData)
 
 
     return (
         <Layout>
             <Box p={2} style={{ backgroundColor: "#f5f5f5" }} >
-                <TableTop countData={countData} />
+                {loading ? <Box display={"flex"} justifyContent={"center"} alignItems={"center"} height={"500px"}><CircularProgress /></Box> :<TableTop countData={countData} handleTopFilter={handleTopFilter}/>}
                 <Box backgroundColor="#FFE9DD" className="topborder" px={3} py={1} color={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                     <Box>
                         <Typography fontSize={20} color={"#000000"} fontWeight={900}>Affiliate members</Typography>
@@ -671,9 +774,9 @@ const StickyTable = () => {
                                     sx={{
                                         height: "30px", // Adjust the height of the select box
                                         "& .MuiSelect-select": {
-                                          padding: "5px 12px", // Adjust padding for better alignment
+                                            padding: "5px 12px", // Adjust padding for better alignment
                                         },
-                                      }}
+                                    }}
                                 >
                                     <MenuItem value={10}>10</MenuItem>
                                     <MenuItem value={25}>25</MenuItem>
@@ -790,80 +893,80 @@ const StickyTable = () => {
 
 
                                     <TableCell style={{ borderRight: "none" }} width={110} position={"relative"}>  <Box className='center' >SmartPe Wallet  <FilterAltOutlinedIcon className='pointer' onClick={smartpeWalletBalanceOpen} id="basic-button" /></Box>
-                                                <SmartpeWalletBalanceModal filterData={filterData} setFilterData={setFilterData} smartpeWalletBalance={smartpeWalletBalance} smartpeWalletBalanceClose={smartpeWalletBalanceClose} />
-                                    
+                                        <SmartpeWalletBalanceModal filterData={filterData} setFilterData={setFilterData} smartpeWalletBalance={smartpeWalletBalance} smartpeWalletBalanceClose={smartpeWalletBalanceClose} />
+
                                     </TableCell>
                                     {afterSubmitSelectedRow?.TotalEarning && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}>  <Box className='center' >Total Earning  <FilterAltOutlinedIcon className='pointer' onClick={totalEarningOpen} id="basic-button" /></Box>
-                                                <TotalEarningModal filterData={filterData} setFilterData={setFilterData} totalEarning={totalEarning} totalEarningClose={totalEarningClose} />
-                                    
+                                        <TotalEarningModal filterData={filterData} setFilterData={setFilterData} totalEarning={totalEarning} totalEarningClose={totalEarningClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.MainActiveIncome && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}>  <Box className='center' >Main Active Income <FilterAltOutlinedIcon className='pointer' onClick={mainActiveIncomeOpen} id="basic-button" /></Box>
-                                    <MainActiveIncomeModal filterData={filterData} setFilterData={setFilterData} mainActiveIncome={mainActiveIncome} mainActiveIncomeClose={mainActiveIncomeClose} />
+                                        <MainActiveIncomeModal filterData={filterData} setFilterData={setFilterData} mainActiveIncome={mainActiveIncome} mainActiveIncomeClose={mainActiveIncomeClose} />
 
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.MainPassiveIncome && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}><Box className='center' >Main Passive Income  <FilterAltOutlinedIcon className='pointer' onClick={mainPassiveIncomeOpen} id="basic-button" /></Box>
-                                    <MainPassiveIncomeModal filterData={filterData} setFilterData={setFilterData} mainPassiveIncome={mainPassiveIncome} mainPassiveIncomeClose={mainPassiveIncomeClose} />
+                                        <MainPassiveIncomeModal filterData={filterData} setFilterData={setFilterData} mainPassiveIncome={mainPassiveIncome} mainPassiveIncomeClose={mainPassiveIncomeClose} />
 
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.RewardIncome && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}> <Box className='center' >Reward Income <FilterAltOutlinedIcon className='pointer' onClick={rewardIncomeOpen} id="basic-button" /></Box>
-                                                <RewardIncomeModal filterData={filterData} setFilterData={setFilterData} rewardIncome={rewardIncome} rewardIncomeClose={rewardIncomeClose} />
-                                    
+                                        <RewardIncomeModal filterData={filterData} setFilterData={setFilterData} rewardIncome={rewardIncome} rewardIncomeClose={rewardIncomeClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.SalaryIncome && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}> <Box className='center' >Salary Income  <FilterAltOutlinedIcon className='pointer' onClick={salaryOpen} id="basic-button" /></Box>
-                                                <SalaryIncomeModal filterData={filterData} setFilterData={setFilterData} salary={salary} salaryClose={salaryClose} />
-                                    
+                                        <SalaryIncomeModal filterData={filterData} setFilterData={setFilterData} salary={salary} salaryClose={salaryClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.RoyaltyIncome && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}>  <Box className='center' >Royalty Income <FilterAltOutlinedIcon className='pointer' onClick={royaltyIncomeOpen} id="basic-button" /></Box>
-                                                <RoyaltyIncomeModal filterData={filterData} setFilterData={setFilterData} royaltyIncome={royaltyIncome} royaltyIncomeClose={royaltyIncomeClose} />
-                                    
+                                        <RoyaltyIncomeModal filterData={filterData} setFilterData={setFilterData} royaltyIncome={royaltyIncome} royaltyIncomeClose={royaltyIncomeClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.SIPMFFund && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}>  <Box className='center' >SIP / MF Fund <FilterAltOutlinedIcon className='pointer' onClick={SIPMFFundsOpen} id="basic-button" /></Box>
-                                                <SIPMFFundsModal filterData={filterData} setFilterData={setFilterData} SIPMFFunds={SIPMFFunds} SIPMFFundsClose={SIPMFFundsClose} />
-                                    
+                                        <SIPMFFundsModal filterData={filterData} setFilterData={setFilterData} SIPMFFunds={SIPMFFunds} SIPMFFundsClose={SIPMFFundsClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.LaptopFund && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}> <Box className='center' >Laptop Fund  <FilterAltOutlinedIcon className='pointer' onClick={laptopFundsOpen} id="basic-button" /></Box>
-                                                <LaptopFundsModal filterData={filterData} setFilterData={setFilterData} laptopFunds={laptopFunds} laptopFundsClose={laptopFundsClose} />
-                                    
+                                        <LaptopFundsModal filterData={filterData} setFilterData={setFilterData} laptopFunds={laptopFunds} laptopFundsClose={laptopFundsClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.BikeFund && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}> <Box className='center' >Bike Fund <FilterAltOutlinedIcon className='pointer' onClick={bickFundsOpen} id="basic-button" /></Box>
-                                                <BickFundsModal filterData={filterData} setFilterData={setFilterData} bickFunds={bickFunds} bickFundsClose={bickFundsClose} />
-                                    
+                                        <BickFundsModal filterData={filterData} setFilterData={setFilterData} bickFunds={bickFunds} bickFundsClose={bickFundsClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.CarFund && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}>   <Box className='center' >Car Fund<FilterAltOutlinedIcon className='pointer' onClick={carFundsOpen} id="basic-button" /></Box>
-                                                <CarFundsModal filterData={filterData} setFilterData={setFilterData} carFunds={carFunds} carFundsClose={carFundsClose} />
-                                    
+                                        <CarFundsModal filterData={filterData} setFilterData={setFilterData} carFunds={carFunds} carFundsClose={carFundsClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.HouseFund && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}>  <Box className='center' >House Fund  <FilterAltOutlinedIcon className='pointer' onClick={houseFundsOpen} id="basic-button" /></Box>
-                                                <HouseFundsModal filterData={filterData} setFilterData={setFilterData} houseFunds={houseFunds} houseFundsClose={houseFundsClose} />
-                                    
+                                        <HouseFundsModal filterData={filterData} setFilterData={setFilterData} houseFunds={houseFunds} houseFundsClose={houseFundsClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.TravelFund && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}>  <Box className='center' >Travel Fund <FilterAltOutlinedIcon className='pointer' onClick={travelFundsOpen} id="basic-button" /></Box>
-                                    <TravelFundsModal filterData={filterData} setFilterData={setFilterData} travelFunds={travelFunds} travelFundsClose={travelFundsClose} />
+                                        <TravelFundsModal filterData={filterData} setFilterData={setFilterData} travelFunds={travelFunds} travelFundsClose={travelFundsClose} />
 
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.InsuranceFund && <TableCell style={{ borderRight: "none" }} width={190} position={"relative"}> <Box className='center' >Insurance Fund  <FilterAltOutlinedIcon className='pointer' onClick={insuranceFundsOpen} id="basic-button" /></Box>
-                                                <InsuranceFundsModal filterData={filterData} setFilterData={setFilterData} insurance={insuranceFunds} insuranceClose={insuranceFundsClose} />
-                                    
+                                        <InsuranceFundsModal filterData={filterData} setFilterData={setFilterData} insurance={insuranceFunds} insuranceClose={insuranceFundsClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.ChildHigherEducationFund && <TableCell style={{ borderRight: "none" }} width={240} position={"relative"}>  <Box className='center' >Child Higher Education Fund <FilterAltOutlinedIcon className='pointer' onClick={childHigherEducationFundOpen} id="basic-button" /></Box>
-                                                <ChildHigherEducationFundModal filterData={filterData} setFilterData={setFilterData} childHigherEducationFund={childHigherEducationFund} childHigherEducationFundClose={childHigherEducationFundClose} />
-                                    
+                                        <ChildHigherEducationFundModal filterData={filterData} setFilterData={setFilterData} childHigherEducationFund={childHigherEducationFund} childHigherEducationFundClose={childHigherEducationFundClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.MarriageBurdenReliefFund && <TableCell style={{ borderRight: "none" }} width={240} position={"relative"}> <Box className='center' >Marriage Burden Relief Fund <FilterAltOutlinedIcon className='pointer' onClick={marriageBurdenReliefFundOpen} id="basic-button" /></Box>
-                                                <MarriageBurdenReliefFundModal filterData={filterData} setFilterData={setFilterData} marriageBurdenReliefFund={marriageBurdenReliefFund} marriageBurdenReliefFundClose={marriageBurdenReliefFundClose} />
-                                    
+                                        <MarriageBurdenReliefFundModal filterData={filterData} setFilterData={setFilterData} marriageBurdenReliefFund={marriageBurdenReliefFund} marriageBurdenReliefFundClose={marriageBurdenReliefFundClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.TotalWithdrawal && <TableCell style={{ borderRight: "none" }} width={150} position={"relative"}>   <Box className='center' >Total Withdrawal <FilterAltOutlinedIcon className='pointer' onClick={totalWithdrawalOpen} id="basic-button" /></Box>
-                                                <TotalWithdrawalModal filterData={filterData} setFilterData={setFilterData} totalWithdrawal={totalWithdrawal} totalWithdrawalClose={totalWithdrawalClose} />
-                                    
+                                        <TotalWithdrawalModal filterData={filterData} setFilterData={setFilterData} totalWithdrawal={totalWithdrawal} totalWithdrawalClose={totalWithdrawalClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.TDSBalance && <TableCell style={{ borderRight: "none" }} width={140} position={"relative"}>   <Box className='center' >TDS Balance <FilterAltOutlinedIcon className='pointer' onClick={tdsBalanceOpen} id="basic-button" /></Box>
-                                                <TDSBalanceModal filterData={filterData} setFilterData={setFilterData} tdsBalance={tdsBalance} tdsBalanceClose={tdsBalanceClose} />
-                                    
+                                        <TDSBalanceModal filterData={filterData} setFilterData={setFilterData} tdsBalance={tdsBalance} tdsBalanceClose={tdsBalanceClose} />
+
                                     </TableCell>}
                                     {afterSubmitSelectedRow?.TDSPaid && <TableCell style={{ borderRight: "none" }} width={140} position={"relative"}>  <Box className='center' >TDS Paid <FilterAltOutlinedIcon className='pointer' onClick={paidTcsOpen} id="basic-button" /></Box>
-                                                <PaidTCSModal filterData={filterData} setFilterData={setFilterData} paidTcs={paidTcs} paidTcsClose={paidTcsClose} />
-                                    
+                                        <PaidTCSModal filterData={filterData} setFilterData={setFilterData} paidTcs={paidTcs} paidTcsClose={paidTcsClose} />
+
                                     </TableCell>}
                                 </TableRow>
                             </TableHead>
@@ -911,16 +1014,16 @@ const StickyTable = () => {
                                         {afterSubmitSelectedRow?.BlockReason && <TableCell style={{ borderRight: "none" }} align="left">{row?.block_reason}</TableCell>}
                                         {afterSubmitSelectedRow?.LastCommunication && <TableCell style={{ borderRight: "none" }} align="left">
                                             <Box display={"flex"} justifyContent={"start"} alignItems={"center"}>
-                                                <Image src="/Group 1000005406.png" height={25} width={25} style={{cursor : "pointer"}} onClick={handlechatModalOpen}/>
-                                                <Image src="/Group 1000005405.png" height={25} width={25} style={{marginLeft : "10px", cursor : "pointer"}} onClick={handleCallModalOpen}/>
+                                                <Image src="/Group 1000005406.png" height={25} width={25} style={{ cursor: "pointer" }} onClick={handlechatModalOpen} />
+                                                <Image src="/Group 1000005405.png" height={25} width={25} style={{ marginLeft: "10px", cursor: "pointer" }} onClick={handleCallModalOpen} />
                                                 <Box display={"flex"} justifyContent={"start"} alignItems={"center"} ml={1}>
-                                                    <Box borderRadius={"2px"} style={{cursor : "pointer"}} backgroundColor="#FF9F59" px={1} py={0.5} display={"flex"} justifyContent={"start"} alignItems={"center"} onClick={handleCallModalOpen}>
+                                                    <Box borderRadius={"2px"} style={{ cursor: "pointer" }} backgroundColor="#FF9F59" px={1} py={0.5} display={"flex"} justifyContent={"start"} alignItems={"center"} onClick={handleCallModalOpen}>
                                                         <Typography fontSize={10} fontWeight={500} color={"white"}>Past Recordings</Typography>&nbsp;
-                                                        <MicIcon style={{color : "white" , fontSize : "10px"}}/>
+                                                        <MicIcon style={{ color: "white", fontSize: "10px" }} />
                                                     </Box>
-                                                    <Box ml={1} borderRadius={"2px"} style={{cursor : "pointer"}} backgroundColor="#FF9F59" px={1} py={0.5} display={"flex"} justifyContent={"start"} alignItems={"center"} onClick={handleCallModalOpen}>
+                                                    <Box ml={1} borderRadius={"2px"} style={{ cursor: "pointer" }} backgroundColor="#FF9F59" px={1} py={0.5} display={"flex"} justifyContent={"start"} alignItems={"center"} onClick={handleCallModalOpen}>
                                                         <Typography fontSize={10} fontWeight={500} color={"white"}>Add Note</Typography>&nbsp;
-                                                        <AccessAlarmIcon style={{color : "white" , fontSize : "10px"}}/>
+                                                        <AccessAlarmIcon style={{ color: "white", fontSize: "10px" }} />
 
                                                     </Box>
                                                 </Box>
@@ -962,15 +1065,18 @@ const StickyTable = () => {
                                                     open={open}
                                                     onClose={handleCloseAction}
                                                 >
-                                                    <MenuItem onClick={() => {handleCloseAction(); window.open(`/affiliateProfile?id=${row?.user_id}`, "_blank")}} disableRipple>
+                                                    <MenuItem onClick={() => { handleCloseAction(); window.open(`/affiliateProfile?id=${row?.user_id}`, "_blank") }} disableRipple>
                                                         <PersonOutlineIcon />
                                                         Profile
                                                     </MenuItem>
-                                                    <MenuItem onClick={handleCloseAction} disableRipple>
+                                                    <MenuItem
+                                                    //  onClick={handleCloseAction}
+                                                    onClick={() => { setActionData(row); setKycModal(true) }}
+                                                      disableRipple>
                                                         <CreditCardIcon />
                                                         KYC
                                                     </MenuItem>
-                                                    <MenuItem onClick={handleCloseAction} disableRipple>
+                                                    <MenuItem onClick={() => { setActionData(row); setChangePasswordModal(true) }} disableRipple>
                                                         <KeyIcon />
                                                         Change Password
                                                     </MenuItem>
@@ -978,7 +1084,7 @@ const StickyTable = () => {
                                                         <SettingsIcon />
                                                         Prime Request
                                                     </MenuItem>
-                                                    <MenuItem onClick={handleCloseAction} disableRipple>
+                                                    <MenuItem onClick={() => { setActionData(row); setBlockUnblockModal(true) }} disableRipple>
                                                         <BlockIcon />
                                                         Block/Unblock
                                                     </MenuItem>
@@ -986,7 +1092,7 @@ const StickyTable = () => {
                                             </div>
                                         </TableCell>}
 
-                                        <TableCell style={{ borderRight: "none" }} align="left">{row?.wallet_balance}</TableCell>
+                                        <TableCell style={{ borderRight: "none" }} align="left">{row?.wallet_balance?.toFixed(2)}</TableCell>
                                         {/* {afterSubmitSelectedRow?.SmartPeWalletBalance && <TableCell style={{ borderRight: "none" }} align="left">{row?.wallet_balance}</TableCell>} */}
                                         {afterSubmitSelectedRow?.TotalEarning && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_earning?.toFixed(2)}</TableCell>}
                                         {afterSubmitSelectedRow?.MainActiveIncome && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_main_active_income}</TableCell>}
@@ -1022,9 +1128,12 @@ const StickyTable = () => {
 
                 <CustomizetableModal Customizetable={Customizetable} CustomizetableClose={CustomizetableClose} handleChange={handleChange} selectedTableRow={selectedTableRow} pinnedTableRow={pinnedTableRow} handleChangePin={handleChangePin} setAfterSubmitSelectedRow={setAfterSubmitSelectedRow} setselectedTableRow={setselectedTableRow} />
                 <PrimeRequestActionModal PrimeRequestModal={PrimeRequestModal} primeRequestClose={primeRequestClose} PrimeRequestClick={PrimeRequestClick} />
-                            <ChatModal openChatModal={openChatModal} handlechatModalClose={handlechatModalClose}/>
-                            <CallModal openCallModal={openCallModal} handleCallModalClose={handleCallModalClose}/>
-                
+                <ChangePasswordActionModal changePasswordModal={changePasswordModal} changePasswordCloseClose={() => setChangePasswordModal(false)} handleChangePassword={handleChangePassword} />
+                <BlockUnblockActionModal blockUnblockModal={blockUnblockModal} blockUnblockClose={() => setBlockUnblockModal(false)} handleBlockUnblock={handleBlockUnblock} />
+                <KYCActionModal kycModal={kycModal} KycClose={() => setKycModal(false)} actionData={actionData} handleBlockUnblock={handleBlockUnblock} getTableData={getTableData} />
+                <ChatModal openChatModal={openChatModal} handlechatModalClose={handlechatModalClose} />
+                <CallModal openCallModal={openCallModal} handleCallModalClose={handleCallModalClose} />
+
             </Box>
 
         </Layout>

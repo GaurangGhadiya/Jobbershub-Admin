@@ -332,7 +332,7 @@ export default function AddCoupan({ open, handleClose , getCourse}) {
                             <Grid item sx={12} md={12}>
                                 <Typography color={"#000000"} fontWeight={500} fontSize={14}>Visibility</Typography>
                                 <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                                    <Typography color={"#000000"} fontWeight={300} fontSize={12} mt={-2}>Toggle OFF in case you don't want to show this coupon to your students </Typography>
+                                    <Typography color={"#000000"} fontWeight={300} fontSize={12} mt={-2}>Toggle OFF in case you do not want to show this coupon to your students </Typography>
 
                                     <Switch
                                         checked={formData?.is_visible}

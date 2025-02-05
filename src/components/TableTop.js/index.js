@@ -9,10 +9,10 @@ import RegistrationPastDaysModal from '../Modals/RegistrationDaysModal';
 import CountFilterModalModal from '../Modals/CountFilterModal';
 
 
-const TableTop = ({countData}) => {
+const TableTop = ({countData,handleTopFilter}) => {
     const [openFilter, setOpenFilter] = useState(true);
     const [countFilterModal, setcountFilterModal] = useState(false)
-    const [filterData, setFilterData] = useState({})
+    const [filterData, setFilterData] = useState({filter_type : 'tillDate'})
 
     const countFilterModalClose = () => {
       setcountFilterModal(false)
@@ -20,6 +20,8 @@ const TableTop = ({countData}) => {
     const countFilterModalOpen = () => {
       setcountFilterModal(true)
     }
+
+    
 
   return (
     <>
@@ -41,11 +43,11 @@ const TableTop = ({countData}) => {
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} pb={2} position={"relative"}>
         <Typography fontSize={"24px"} fontWeight={600} >Affiliate Analytics</Typography>
                     <Box onClick={countFilterModalOpen}  borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"3px"} style={{ cursor: "pointer" }}>
-                        <Typography fontSize={"14px"} color={"#707070"}>Till Date</Typography>
+                        <Typography fontSize={"14px"} color={"#707070"}>{filterData?.filter_type}</Typography>
                         <ArrowDropDownIcon />
 
                     </Box>
-                                        <CountFilterModalModal filterData={filterData} setFilterData={setFilterData} countFilterModal={countFilterModal} countFilterModalClose={countFilterModalClose} />
+                                        <CountFilterModalModal filterData={filterData} setFilterData={setFilterData} countFilterModal={countFilterModal} countFilterModalClose={countFilterModalClose} handleTopFilter={handleTopFilter} />
                     
         </Box>
         <Grid container spacing={2}>
@@ -78,6 +80,8 @@ const TableTop = ({countData}) => {
         <CountBox title="SmartPe Wallet Balance" count={formatIndianNumber(countData?.resultswalletBalance?.[0]?.smartpaywallet?.toFixed(2))} color={"#E5E4FF"} icon={"/icon1.png"} />
         <CountBox title="Main Active Income Wallet Balance" count={formatIndianNumber(countData?.resultswalletBalance?.[0]?.mainactive?.toFixed(2))}  color={"#FFF3D6"} icon={"/icon2.png"} />
         <CountBox title="Main Passive Income Wallet Balance" count={formatIndianNumber(countData?.resultswalletBalance?.[0]?.mainpassive?.toFixed(2))} color={"#D9F7E8"} icon={"/icon3.png"} />
+        <CountBox title="Royalty Fund Balance" count={formatIndianNumber(countData?.resultswalletBalance?.[0]?.Royalityfund?.toFixed(2))} color={"#D9F7E8"} icon={"/icon3.png"} />
+        <CountBox title="Reward Fund Balance" count={formatIndianNumber(countData?.resultswalletBalance?.[0]?.Rewardfund?.toFixed(2))} color={"#D9F7E8"} icon={"/icon3.png"} />
         <CountBox title="Laptop Fund Balance" count={formatIndianNumber(countData?.resultswalletBalance?.[0]?.laptopfund?.toFixed(2))} color={"#FFDED1"} icon={"/icon4.png"} />
         <CountBox title="Bike Fund Balance" count={formatIndianNumber(countData?.resultswalletBalance?.[0]?.bikefund?.toFixed(2))} color={"#CEFFFD"} icon={"/icon5.png"} />
         <CountBox title="Car Fund Balance"  count={formatIndianNumber(countData?.resultswalletBalance?.[0]?.carfund?.toFixed(2))}  color={"#FFE4FF"} icon={"/icon6.png"} />

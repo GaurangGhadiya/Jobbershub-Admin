@@ -151,7 +151,7 @@ label.MuiInputLabel-root {
 }
 
 .MuiTableCell-root {
-    border-right: 1px solid #eee;
+    /* border-right: 1px solid #eee; */
   }
 
 .custom-paper {

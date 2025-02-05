@@ -24,7 +24,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-export default function CountFilterModalModal({ filterData,setFilterData, countFilterModal, countFilterModalClose }) {
+export default function CountFilterModalModal({ filterData,setFilterData, countFilterModal, countFilterModalClose,handleTopFilter }) {
     console.log('countFilterModal', countFilterModal)
 
     let box = [{ title: "Today’s", value: "today" },
@@ -72,10 +72,10 @@ export default function CountFilterModalModal({ filterData,setFilterData, countF
                         </LocalizationProvider>}
 
                         <Box width={"100%"} display={"flex"} justifyContent={"end"} mt={3}>
-                            <Box style={{ cursor: "pointer", padding: "7px 19px", border: "2px solid #FF9F59" }} borderRadius={"4px"} width={"100px"} mr={1} onClick={countFilterModalClose}>
+                            <Box style={{ cursor: "pointer", padding: "7px 19px", border: "2px solid #FF9F59" }} borderRadius={"4px"} width={"100px"} mr={1} onClick={() => {countFilterModalClose(); setFilterData({filter_type : 'tillDate'}); handleTopFilter({filter_type : 'tillDate'})}}>
                                 <Typography color={"#FF9F59"} fontSize={"18px"} textAlign={"center"} fontWeight={500}>Reset</Typography>
                             </Box>
-                            <Box style={{ cursor: "pointer", padding: "7px 19px", backgroundColor: "#FF9F59" }} borderRadius={"4px"} width={"122px"} onClick={countFilterModalClose}>
+                            <Box style={{ cursor: "pointer", padding: "7px 19px", backgroundColor: "#FF9F59" }} borderRadius={"4px"} width={"122px"} onClick={() => {handleTopFilter(filterData); countFilterModalClose()}}>
                                 <Typography color={"white"} fontSize={"17px"} textAlign={"center"} fontWeight={500}>Submit</Typography>
                             </Box>
                         </Box>
