@@ -54,8 +54,31 @@ const AddCourse = () => {
     })
     const [loading, setLoading] = useState(false)
 console.log('formData', formData)
+
+const getDataById =async () => {
+    setLoading(true)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-courses-data`, { course_id: route?.query?.id }).then(res => {
+        console.log('getDataById response ', res?.data)
+        setFormData({...formData, ...res?.data?.CourseData})
+        setLoading(false)
+
+    }).catch(e => {
+        setLoading(false)
+
+        console.log('e', e)
+    })
+
+}
     useEffect(() => {
-        Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid') })
+        console.log('route', route)
+        if(route?.query?.id){
+            getDataById()
+            Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid') })
+
+        }else{
+
+            Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid') })
+        }
     }, [route])
 
 
@@ -93,8 +116,8 @@ console.log('formData', formData)
     return (
         <Layout>
             <Box p={2} style={{ backgroundColor: "white" }}>
-                <Typography fontSize={"20px"} fontWeight={600} color={"#16151C"}>Add New Course</Typography>
-                <Typography fontSize={"14px"} fontWeight={300} color={"#16151C"}>All Course &gt; Add New Course</Typography>
+                <Typography fontSize={"20px"} fontWeight={600} color={"#16151C"}>Edit Course</Typography>
+                <Typography fontSize={"14px"} fontWeight={300} color={"#16151C"}>All Course &gt; Edit Course</Typography>
                 <Box width={"100%"} mt={3}>
                     <Stepper activeStep={step} alternativeLabel
                         connector={<CustomConnector />}

@@ -1,27 +1,25 @@
-import Title from '@/components/Title'
+import TextFieldComponent from '@/components/TextFieldComponent'
 import { Box, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles';
 import UploadIcon from '@mui/icons-material/CloudUpload';
-import TextFieldComponent from '@/components/TextFieldComponent';
+import Title from '@/components/Title';
 import { useRouter } from 'next/router';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import Image from 'next/image';
 
 const IconWrapper = styled('div')(({ theme }) => ({
   textAlign: 'center',
-  width: '100%',
+  width: '250px',
   height: '150px',
   border: "2px dotted #FF9F59",
   cursor: 'pointer',
-  paddingTop: "30px"
+  paddingTop: "30px",
+  position: "relative",
 }));
 
 const HiddenInput = styled('input')({
   display: 'none',
 });
-
-const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
+const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const route = useRouter()
 
   const [formData, setFormData] = useState({})
@@ -29,15 +27,16 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [editData, setEditData] = useState({})
 
 
-  useEffect(() => {
-    setFormData({ ...formDataMain })
-  }, [formDataMain])
+   useEffect(() => {
+      setFormData({ ...formDataMain })
+    }, [formDataMain])
+
 
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, thumbnail: tableData?.map(v => v?.thumbnail), intro_video_link: tableData?.map(v => v?.intro_video_link) })
+      setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnail : tableData?.map(v => v?.recorded_courses_thumbnail) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
       setStep(step + 1)
     }
   }
@@ -54,7 +53,7 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (e.target.type == "file") {
       const file = event.target.files[0];
       if (file) {
-        setFormData({ ...formData, "thumbnail": file })
+        setFormData({ ...formData, "recorded_courses_thumbnail": file })
 
         // alert(`File selected: ${file.name}`);
       }
@@ -90,33 +89,70 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     setFormData({})
   }
   return (
-    <>
-      <Grid container spacing={2}>
+    <>    <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>Recorded Course Videos</Typography>
+
+      <TextFieldComponent
+        name="recorded_courses_name"
+        value={formData?.recorded_courses_name ?? ""}
+        onChange={handleChange}
+        placeholder='Chapter Name'
+      />
+      <br />
+      <br />
+      <br />
+      <TextFieldComponent
+        name="recorded_courses_chapter"
+        value={formData?.recorded_courses_chapter ?? ""}
+        onChange={handleChange}
+        placeholder='Chapter Count'
+      />
+      <br />
+      <br />
+      <br />
+      <TextFieldComponent
+        name="recorded_courses_timeduration"
+        value={formData?.recorded_courses_timeduration ?? ""}
+        onChange={handleChange}
+        placeholder='Time Duration'
+      />
+      <br />
+      <br />
+      <br />
+
+
+      <TextFieldComponent
+        name="recorded_courses_video"
+        value={formData?.recorded_courses_video ?? ""}
+        onChange={handleChange}
+        placeholder='Upload  Video Link'
+      />
+
+      <Grid container spacing={2} mt={2}>
         <Grid item sx={12} md={5}>
-          <Title title={"Upload Thumbnail"} />
+          <Title title={"Upload Video Thumbnail"} />
           <HiddenInput
             type="file"
             id="file-upload"
-            name='thumbnail'
+            name='recorded_courses_thumbnail'
             onChange={handleChange}
           />
-          <label htmlFor="file-upload" style={{ width: "250px", display: "block", position: "relative" }}>
-            {!formData?.thumbnail ? <IconWrapper>
-          <Image src="/Button.png" width={50} height={50} />
-              <Typography color={"#FF9F59"} fontSize={"14px"} fontWeight={300}>choose file to upload</Typography>
+          <label htmlFor="file-upload" style={{ width: "100%", display: "block" }}>
+            {!formData?.recorded_courses_thumbnail ? <IconWrapper>
+              <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
+              <Typography color={"#16151C"} fontSize={"14px"} fontWeight={300}>Drag & Drop or choose file to upload</Typography>
+              <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography>
             </IconWrapper> :
               <IconWrapper >
-                {formData?.thumbnail instanceof File && <Image src={URL.createObjectURL(formData?.thumbnail)} width={250} height={145} style={{ height: "145px", marginTop: "-30px", padding: "5px" }} />}
-                <Box position="absolute" top={40} left={33} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
-                  <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
-                  <Typography color={"#FF9F59"}>Chnage image</Typography>
+                {formData?.recorded_courses_thumbnail instanceof File && <img src={URL.createObjectURL(formData?.recorded_courses_thumbnail) } width={"250px"} style={{ height: "150px", marginTop: "-30px" }} />}
+                <Box position="absolute" top={50} left={100}>
+                  <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
 
                 </Box>
               </IconWrapper>}
           </label>
         </Grid>
         {/* <Grid item sx={12} md={5}>
-        <Title title={"Upload Introductory Video"} />
+        <Title title={"Upload  Video Link"} />
         <HiddenInput
           type="file"
           id="file-upload"
@@ -134,14 +170,7 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
 
       </Grid>
-      <Box mt={2}></Box>
-      <Title title={"Introductory Video Link"} />
-      <TextFieldComponent
-        name="intro_video_link"
-        value={formData?.intro_video_link ?? ""}
-        onChange={handleChange}
-        placeholder='Introductory Video Link'
-      />
+
       {editData?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
@@ -161,8 +190,11 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             <TableHead >
               <TableRow>
                 <TableCell style={{ borderRight: "none" }} width={20} >#</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Chapter Name</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Time Duration</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Chapter</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Thumbnail</TableCell>
-                <TableCell style={{ borderRight: "none" }} width={120} >Introductory Video Link</TableCell>
+                <TableCell style={{ borderRight: "none" }} width={120} >Video</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Action</TableCell>
               </TableRow>
 
@@ -175,8 +207,11 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   key={id}
                   style={{ textAlign: "left" }}>
                   <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left"><img src={row?.thumbnail ? URL.createObjectURL(row?.thumbnail) : null} width={150} style={{ height: "70px" }} /></TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.intro_video_link}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_name}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_timeduration}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_chapter}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left"><img src={row?.recorded_courses_thumbnail instanceof File ? URL.createObjectURL(row?.recorded_courses_thumbnail) : null} width={150} style={{ height: "70px" }} /></TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_video}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
@@ -202,4 +237,4 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   )
 }
 
-export default Step4
+export default Step8

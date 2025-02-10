@@ -6,6 +6,8 @@ import api from "../../../utils/api";
 import CryptoJS from 'crypto-js';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { DataEncrypt, DataDecrypt } from '../../../utils/encryption';
+import toast from "react-hot-toast";
+import { set } from "nprogress";
 
 const UserName = ({ handleChange }) => {
 
@@ -47,24 +49,26 @@ const UserName = ({ handleChange }) => {
                     // password: CryptoJS.AES.encrypt(password, process.env.NEXT_PUBLIC_API_SECRET_KEY).toString(),
                     username: userName,
                     password: password,
-                    is_admin: 1,
+                    // is_admin: 1,
                     //userDetails: userDetail
                 }
                 
-                const response = await api.post('/api/users/admin_login', reqData);
-
+                const response = await api.post('/api/seller/8b2771dc5fa314d56425251eba508fc4293d5ce7', reqData);
+                console.log('response', response);
                 if (response.status === 200) 
                 //if (response)
                 {
                     const responseData = response.data.data;
                     
-                    localStorage.setItem('role', 'user');
+                    localStorage.setItem('role', 'seller');
                     localStorage.setItem('uid', responseData.id);
                     localStorage.setItem('email', responseData.email);
-                    localStorage.setItem('name', responseData.first_name);
+                    localStorage.setItem('name', responseData.name);
                     localStorage.setItem('mobile', responseData.mobile);
                     localStorage.setItem('employee_role', responseData.role_name);
                     localStorage.setItem('employee_id', responseData.employee_id);
+                    localStorage.setItem('category_name', responseData.category_name);
+                    localStorage.setItem('category_id', responseData.category_id);
                     localStorage.setItem('menu', JSON.stringify(response.data.employeeMenu));
                     
                     sendOtp();
@@ -80,7 +84,8 @@ const UserName = ({ handleChange }) => {
                     // route.push('/dashboard')
 
                 }else{
-                    setAlert({ open: true, type: false, message: response.data.message });
+                    toast.error(response.data.message || 'Something went wrong');
+                    // setAlert({ open: true, type: false, message: response.data.message });
                 }
 
             } catch (error) {
@@ -95,15 +100,20 @@ const UserName = ({ handleChange }) => {
 
 
                 if (error?.response?.status && error.response.status === 404) {
-                    setAlert({ open: true, type: false, message: error.response.data });
+                    toast.error(error.response.data || 'Something went wrong');
+                    // setAlert({ open: true, type: false, message: error.response.data });
                 }else if (error?.response?.status && error.response.status === 401) {
-                        setAlert({ open: true, type: false, message: error.response.data.message });
+
+                    toast.error(error.response.data.message || 'Invalid Username or Password');
+                        // setAlert({ open: true, type: false, message: error.response.data.message });
                 } else {
 
                     if (error?.response?.data?.error) {
-                        setAlert({ open: true, type: false, message: error.response.data.error });
+                        toast.error(error.response.data.error || 'Something went wrong');
+                        // setAlert({ open: true, type: false, message: error.response.data.error });
                     } else {
-                        setAlert({ open: true, type: false, message: error.message });
+                        toast.error(error.message || 'Something went wrong');
+                        // setAlert({ open: true, type: false, message: error.message });
                     }
                 }
 
@@ -134,6 +144,8 @@ const UserName = ({ handleChange }) => {
     const [uid, setUid] = useState('');
     const [employeeRole, setRmployeeRole] = useState('');
     const [employee_id, setEmployee_id] = useState('');
+    const [categoryId, setCategoryId] = useState('')
+    const [categoryName, setCategoryName] = useState('')
 
 
     useEffect(() => {
@@ -143,6 +155,8 @@ const UserName = ({ handleChange }) => {
         const getUid = localStorage.getItem('uid');
         const getEmployeeRole = localStorage.getItem('employee_role');
         const getEmployeeId = localStorage.getItem('employee_id');
+        const getCategoryId = localStorage.getItem('category_id');
+        const getCategoryName = localStorage.getItem('category_name');
 
         setUserEmail(getEmail);
         setName(getName);
@@ -150,11 +164,15 @@ const UserName = ({ handleChange }) => {
         setUid(getUid);
         setRmployeeRole(getEmployeeRole);
         setEmployee_id(getEmployeeId);
+        setCategoryId(getCategoryId);
+        setCategoryName(getCategoryName);
 
         setOTP('');
         setPassword('');
 
     }, [loginWithOtp])
+
+    console.log('name', name)
 
     const sendOtp = async () => {
 
@@ -162,9 +180,9 @@ const UserName = ({ handleChange }) => {
 
             const reqData = {
                 mode: 'API',
-                type: 'Admin',
+                type: 'Seller',
                 category: 'Login',
-                mobile: userName,
+                mobile: mobile,
                 email: userEmail,
                 name: name,
             }
@@ -183,28 +201,34 @@ const UserName = ({ handleChange }) => {
                 if(response.status === 200)
                 {   
                     setLoginWithOtp(true);
-                    setAlert({ open: true, type: true, message: "OTP sent to your register mobile no." });
+                    toast.success('OTP sent to your register mobile no.');
+                    // setAlert({ open: true, type: true, message: "OTP sent to your register mobile no." });
                 }else{
-                    setAlert({ open: true, type: false, message: decryptedObject.data.message });
+                    toast.error(decryptedObject.data.message || 'Something went wrong');
+                    // setAlert({ open: true, type: false, message: decryptedObject.data.message });
                 }
 
             } catch (error) {
                 
                 if (error?.response?.status && error.response.status === 404) {
-                    setAlert({ open: true, type: false, message: error.response.data });
+                    toast.error(error.response.data || 'Something went wrong');
+                    // setAlert({ open: true, type: false, message: error.response.data });
                 } else {
 
                     if (error?.response?.data?.error) {
-                        setAlert({ open: true, type: false, message: error.response.data.error });
+                        toast.error(error.response.data.error || 'Something went wrong');
+                        // setAlert({ open: true, type: false, message: error.response.data.error });
                     } else {
-                        setAlert({ open: true, type: false, message: error.message });
+                        toast.error(error.message || 'Something went wrong');
+                        // setAlert({ open: true, type: false, message: error.message });
                     }
                 }
 
             }
 
         } else {
-            setAlert({ open: true, type: false, message: "Please enter valid Mobile no." });
+            toast.error('Please enter valid Mobile no.');
+            // setAlert({ open: true, type: false, message: "Please enter valid Mobile no." });
         }
 
     }
@@ -217,9 +241,9 @@ const UserName = ({ handleChange }) => {
             const reqData = {
                 otp: otp,
                 mode: 'API',
-                type: 'Admin',
+                type: 'Seller',
                 category: 'Login',
-                mobile: userName
+                mobile: mobile
             }
 
             const encryptedData = DataEncrypt(JSON.stringify(reqData));
@@ -234,15 +258,18 @@ const UserName = ({ handleChange }) => {
 
                 if(response.status === 200)
                 {
-                    setAlert({ open: true, type: false, message: 'SignIn successfully!' });
-                    Cookies.set('role', 'user', { expires: 1 });
+                    toast.success('SignIn successfully!')
+                    // setAlert({ open: true, type: false, message: 'SignIn successfully!' });
+                    Cookies.set('role', 'seller', { expires: 1 });
                     Cookies.set('uid', uid, { expires: 1 });
                     Cookies.set('name', name, { expires: 1 });
                     Cookies.set('mobile', mobile, { expires: 1 });
                     Cookies.set('employee_role', employeeRole, { expires: 1 });
                     Cookies.set('employee_id', employee_id, { expires: 1 })
+                    Cookies.set('category_id', categoryId, { expires: 1 })
+                    Cookies.set('category_name', categoryName, { expires: 1 })
                     //localStorage.setItem('menu', JSON.stringify(response.data.employeeMenu));
-                    route.push('/dashboard');
+                    route.push('/course');
                     // route.push('/table');
                     
                 }else{
@@ -252,22 +279,27 @@ const UserName = ({ handleChange }) => {
 
             } catch (error) {
                 if (error?.response?.status && error.response.status === 404) {
-                    setAlert({ open: true, type: false, message: error.response.data });
+                    toast.error(error.response.data || 'Something went wrong');
+                    // setAlert({ open: true, type: false, message: error.response.data });
                 }else if (error?.response?.status && error.response.status === 401) {
-                    setAlert({ open: true, type: false, message: 'Invalid Otp' });
+                    toast.error('Invalid Otp');
+                    // setAlert({ open: true, type: false, message: 'Invalid Otp' });
                 } else {
 
                     if (error?.response?.data?.error) {
-                        setAlert({ open: true, type: false, message: error.response.data.error });
+                        toast.error(error.response.data.error || 'Something went wrong');
+                        // setAlert({ open: true, type: false, message: error.response.data.error });
                     } else {
-                        setAlert({ open: true, type: false, message: error.message });
+                        toast.error(error.message || 'Something went wrong');
+                        // setAlert({ open: true, type: false, message: error.message });
                     }
                 }
 
             }
 
         } else {
-            setAlert({ open: true, type: false, message: "Please enter valid otp" });
+            toast.error('Please enter valid otp');
+            // setAlert({ open: true, type: false, message: "Please enter valid otp" });
         }
 
     }

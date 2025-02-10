@@ -21,31 +21,39 @@ const CourseTableTop = ({countData}) => {
       setcountFilterModal(true)
     }
 
+    console.log('countData', countData)
   return (
     <>
   
     {openFilter && <Box  pb={4} style={{backgroundColor : "#f5f5f5"}}>
-     {countData?.affiliateAnalytics?.length > 0 && <Box>
+     {countData?.data?.length > 0 && <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} pb={2} position={"relative"}>
-        <Typography fontSize={"24px"} fontWeight={600} >Affiliate Analytics</Typography>
-                    <Box onClick={countFilterModalOpen}  borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"3px"} style={{ cursor: "pointer" }}>
+        <Typography fontSize={"24px"} fontWeight={600} >Course Data</Typography>
+                    {/* <Box onClick={countFilterModalOpen}  borderRadius={"4px"} border={"1px solid #CDCDCD"} backgroundColor={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} px={"10px"} py={"3px"} style={{ cursor: "pointer" }}>
                         <Typography fontSize={"14px"} color={"#707070"}>Till Date</Typography>
                         <ArrowDropDownIcon />
 
-                    </Box>
+                    </Box> */}
                                         <CountFilterModalModal filterData={filterData} setFilterData={setFilterData} countFilterModal={countFilterModal} countFilterModalClose={countFilterModalClose} />
                     
         </Box>
         <Grid container spacing={2}>
 
-        <CountBox title="Registered Affiliates" count={formatIndianNumber(countData?.affiliateAnalytics?.[0]?.total_registered_users) ?? 0.00} color={"#E5E4FF"} icon={"/icon1.png"}/>
-        <CountBox title="Total Pending Leads" count={formatIndianNumber(countData?.affiliateAnalytics?.[0]?.total_pending_leads) ?? 0.00} color={"#FFF3D6"} icon={"/icon2.png"}/>
-        {/* <CountBox title=" Unauthorized Affiliats" count={formatIndianNumber(countData?.affiliateAnalytics?.[0]?.total_unauthorized) ?? 0.00} color={"#D9F7E8"} icon={"/icon3.png"}/> */}
-        <CountBox title=" Authorized Affiliates" count={formatIndianNumber(countData?.affiliateAnalytics?.[0]?.authorized_users) ?? 0.00} color={"#D9F7E8"} icon={"/icon3.png"}/>
-        <CountBox title=" Blocked Affiliates" count={formatIndianNumber(countData?.affiliateAnalytics?.[0]?.blocked_users) ?? 0.00} color={"#FFDED1"} icon={"/icon4.png"}/>
-        <CountBox title="Normal Affiliates" count={formatIndianNumber(countData?.affiliateAnalytics?.[0]?.total_normal_user) ?? 0.00} color={"#CEFFFD"} icon={"/icon5.png"}/>
-        <CountBox title="Prime Affiliates" count={formatIndianNumber(countData?.affiliateAnalytics?.[0]?.total_prime_user) ?? 0.00} color={"#FFE4FF"} icon={"/icon6.png"}/>
-        </Grid>
+        <CountBox title="Total Course Amount" count={countData?.data?.[0]?.total_course_amount ?formatIndianNumber(countData?.data?.[0]?.total_course_amount) : 0.00} color={"#E5E4FF"} icon={"/icon1.png"}/>
+        <CountBox title="Total Course" count={countData?.data?.[0]?.totalcount ?formatIndianNumber(countData?.data?.[0]?.totalcount) : 0.00} color={"#FFF3D6"} icon={"/icon2.png"}/>
+        <CountBox title=" Total Net Profit" count={countData?.data?.[0]?.seller_netprofit  ? formatIndianNumber(countData?.data?.[0]?.seller_netprofit) : 0.00} color={"#D9F7E8"} icon={"/icon3.png"}/>
+      </Grid>
+      </Box>}
+     {countData?.SubCategory?.length > 0 && <Box mt={2}>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} pb={2} position={"relative"}>
+        <Typography fontSize={"24px"} fontWeight={600} >Sub Category Data</Typography>
+                    </Box>
+        <Grid container spacing={2}>
+
+        <CountBox title="Total Course Amount" count={countData?.SubCategory?.[0]?.totalsubcategorycount ? formatIndianNumber(countData?.SubCategory?.[0]?.totalsubcategorycount) : 0.00} color={"#E5E4FF"} icon={"/icon1.png"}/>
+        {/* <CountBox title="Total Course" count={formatIndianNumber(countData?.data?.[0]?.totalcount) ?? 0.00} color={"#FFF3D6"} icon={"/icon2.png"}/> */}
+        {/* <CountBox title=" Total Net Profit" count={countData?.data?.[0]?.seller_netprofit  ? formatIndianNumber(countData?.data?.[0]?.seller_netprofit) : 0.00} color={"#D9F7E8"} icon={"/icon3.png"}/> */}
+      </Grid>
       </Box>}
 
     

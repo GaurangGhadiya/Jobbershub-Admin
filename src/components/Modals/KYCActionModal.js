@@ -138,7 +138,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                     value={viewData?.pan_number}
                     // onChange={handleChange}
                     disabled
-                    placeholder='CGHDI5736O'
+                    placeholder=''
                   />
                 </Grid>
                 <Grid sm={12} item>
@@ -148,7 +148,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                     value={viewData?.aadhar_number}
                     // onChange={handleChange}
                     disabled
-                    placeholder='251016776044'
+                    placeholder=''
                   />
                 </Grid>
               </Grid>
@@ -167,7 +167,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       value={viewData?.account_holder}
                       // onChange={handleChange}
                       disabled
-                      placeholder='Ramesh Dole'
+                      placeholder=''
                     />
                   </Grid>
                   <Grid sm={4} item >
@@ -177,7 +177,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       value={viewData?.account_number}
                       // onChange={handleChange}
                       disabled
-                      placeholder='89030100009181'
+                      placeholder=''
                     />
                   </Grid>
                   <Grid sm={4} item >
@@ -187,7 +187,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       value={viewData?.account_type}
                       // onChange={handleChange}
                       disabled
-                      placeholder='Saving'
+                      placeholder=''
                     />
                   </Grid>
                   <Grid sm={4} item >
@@ -197,7 +197,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       value={viewData?.ifsc_code}
                       // onChange={handleChange}
                       disabled
-                      placeholder='BARBODBLOHO'
+                      placeholder=''
                     />
                   </Grid>
                   <Grid sm={4} item >
@@ -207,7 +207,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       value={viewData?.bank_name}
                       // onChange={handleChange}
                       disabled
-                      placeholder='Bank Of Baroda'
+                      placeholder=''
                     />
                   </Grid>
                   <Grid sm={4} item >
@@ -217,7 +217,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       value={viewData?.bank_branch}
                       // onChange={handleChange}
                       disabled
-                      placeholder='Nashik'
+                      placeholder=''
                     />
                   </Grid>
                 </Grid>
@@ -317,7 +317,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       value={v?.pan_no}
                       // onChange={handleChange}
                       disabled
-                      placeholder='CGHDI5736O'
+                      placeholder=''
                     />
                   </Grid>
                   <Grid sm={12} item>
@@ -327,7 +327,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       value={v?.aadhaar_no}
                       // onChange={handleChange}
                       disabled
-                      placeholder='251016776044'
+                      placeholder=''
                     />
                   </Grid>
                 </Grid>
@@ -346,7 +346,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                         value={v?.account_holder}
                         // onChange={handleChange}
                         disabled
-                        placeholder='Ramesh Dole'
+                        placeholder=''
                       />
                     </Grid>
                     <Grid sm={4} item >
@@ -356,7 +356,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                         value={v?.account_no}
                         // onChange={handleChange}
                         disabled
-                        placeholder='89030100009181'
+                        placeholder=''
                       />
                     </Grid>
                     <Grid sm={4} item >
@@ -366,7 +366,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                         value={v?.account_type}
                         // onChange={handleChange}
                         disabled
-                        placeholder='Saving'
+                        placeholder=''
                       />
                     </Grid>
                     <Grid sm={4} item >
@@ -376,7 +376,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                         value={v?.ifsc_code}
                         // onChange={handleChange}
                         disabled
-                        placeholder='BARBODBLOHO'
+                        placeholder=''
                       />
                     </Grid>
                     <Grid sm={4} item >
@@ -386,7 +386,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                         value={v?.bank_name}
                         // onChange={handleChange}
                         disabled
-                        placeholder='Bank Of Baroda'
+                        placeholder=''
                       />
                     </Grid>
                     <Grid sm={4} item >
@@ -396,7 +396,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                         value={v?.branch_name}
                         // onChange={handleChange}
                         disabled
-                        placeholder='Nashik'
+                        placeholder=''
                       />
                     </Grid>
                   </Grid>

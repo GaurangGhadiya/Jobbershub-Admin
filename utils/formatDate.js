@@ -1,4 +1,6 @@
-import moment from 'moment';
+// import moment from 'moment';
+import moment from "moment-timezone"; // If using timezone support
+
 
 export const formatDate = (dateString) => {
     return moment(dateString).format("D MMM YYYY h:mm A");
@@ -18,5 +20,10 @@ export const formatDate = (dateString) => {
     const period = hours >= 12 ? 'pm' : 'am'; // Determine am/pm
     const formattedHours = hours % 12 || 12; // Convert to 12-hour format (0 becomes 12)
     return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+  }
+
+  export const formatDateWithTime = (timestamp) => {
+    return moment(timestamp).tz("Asia/Kolkata").format("D MMM YYYY hh:mm A");
+
   }
   

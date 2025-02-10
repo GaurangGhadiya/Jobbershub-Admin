@@ -49,6 +49,8 @@ import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { Message } from '@mui/icons-material';
 import MessageModal from '../Modals/MessageModal';
+import Cookies from "js-cookie";
+
 const drawerWidth = 320;
 const menu = [
   {
@@ -291,6 +293,13 @@ export default function Layout({ children }) {
   const [open, setOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [openMessageModal, setOpenMessageModal] = React.useState(false)
+  const [userName, setUserName] = React.useState("")
+
+
+  React.useEffect(() => {
+    Cookies.get('name') && setUserName(Cookies.get('name'))
+  }, [])
+  
 
 
   const handleMessageModalOpen = () => {
@@ -384,12 +393,12 @@ export default function Layout({ children }) {
               </Box>
               <Box display={"flex"} justifyContent={"flex-start"} alignItems={"center"}>
                 <Box mr={1}>
-                  <Typography color={"#1A1A1A"} fontSize={"14px"} fontWeight={700} textAlign={"right"}>Rizwan</Typography>
+                  <Typography color={"#1A1A1A"} fontSize={"14px"} fontWeight={700} textAlign={"right"}>{userName}</Typography>
                   <Typography color={"#757575"} fontSize={"13px"} fontWeight={500}>Ux Designer</Typography>
                 </Box>
                 <Box sx={{ flexGrow: 0 }}>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" style={{ borderRadius: "7px" }} />
+                    <Avatar alt={userName} src="/static/images/avatar/2.jpg" style={{ borderRadius: "7px" }} />
                   </IconButton>
                   <Menu
                     sx={{ mt: '45px' }}
