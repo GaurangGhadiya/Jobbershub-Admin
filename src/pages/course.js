@@ -384,7 +384,7 @@ const Course = () => {
                                         {afterSubmitSelectedRow?.SponsorType && <TableCell align="left">{row?.status == 0 ? "Pending" : row?.status == 1 ? "Approved" : row?.status == 2 ? "Rejected" : "Deleted"}</TableCell>}
                                         {afterSubmitSelectedRow?.SponsorRank && <TableCell align="left">
                                             <Box display={"flex"} justifyContent={"start"} alignItems={"center"}>
-                                                <Box style={{ cursor: "pointer" }} backgroundColor="#D1732D" borderRadius={"4px"} px={1} py={0.5}><Typography color={"white"} fontSize={12}>EDIT</Typography></Box>
+                                                <Box style={{ cursor: "pointer" }} backgroundColor="#D1732D" borderRadius={"4px"} px={1} py={0.5}><Typography color={"white"} fontSize={12} onClick={() => router.push(`/edit-course?id=${row?.id}`)}>EDIT</Typography></Box>
                                                 <Box style={{ cursor: "pointer" }} mx={1} backgroundColor="#B73E38" borderRadius={"4px"} px={1} py={0.5} onClick={() => { openDeleteModal(); setDeleteId(row?.id) }}><Typography color={"white"} fontSize={12}>DELETE</Typography></Box>
 
                                                 {/* <IconButton

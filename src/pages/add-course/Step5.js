@@ -10,15 +10,16 @@ const Step5 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
 
-   useEffect(() => {
-      setFormData({ ...formDataMain })
-    }, [formDataMain])
+  //  useEffect(() => {
+  //     setFormData({ ...formDataMain })
+  //   }, [formDataMain])
 
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, courses_title: tableData?.map(v => v?.courses_title), courses_description: tableData?.map(v => v?.courses_description) })
+      // setFormDataMain({ ...formDataMain, courses_title: tableData?.map(v => v?.courses_title), courses_description: tableData?.map(v => v?.courses_description) })
+      setFormDataMain({ ...formDataMain, courses_description_obj : tableData})
       setStep(step + 1)
     }
   }

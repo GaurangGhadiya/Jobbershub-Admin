@@ -31,21 +31,61 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [tableData3, setTableData3] = useState([])
   const [editData3, setEditData3] = useState({})
 
+  function transformData(input) {
+    const maxLength = Math.max(input.image_titles?.length, input.image_descriptions?.length);
+    
+    return Array.from({ length: maxLength }, (_, i) => ({
+      image_titles: input.image_titles[i] || "",
+      image_descriptions: input.image_descriptions[i] || "",
+      id: Math.floor(Math.random() * 1000000).toString()
+    }));
+  }
+  function transformData2(input) {
+    const maxLength = Math.max(input.market_short_video?.length, input.market_short_title?.length, input.market_short_desc?.length);
+    
+    return Array.from({ length: maxLength }, (_, i) => ({
+      market_short_video: input.market_short_video[i] || "",
+      market_short_title: input.market_short_title[i] || "",
+      market_short_desc: input.market_short_desc[i] || "",
+      id: Math.floor(Math.random() * 1000000).toString()
+    }));
+  }
+  function transformData3(input) {
+    const maxLength = Math.max(input.market_brochure_link?.length, input.market_brochure_title?.length, input.market_brochure_desc?.length);
+    
+    return Array.from({ length: maxLength }, (_, i) => ({
+      market_brochure_link: input.market_brochure_link[i] || "",
+      market_brochure_title: input.market_brochure_title[i] || "",
+      market_brochure_desc: input.market_brochure_desc[i] || "",
+      id: Math.floor(Math.random() * 1000000).toString()
+    }));
+  }
+
  useEffect(() => {
-    setFormData({ ...formDataMain })
+    setFormData({ ...formDataMain, image_titles : "", image_descriptions : "", market_short_video : "",market_short_title : "", market_short_desc : "" })
+    setFormData2({ ...formDataMain,market_short_video : "",market_short_title : "", market_short_desc : "" })
+    setFormData3({ ...formDataMain, market_brochure_link : "", market_brochure_title : "", market_brochure_desc : "",market_short_title : "", market_short_desc : "" })
+    // const data = transformData(formDataMain);
+    // const data2 = transformData2(formDataMain);
+    // const data3 = transformData3(formDataMain);
+
+    setTableData(formDataMain?.marketing_images_obj)
+    setTableData2(formDataMain?.marketing_short_obj)
+    setTableData3(formDataMain?.marketing_brochure_obj)
   }, [formDataMain])
   
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, image_titles: tableData?.map(v => v?.image_titles), image_descriptions: tableData?.map(v => v?.image_descriptions), market_short_video: tableData2?.map(v => v?.market_short_video), market_short_title: tableData2?.map(v => v?.market_short_title), market_short_desc: tableData2?.map(v => v?.market_short_desc), market_brochure_link: tableData3?.map(v => v?.market_brochure_link), market_brochure_title: tableData3?.map(v => v?.market_brochure_title), market_brochure_desc: tableData3?.map(v => v?.market_brochure_desc) })
+      // setFormDataMain({ ...formDataMain, image_titles: tableData?.map(v => v?.image_titles), image_descriptions: tableData?.map(v => v?.image_descriptions), market_short_video: tableData2?.map(v => v?.market_short_video), market_short_title: tableData2?.map(v => v?.market_short_title), market_short_desc: tableData2?.map(v => v?.market_short_desc), market_brochure_link: tableData3?.map(v => v?.market_brochure_link), market_brochure_title: tableData3?.map(v => v?.market_brochure_title), market_brochure_desc: tableData3?.map(v => v?.market_brochure_desc) })
+      setFormDataMain({ ...formDataMain, marketing_images_obj : tableData, marketing_short_obj : tableData2, marketing_brochure_obj : tableData3})
       setStep(step + 1)
     }
   }
   const handleBack = () => {
     if (step == 0) {
-      route.push("/course")
+      router.push("/course")
     } else {
       setStep(step - 1)
     }

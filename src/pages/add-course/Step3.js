@@ -16,7 +16,7 @@ const Step3 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [courseList, setCourseList] = useState([])
-  console.log('courseList', courseList,formData)
+  console.log('courseList', courseList, formData)
   const open1 = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,15 +41,16 @@ const Step3 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       }
     } else {
       const { name, checked } = e.target
-      if(checked){
-        
+      if (checked) {
+
         setFormData({ ...formData, [name]: checked })
-      }else{
-        let data = {...formData}
+      } else {
+        let data = { ...formData }
         delete data[name]
-        setFormData({...data})
+        setFormData({ ...data })
+      }
     }
-  }}
+  }
 
   // useEffect(() => {
   //   setFormData({ ...formDataMain })
@@ -59,13 +60,17 @@ const Step3 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
     } else {
       // setFormDataMain({ ...formDataMain, coupon_id: "2"})
-      
-      
-      const selectedDiscounts = courseList
-      .filter(course => formData[course.id])
-      .map(course => course.discount_val);
-      console.log("courseList",courseList, formData,selectedDiscounts)
-      setFormDataMain({ ...formDataMain, coupon_id: Object.keys(formData),coupon_amount :selectedDiscounts  })
+
+      const finalArray = courseList
+  .filter(course => formData[course.id]) // Keep only matching ids
+  .map(course => ({ id: course.id, discount_val: course.discount_val })); // Transform to required format
+
+      // const selectedDiscounts = courseList
+      //   .filter(course => formData[course.id])
+      //   .map(course => course.discount_val);
+      // console.log("courseList", courseList, formData, selectedDiscounts)
+      // setFormDataMain({ ...formDataMain, coupon_id: Object.keys(formData), coupon_amount: selectedDiscounts })
+      setFormDataMain({ ...formDataMain, coupon_obj : finalArray })
       setStep(step + 1)
     }
   }
@@ -180,7 +185,7 @@ const Step3 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   Selected
                 </Typography>
               </Box> */}
-              {console.log("asd",formData?.[v?.id])}
+                {console.log("asd", formData?.[v?.id])}
                 <Checkbox
                   checked={Object.keys(formData)?.find(h => h == v?.id) || formDataMain?.coupon_id?.find(h => +h == v?.id)}
                   onChange={handleChange}

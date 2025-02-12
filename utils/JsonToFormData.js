@@ -22,4 +22,28 @@
     return formData;
 }
 
-export default jsonToFormData
+const objectToFormData = (obj, formData = new FormData(), parentKey = "") => {
+    if (obj && typeof obj === "object" && !(obj instanceof File)) {
+      if (Array.isArray(obj)) {
+        // Handle arrays (keep proper index keys for nested structure)
+        obj.forEach((value, index) => {
+          objectToFormData(value, formData, `${parentKey}[${index}]`);
+        });
+      } else {
+        // Handle objects
+        Object.entries(obj).forEach(([key, value]) => {
+          const newKey = parentKey ? `${parentKey}[${key}]` : key;
+          objectToFormData(value, formData, newKey);
+        });
+      }
+    } else {
+      // Handle primitive values and files
+      formData.append(parentKey, obj);
+    }
+  
+    return formData;
+  }
+  
+
+// export default jsonToFormData
+export default objectToFormData

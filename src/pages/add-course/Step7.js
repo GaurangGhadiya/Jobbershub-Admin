@@ -10,15 +10,17 @@ const Step7 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
 
-   useEffect(() => {
-      setFormData({ ...formDataMain })
-    }, [formDataMain])
+  //  useEffect(() => {
+  //     setFormData({ ...formDataMain })
+  //   }, [formDataMain])
 
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, faq_ans : tableData?.map(v => v?.faq_ans), faq_ques: tableData?.map(v => v?.faq_ques)})
+      // setFormDataMain({ ...formDataMain, faq_ans : tableData?.map(v => v?.faq_ans), faq_ques: tableData?.map(v => v?.faq_ques)})
+      setFormDataMain({ ...formDataMain, faq_obj : tableData})
+   
       setStep(step + 1)
     }
   }

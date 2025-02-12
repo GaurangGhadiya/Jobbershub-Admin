@@ -59,7 +59,7 @@ const getDataById =async () => {
     setLoading(true)
     await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-courses-data`, { course_id: route?.query?.id }).then(res => {
         console.log('getDataById response ', res?.data)
-        setFormData({...formData, ...res?.data?.CourseData})
+        setFormData({...formData, ...res?.data?.CourseData, ...res?.data})
         setLoading(false)
 
     }).catch(e => {
@@ -87,9 +87,9 @@ const getDataById =async () => {
         console.log('body', body)
         setLoading(true)
 
-        let newData = await jsonToFormData(body)
+        let newData = await objectToFormData({...body, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid')})
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/add-course-leads`, newData).then(async(res) => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-courses-data`, newData).then(async(res) => {
             console.log('api response', res?.data?.data)
             setLoading(false)
             setFormData({ category_id: Cookies.get('category_id') || 4 })

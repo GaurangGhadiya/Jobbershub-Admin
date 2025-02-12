@@ -17,8 +17,9 @@ import Step3 from './Step3';
 import Step2 from './Step2';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import jsonToFormData from '../../../utils/JsonToFormData';
+// import {objectToFormData} from '../../../utils/JsonToFormData';
 import toast from 'react-hot-toast';
+import objectToFormData from '../../../utils/JsonToFormData';
 
 
 const steps = [
@@ -64,7 +65,7 @@ console.log('formData', formData)
         console.log('body', body)
         setLoading(true)
 
-        let newData = await jsonToFormData(body)
+        let newData = await objectToFormData({...body, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid')})
 
         await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/add-course-leads`, newData).then(async(res) => {
             console.log('api response', res?.data?.data)

@@ -10,16 +10,32 @@ const Step7 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
 
+  function transformData(input) {
+    const maxLength = Math.max(input.faq_ans?.length, input.faq_ques?.length);
+    
+    return Array.from({ length: maxLength }, (_, i) => ({
+      faq_ans: input.faq_ans[i] || "",
+      faq_ques: input.faq_ques[i] || "",
+      id: Math.floor(Math.random() * 1000000).toString()
+    }));
+  }
+
+
    useEffect(() => {
-      setFormData({ ...formDataMain })
+      setFormData({ ...formDataMain, faq_ans : "", faq_ques : "" })
+      // const data = transformData(formDataMain);
+
+      setTableData(formDataMain?.faq_obj)
     }, [formDataMain])
 
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, faq_ans : tableData?.map(v => v?.faq_ans), faq_ques: tableData?.map(v => v?.faq_ques)})
-      setStep(step + 1)
+         // setFormDataMain({ ...formDataMain, faq_ans : tableData?.map(v => v?.faq_ans), faq_ques: tableData?.map(v => v?.faq_ques)})
+         setFormDataMain({ ...formDataMain, faq_obj : tableData})
+   
+         setStep(step + 1)
     }
   }
   const handleBack = () => {

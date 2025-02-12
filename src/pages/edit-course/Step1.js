@@ -78,7 +78,8 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
   const handleBack = () => {
     if (step == 0) {
-      route.push("/course")
+      // route.push("/course")
+      route.back()
     } else {
       setStep(step - 1)
     }

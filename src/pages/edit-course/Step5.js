@@ -10,16 +10,31 @@ const Step5 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
 
+  function transformData(input) {
+    const maxLength = Math.max(input.courses_title?.length, input.courses_description?.length);
+    
+    return Array.from({ length: maxLength }, (_, i) => ({
+      courses_title: input.courses_title[i] || "",
+      courses_description: input.courses_description[i] || "",
+      id: Math.floor(Math.random() * 1000000).toString()
+    }));
+  }
+
+
    useEffect(() => {
-      setFormData({ ...formDataMain })
+      setFormData({ ...formDataMain ,courses_description : "", courses_title : ""})
+      // const data = transformData(formDataMain);
+
+      setTableData(formDataMain?.courses_description_obj)
     }, [formDataMain])
 
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, courses_title: tableData?.map(v => v?.courses_title), courses_description: tableData?.map(v => v?.courses_description) })
-      setStep(step + 1)
+          // setFormDataMain({ ...formDataMain, courses_title: tableData?.map(v => v?.courses_title), courses_description: tableData?.map(v => v?.courses_description) })
+          setFormDataMain({ ...formDataMain, courses_description_obj : tableData})
+          setStep(step + 1)
     }
   }
   const handleBack = () => {

@@ -10,18 +10,30 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
 
+  function transformData(input) {
+    const maxLength = Math.max(input.study_material_title?.length, input.study_material_desc?.length);
+    
+    return Array.from({ length: maxLength }, (_, i) => ({
+      study_material_title: input.study_material_title[i] || "",
+      study_material_desc: input.study_material_desc[i] || "",
+      id: Math.floor(Math.random() * 1000000).toString()
+    }));
+  }
+
    useEffect(() => {
-      setFormData({ ...formDataMain })
+      setFormData({ ...formDataMain, study_material_title : "",study_material_desc : "" })
+      // const data = transformData(formDataMain);
+
+      setTableData(formDataMain?.study_material_obj)
     }, [formDataMain])
 
   const handleNext = () => {
     if (step == 8) {
-      setFormDataMain({ ...formDataMain, study_material_title : tableData?.map(v => v?.study_material_title), study_material_desc: tableData?.map(v => v?.study_material_desc)})
-      finalSubmit({ ...formDataMain, study_material_title : tableData?.map(v => v?.study_material_title), study_material_desc: tableData?.map(v => v?.study_material_desc)})
-
+      setFormDataMain({ ...formDataMain, study_material_obj : tableData})
+      finalSubmit({ ...formDataMain,  study_material_obj : tableData})
 
     } else {
-      setFormDataMain({ ...formDataMain, study_material_title : tableData?.map(v => v?.study_material_title), study_material_desc: tableData?.map(v => v?.study_material_desc)})
+      setFormDataMain({ ...formDataMain,  study_material_obj : tableData})
       setStep(step + 1)
     }
   }
@@ -136,7 +148,7 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} my={5}>
 
         <Box border={"1px solid #A2A1A8"} style={{ cursor: "pointer" }} onClick={() => handleBack()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"black"} px={3} py={1}>Back</Typography></Box>
-        <Box backgroundColor={"#FF8C38"} style={{ cursor: "pointer" }} onClick={() => handleNext()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Next</Typography></Box>
+        <Box backgroundColor={"#FF8C38"} style={{ cursor: "pointer" }} onClick={() => handleNext()} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box>
       </Box>
     </>)
 }

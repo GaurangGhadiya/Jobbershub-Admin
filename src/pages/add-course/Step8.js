@@ -27,16 +27,18 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [editData, setEditData] = useState({})
 
 
-   useEffect(() => {
-      setFormData({ ...formDataMain })
-    }, [formDataMain])
+  //  useEffect(() => {
+  //     setFormData({ ...formDataMain })
+  //   }, [formDataMain])
 
 
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnail : tableData?.map(v => v?.recorded_courses_thumbnail) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
+      // setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnail : tableData?.map(v => v?.recorded_courses_thumbnail) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
+      setFormDataMain({ ...formDataMain, recorded_courses_obj : tableData})
+   
       setStep(step + 1)
     }
   }

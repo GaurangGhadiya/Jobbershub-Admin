@@ -26,9 +26,25 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [tableData, setTableData] = useState([])
   const [editData, setEditData] = useState({})
 
+  function transformData(input) {
+    const maxLength = Math.max(input.recorded_courses_name?.length, input.recorded_courses_timeduration?.length, input.recorded_courses_chapter?.length, input.recorded_courses_video?.length, input.recorded_courses_thumbnail?.length);
+    
+    return Array.from({ length: maxLength }, (_, i) => ({
+      recorded_courses_name: input.recorded_courses_name[i] || "",
+      recorded_courses_timeduration: input.recorded_courses_timeduration[i] || "",
+      recorded_courses_chapter: input.recorded_courses_chapter[i] || "",
+      recorded_courses_video: input.recorded_courses_video[i] || "",
+      recorded_courses_thumbnail: input.recorded_courses_thumbnail[i] || "",
+      id: Math.floor(Math.random() * 1000000).toString()
+    }));
+  }
+
 
    useEffect(() => {
-      setFormData({ ...formDataMain })
+      setFormData({ ...formDataMain, recorded_courses_name : "", recorded_courses_timeduration : "", recorded_courses_chapter : "",recorded_courses_thumbnail :"", recorded_courses_video : ""})
+      // const data = transformData(formDataMain);
+
+      setTableData(formDataMain?.recorded_courses_obj)
     }, [formDataMain])
 
 
@@ -36,8 +52,10 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnail : tableData?.map(v => v?.recorded_courses_thumbnail) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
-      setStep(step + 1)
+         // setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnail : tableData?.map(v => v?.recorded_courses_thumbnail) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
+         setFormDataMain({ ...formDataMain, recorded_courses_obj : tableData})
+   
+         setStep(step + 1)
     }
   }
   const handleBack = () => {
@@ -194,7 +212,7 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                 <TableCell style={{ borderRight: "none" }} width={120} >Time Duration</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Chapter</TableCell>
                 <TableCell style={{ borderRight: "none" }} width={120} >Thumbnail</TableCell>
-                <TableCell style={{ borderRight: "none" }} width={120} >Video</TableCell>
+                {/* <TableCell style={{ borderRight: "none" }} width={120} >Video</TableCell> */}
                 <TableCell style={{ borderRight: "none" }} width={120} >Action</TableCell>
               </TableRow>
 
@@ -211,7 +229,7 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_timeduration}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_chapter}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left"><img src={row?.recorded_courses_thumbnail instanceof File ? URL.createObjectURL(row?.recorded_courses_thumbnail) : null} width={150} style={{ height: "70px" }} /></TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_video}</TableCell>
+                  {/* <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_video}</TableCell> */}
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>

@@ -29,15 +29,16 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [editData, setEditData] = useState({})
 
 
-  useEffect(() => {
-    setFormData({ ...formDataMain })
-  }, [formDataMain])
+  // useEffect(() => {
+  //   setFormData({ ...formDataMain })
+  // }, [formDataMain])
 
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, thumbnail: tableData?.map(v => v?.thumbnail), intro_video_link: tableData?.map(v => v?.intro_video_link) })
+      // setFormDataMain({ ...formDataMain, thumbnail: tableData?.map(v => v?.thumbnail), intro_video_link: tableData?.map(v => v?.intro_video_link) })
+      setFormDataMain({ ...formDataMain, intro_video_obj : tableData})
       setStep(step + 1)
     }
   }

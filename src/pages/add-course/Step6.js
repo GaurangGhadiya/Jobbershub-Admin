@@ -31,15 +31,16 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [tableData3, setTableData3] = useState([])
   const [editData3, setEditData3] = useState({})
 
- useEffect(() => {
-    setFormData({ ...formDataMain })
-  }, [formDataMain])
+//  useEffect(() => {
+//     setFormData({ ...formDataMain })
+//   }, [formDataMain])
   
   const handleNext = () => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, image_titles: tableData?.map(v => v?.image_titles), image_descriptions: tableData?.map(v => v?.image_descriptions), market_short_video: tableData2?.map(v => v?.market_short_video), market_short_title: tableData2?.map(v => v?.market_short_title), market_short_desc: tableData2?.map(v => v?.market_short_desc), market_brochure_link: tableData3?.map(v => v?.market_brochure_link), market_brochure_title: tableData3?.map(v => v?.market_brochure_title), market_brochure_desc: tableData3?.map(v => v?.market_brochure_desc) })
+      // setFormDataMain({ ...formDataMain, image_titles: tableData?.map(v => v?.image_titles), image_descriptions: tableData?.map(v => v?.image_descriptions), market_short_video: tableData2?.map(v => v?.market_short_video), market_short_title: tableData2?.map(v => v?.market_short_title), market_short_desc: tableData2?.map(v => v?.market_short_desc), market_brochure_link: tableData3?.map(v => v?.market_brochure_link), market_brochure_title: tableData3?.map(v => v?.market_brochure_title), market_brochure_desc: tableData3?.map(v => v?.market_brochure_desc) })
+      setFormDataMain({ ...formDataMain, marketing_images_obj : tableData, marketing_short_obj : tableData2, marketing_brochure_obj : tableData3})
       setStep(step + 1)
     }
   }
