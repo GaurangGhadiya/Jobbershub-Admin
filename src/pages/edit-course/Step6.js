@@ -62,9 +62,9 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
  useEffect(() => {
-    setFormData({ ...formDataMain, image_titles : "", image_descriptions : "", market_short_video : "",market_short_title : "", market_short_desc : "" })
-    setFormData2({ ...formDataMain,market_short_video : "",market_short_title : "", market_short_desc : "" })
-    setFormData3({ ...formDataMain, market_brochure_link : "", market_brochure_title : "", market_brochure_desc : "",market_short_title : "", market_short_desc : "" })
+    setFormData({ image_titles : "", image_descriptions : "", market_short_video : "",market_short_title : "", market_short_desc : "" })
+    setFormData2({ market_short_video : "",market_short_title : "", market_short_desc : "" })
+    setFormData3({ market_brochure_link : "", market_brochure_title : "", market_brochure_desc : "",market_short_title : "", market_short_desc : "" })
     // const data = transformData(formDataMain);
     // const data2 = transformData2(formDataMain);
     // const data3 = transformData3(formDataMain);

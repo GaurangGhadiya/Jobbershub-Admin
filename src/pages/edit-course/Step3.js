@@ -74,8 +74,8 @@ console.log('couponObject', couponObject,formDataMain)
         // setFormDataMain({ ...formDataMain, coupon_id: "2"})
 
         const finalArray = courseList
-        .filter(course => formData[course.coupon_id]) // Keep only matching ids
-        .map(course => ({ coupon_id : course.coupon_id, coupon_amount : course.discount_val })); // Transform to required format
+        .filter(course => formData[course.id]) // Keep only matching ids
+        .map(course => ({ coupon_id : course.id, coupon_amount : course.discount_val })); // Transform to required format
       
             // const selectedDiscounts = courseList
             //   .filter(course => formData[course.id])

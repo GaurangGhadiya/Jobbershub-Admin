@@ -21,7 +21,7 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
   }
 
    useEffect(() => {
-      setFormData({ ...formDataMain, study_material_title : "",study_material_desc : "" })
+      setFormData({  study_material_title : "",study_material_desc : "" })
       // const data = transformData(formDataMain);
 
       setTableData(formDataMain?.study_material_obj)

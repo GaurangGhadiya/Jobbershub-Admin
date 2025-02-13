@@ -22,7 +22,7 @@ const Step7 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
 
    useEffect(() => {
-      setFormData({ ...formDataMain, faq_ans : "", faq_ques : "" })
+      setFormData({  faq_ans : "", faq_ques : "" })
       // const data = transformData(formDataMain);
 
       setTableData(formDataMain?.faq_obj)

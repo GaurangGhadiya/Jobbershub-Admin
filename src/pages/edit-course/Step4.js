@@ -40,7 +40,7 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   useEffect(() => {
-    setFormData({ ...formDataMain ,intro_video_link : ""})
+    setFormData({ intro_video_link : ""})
     // const data = transformData(formDataMain);
 
     setTableData(formDataMain?.intro_video_obj)
