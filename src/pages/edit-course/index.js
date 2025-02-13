@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import jsonToFormData from '../../../utils/JsonToFormData';
 import toast from 'react-hot-toast';
+import objectToFormData from '../../../utils/JsonToFormData';
 
 
 const steps = [
@@ -93,7 +94,7 @@ const getDataById =async () => {
             console.log('api response', res?.data?.data)
             setLoading(false)
             setFormData({ category_id: Cookies.get('category_id') || 4 })
-            toast.success(res?.data?.message || 'Course Added Successfully')
+            toast.success(res?.data?.message || 'Course Update Successfully')
             let redirect = await Cookies.get("employee_role")
             if(redirect == "Admin"){
 

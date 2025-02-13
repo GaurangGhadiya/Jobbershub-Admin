@@ -120,7 +120,7 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
               <Typography color={"#FF9F59"} fontSize={"14px"} fontWeight={300}>choose file to upload</Typography>
             </IconWrapper> :
               <IconWrapper >
-                {formData?.thumbnail instanceof File && <Image src={formData?.thumbnail instanceof File  ? URL.createObjectURL(formData?.thumbnail) : null} width={250} height={145} style={{ height: "145px", marginTop: "-30px", padding: "5px" }} />}
+                { <Image src={formData?.thumbnail instanceof File  ? URL.createObjectURL(formData?.thumbnail) : formData?.thumbnail ? process.env.NEXT_PUBLIC_PHOTO_BASE_URL+"/course/"+formData?.thumbnail : null} width={250} height={145} style={{ height: "145px", marginTop: "-30px", padding: "5px" }} />}
                 <Box position="absolute" top={40} left={33} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
                   <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
                   <Typography color={"#FF9F59"}>Chnage image</Typography>
@@ -189,7 +189,7 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   key={id}
                   style={{ textAlign: "left" }}>
                   <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left"><img src={row?.thumbnail instanceof File  ? URL.createObjectURL(row?.thumbnail) : null} width={150} style={{ height: "70px" }} /></TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left"><Image src={row?.thumbnail instanceof File  ? URL.createObjectURL(row?.thumbnail) : row?.thumbnail ? process.env.NEXT_PUBLIC_PHOTO_BASE_URL+"/course/"+row?.thumbnail : null} width={150} height={70} style={{ height: "70px" }} /></TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.intro_video_link}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>

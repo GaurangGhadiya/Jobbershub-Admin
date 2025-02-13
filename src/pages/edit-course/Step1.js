@@ -33,7 +33,7 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   useEffect(() => {
     setFormData({ ...formDataMain })
   }, [formDataMain])
-  
+  console.log('formData', formData)
 
   const getSubCategory = async () => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-course-sub-category`, {
@@ -101,7 +101,9 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
           {/* <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography> */}
         </IconWrapper> :
           <IconWrapper >
-            {formData?.photo && <img src={URL.createObjectURL(formData?.photo)} width={"250px"} style={{ height: "145px", marginTop: "-30px", padding : "5px" }} />}
+             <Image 
+             src={formData?.photo instanceof File ? URL.createObjectURL(formData?.photo) : formData?.photo ?process.env.NEXT_PUBLIC_PHOTO_BASE_URL+"/course/"+formData?.photo :null}
+              width={250} height={145} style={{ height: "145px", marginTop: "-30px", padding : "5px" }} />
             <Box position="absolute" top={40} left={33}  backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
               <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
               <Typography color={"#FF9F59"}>Chnage image</Typography>

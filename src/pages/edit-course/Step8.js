@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import UploadIcon from '@mui/icons-material/CloudUpload';
 import Title from '@/components/Title';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const IconWrapper = styled('div')(({ theme }) => ({
   textAlign: 'center',
@@ -27,21 +28,21 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const [editData, setEditData] = useState({})
 
   function transformData(input) {
-    const maxLength = Math.max(input.recorded_courses_name?.length, input.recorded_courses_timeduration?.length, input.recorded_courses_chapter?.length, input.recorded_courses_video?.length, input.recorded_courses_thumbnail?.length);
+    const maxLength = Math.max(input.recorded_courses_name?.length, input.recorded_courses_timeduration?.length, input.recorded_courses_chapter?.length, input.recorded_courses_video?.length, input.recorded_courses_thumbnails?.length);
     
     return Array.from({ length: maxLength }, (_, i) => ({
       recorded_courses_name: input.recorded_courses_name[i] || "",
       recorded_courses_timeduration: input.recorded_courses_timeduration[i] || "",
       recorded_courses_chapter: input.recorded_courses_chapter[i] || "",
       recorded_courses_video: input.recorded_courses_video[i] || "",
-      recorded_courses_thumbnail: input.recorded_courses_thumbnail[i] || "",
+      recorded_courses_thumbnails: input.recorded_courses_thumbnails[i] || "",
       id: Math.floor(Math.random() * 1000000).toString()
     }));
   }
 
 
    useEffect(() => {
-      setFormData({ ...formDataMain, recorded_courses_name : "", recorded_courses_timeduration : "", recorded_courses_chapter : "",recorded_courses_thumbnail :"", recorded_courses_video : ""})
+      setFormData({ ...formDataMain, recorded_courses_name : "", recorded_courses_timeduration : "", recorded_courses_chapter : "",recorded_courses_thumbnails :"", recorded_courses_video : ""})
       // const data = transformData(formDataMain);
 
       setTableData(formDataMain?.recorded_courses_obj)
@@ -52,7 +53,7 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
-         // setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnail : tableData?.map(v => v?.recorded_courses_thumbnail) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
+         // setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnails : tableData?.map(v => v?.recorded_courses_thumbnails) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
          setFormDataMain({ ...formDataMain, recorded_courses_obj : tableData})
    
          setStep(step + 1)
@@ -71,7 +72,7 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (e.target.type == "file") {
       const file = event.target.files[0];
       if (file) {
-        setFormData({ ...formData, "recorded_courses_thumbnail": file })
+        setFormData({ ...formData, "recorded_courses_thumbnails": file })
 
         // alert(`File selected: ${file.name}`);
       }
@@ -151,17 +152,19 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
           <HiddenInput
             type="file"
             id="file-upload"
-            name='recorded_courses_thumbnail'
+            name='recorded_courses_thumbnails'
             onChange={handleChange}
           />
           <label htmlFor="file-upload" style={{ width: "100%", display: "block" }}>
-            {!formData?.recorded_courses_thumbnail ? <IconWrapper>
+            {!formData?.recorded_courses_thumbnails ? <IconWrapper>
               <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
               <Typography color={"#16151C"} fontSize={"14px"} fontWeight={300}>Drag & Drop or choose file to upload</Typography>
               <Typography color={"#A2A1A8"} fontSize={"11px"} fontWeight={300}>Supported formats : Jpeg, pdf</Typography>
             </IconWrapper> :
               <IconWrapper >
-                {formData?.recorded_courses_thumbnail instanceof File && <img src={URL.createObjectURL(formData?.recorded_courses_thumbnail) } width={"250px"} style={{ height: "150px", marginTop: "-30px" }} />}
+                                { <Image src={formData?.recorded_courses_thumbnails instanceof File  ? URL.createObjectURL(formData?.recorded_courses_thumbnails) : formData?.recorded_courses_thumbnails ? process.env.NEXT_PUBLIC_PHOTO_BASE_URL+"/course/"+formData?.recorded_courses_thumbnails : null} width={250} height={145} style={{ height: "145px", marginTop: "-30px", padding: "5px" }} />}
+                
+                {/* {formData?.recorded_courses_thumbnails instanceof File && <img src={URL.createObjectURL(formData?.recorded_courses_thumbnails) } width={"250px"} style={{ height: "150px", marginTop: "-30px" }} />} */}
                 <Box position="absolute" top={50} left={100}>
                   <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
 
@@ -228,7 +231,7 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_name}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_timeduration}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_chapter}</TableCell>
-                  <TableCell style={{ borderRight: "none" }} align="left"><img src={row?.recorded_courses_thumbnail instanceof File ? URL.createObjectURL(row?.recorded_courses_thumbnail) : null} width={150} style={{ height: "70px" }} /></TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left"><Image src={row?.recorded_courses_thumbnails instanceof File ? URL.createObjectURL(row?.recorded_courses_thumbnails) : row?.recorded_courses_thumbnails ? process.env.NEXT_PUBLIC_PHOTO_BASE_URL+"/course/"+row?.recorded_courses_thumbnails :null} width={150} height={70} style={{ height: "70px" }} /></TableCell>
                   {/* <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_video}</TableCell> */}
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
