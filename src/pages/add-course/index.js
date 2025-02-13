@@ -54,29 +54,44 @@ const AddCourse = () => {
         category_id: 4
     })
     const [loading, setLoading] = useState(false)
-console.log('formData', formData)
+    console.log('formData', formData)
     useEffect(() => {
-        Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid') })
+        let redirect = Cookies.get("employee_role")
+
+        if (redirect == "Admin") {
+
+            Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id') })
+        }
+        else {
+
+            Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'), seller_id: Cookies.get('uid') })
+        }
     }, [route])
 
 
     const finalSubmit = async (body) => {
+        let redirect = await Cookies.get("employee_role")
 
         console.log('body', body)
         setLoading(true)
+        let newData;
+        if (redirect == "Admin") {
 
-        let newData = await objectToFormData({...body, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid')})
+            newData = await objectToFormData({ ...body, category_id: Cookies.get('category_id') || 4 })
+        } else {
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/add-course-leads`, newData).then(async(res) => {
+            newData = await objectToFormData({ ...body, category_id: Cookies.get('category_id') || 4, seller_id: Cookies.get('uid') })
+        }
+
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/add-course-leads`, newData).then(async (res) => {
             console.log('api response', res?.data?.data)
             setLoading(false)
             setFormData({ category_id: Cookies.get('category_id') || 4 })
             toast.success(res?.data?.message || 'Course Added Successfully')
-            let redirect = await Cookies.get("employee_role")
-            if(redirect == "Admin"){
+            if (redirect == "Admin") {
 
                 route.push("/admin-course-list")
-            }else{
+            } else {
 
                 route.push("/course")
             }

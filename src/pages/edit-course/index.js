@@ -54,52 +54,73 @@ const AddCourse = () => {
         category_id: 4
     })
     const [loading, setLoading] = useState(false)
-console.log('formData', formData)
+    console.log('formData', formData)
 
-const getDataById =async () => {
-    setLoading(true)
-    await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-courses-data`, { course_id: route?.query?.id }).then(res => {
-        console.log('getDataById response ', res?.data)
-        setFormData({...formData, ...res?.data?.CourseData, ...res?.data})
-        setLoading(false)
+    const getDataById = async () => {
+        setLoading(true)
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-courses-data`, { course_id: route?.query?.id }).then(res => {
+            console.log('getDataById response ', res?.data)
+            setFormData({ ...formData, ...res?.data?.CourseData, ...res?.data })
+            setLoading(false)
 
-    }).catch(e => {
-        setLoading(false)
+        }).catch(e => {
+            setLoading(false)
 
-        console.log('e', e)
-    })
+            console.log('e', e)
+        })
 
-}
+    }
     useEffect(() => {
         console.log('route', route)
-        if(route?.query?.id){
+        let redirect = Cookies.get("employee_role")
+
+        if (route?.query?.id) {
             getDataById()
-            Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid') })
+            if (redirect == "Admin") {
 
-        }else{
+                Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id') })
+            } else {
 
-            Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid') })
+                Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'), seller_id: Cookies.get('uid') })
+            }
+
+        } else {
+            if (redirect == "Admin") {
+
+                Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id') })
+            } else {
+
+                Cookies.get('category_id') && Cookies.get('uid') && setFormData({ ...formData, category_id: Cookies.get('category_id'), seller_id: Cookies.get('uid') })
+            }
         }
     }, [route])
 
 
     const finalSubmit = async (body) => {
+        let redirect = await Cookies.get("employee_role")
 
         console.log('body', body)
         setLoading(true)
 
-        let newData = await objectToFormData({...body, category_id: Cookies.get('category_id'),seller_id : Cookies.get('uid')})
+        let newData;
+        if (redirect == "Admin") {
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-courses-data`, newData).then(async(res) => {
+            newData = await objectToFormData({ ...body, category_id: Cookies.get('category_id') || 4 })
+        } else {
+
+            newData = await objectToFormData({ ...body, category_id: Cookies.get('category_id') || 4, seller_id: Cookies.get('uid') })
+        }
+
+
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-courses-data`, newData).then(async (res) => {
             console.log('api response', res?.data?.data)
             setLoading(false)
             setFormData({ category_id: Cookies.get('category_id') || 4 })
             toast.success(res?.data?.message || 'Course Update Successfully')
-            let redirect = await Cookies.get("employee_role")
-            if(redirect == "Admin"){
+            if (redirect == "Admin") {
 
                 route.push("/admin-course-list")
-            }else{
+            } else {
 
                 route.push("/course")
             }

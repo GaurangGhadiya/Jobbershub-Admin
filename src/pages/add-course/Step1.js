@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import axios from 'axios';
+import Cookies from "js-cookie";
 
 const IconWrapper = styled('div')(({ theme }) => ({
   textAlign: 'center',
@@ -29,12 +30,29 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const route = useRouter()
   const [formData, setFormData] = useState({})
   const [subCategoryList, setSubCategoryList] = useState([])
+  const [redirect, setredirect] = useState("")
+const [sellerList, setSellerList] = useState([])
 
   useEffect(() => {
     setFormData({ ...formDataMain })
+      let redirect1 = Cookies.get("employee_role")
+        setredirect(redirect1)
   }, [formDataMain])
   
 
+  const getSellerList = async () => {
+    await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/seller/get-active-seller`).then(res => {
+      console.log('api response', res)
+      setSellerList(res?.data?.data)
+      // setCountData(res?.data)
+      // setLoading(false)
+
+  }).catch(e => {
+      // setLoading(false)
+
+      console.log('e', e)
+  })
+  }
   const getSubCategory = async () => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-course-sub-category`, {
       category_id : formDataMain?.category_id
@@ -53,6 +71,7 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   useEffect(() => {
     getSubCategory()
+    getSellerList()
   }, [])
   
   const handleChange = (e) => {
@@ -111,7 +130,19 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       <Typography color={"#16151C"} my={1} fontSize={"12px"} fontWeight={300}>Recommended Image Size: 800Px - 600PX, JPEG, PNG, JPG</Typography>
 
       <Grid container spacing={2} >
-        <Grid item sx={12} md={6}>
+       {redirect == "Admin" && <Grid item sx={12} md={4}>
+          <Title title={"Select Seller "} />
+          <SelectDropdown
+            options={sellerList?.map(v => ({value : v?.id, label : v?.name})) || []}
+
+            value={formData?.seller_id}
+            onChange={handleChange}
+            name="seller_id"
+          // placeholder="Choose a category"
+          />
+
+        </Grid>}
+        <Grid item sx={12} md={4}>
           <Title title={"Category "} />
           <SelectDropdown
             options={[
@@ -125,7 +156,7 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
           />
 
         </Grid>
-        <Grid item sx={12} md={6}>
+        <Grid item sx={12} md={4}>
           <Title title={"Select Sub-Category "} />
           <SelectDropdown
             options={subCategoryList?.map(v => ({value : v?.id, label : v?.sub_category}))}
@@ -142,7 +173,7 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             name="courses_name"
             value={formData?.courses_name}
             onChange={handleChange}
-            placeholder='Enter Course Name Here'
+            placeholder=''
           />
         </Grid>
         <Grid item sx={12} md={6}>
@@ -151,7 +182,7 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             name="tutor_name"
             value={formData?.tutor_name}
             onChange={handleChange}
-            placeholder='Enter Tutor Name Here'
+            placeholder=''
           />
         </Grid>
         <Grid item sx={12} md={4}>
@@ -190,7 +221,7 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             name="total_chapter"
             value={formData?.total_chapter}
             onChange={handleChange}
-            placeholder='10'
+            placeholder=''
           />
          
         </Grid>
@@ -200,7 +231,7 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             name="description"
             value={formData?.description}
             onChange={handleChange}
-            placeholder='Enter Course description here'
+            placeholder=''
           />
         </Grid>
 

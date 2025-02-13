@@ -62,8 +62,8 @@ const Step3 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       // setFormDataMain({ ...formDataMain, coupon_id: "2"})
 
       const finalArray = courseList
-  .filter(course => formData[course.id]) // Keep only matching ids
-  .map(course => ({ id: course.id, discount_val: course.discount_val })); // Transform to required format
+  .filter(course => formData[course.coupon_id]) // Keep only matching ids
+  .map(course => ({ coupon_id : course.coupon_id, coupon_amount : course.discount_val })); // Transform to required format
 
       // const selectedDiscounts = courseList
       //   .filter(course => formData[course.id])
