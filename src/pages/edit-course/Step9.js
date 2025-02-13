@@ -16,7 +16,7 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
     return Array.from({ length: maxLength }, (_, i) => ({
       study_material_title: input.study_material_title[i] || "",
       study_material_desc: input.study_material_desc[i] || "",
-      id: Math.floor(Math.random() * 1000000).toString()
+      id1: Math.floor(Math.random() * 1000000).toString()
     }));
   }
 
@@ -51,7 +51,7 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
   }
 
   const handleAdd = () => {
-    setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
+    setTableData([...tableData, { ...formData, id1: Math.floor(Math.random() * 1000000).toString() }])
     setFormData({})
   }
 
@@ -60,15 +60,15 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
     setFormData(row)
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = (id1) => {
     let data = [...tableData]
-    let newData = data?.filter(v => v?.id != id)
+    let newData = data?.filter(v => v?.id1 != id1)
     setTableData(newData)
   }
 
   const handleUpdate = () => {
     let data = [...tableData]
-    let newData = data?.map(v => v?.id == editData?.id ? formData : v)
+    let newData = data?.map(v => v?.id1 == editData?.id1 ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
@@ -98,7 +98,7 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData?.length > 0 && <Box overflow={"hidden"}>
-        <TableContainer component={Box} id="step4" style={{
+        <TableContainer component={Box} id1="step4" style={{
           // maxHeight: '600px ', // Fixed height for vertical scroll
           maxWidth: '100%', // Optional: Limit the width if necessary
           overflowX: 'auto', // Enable horizontal scrolling only inside the table container
@@ -121,18 +121,18 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
             </TableHead>
 
             <TableBody>
-              {tableData?.map((row, id) => (
+              {tableData?.map((row, id1) => (
                 <TableRow
                   hover
-                  key={id}
+                  key={id1}
                   style={{ textAlign: "left" }}>
-                  <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{id1 + 1}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.study_material_title}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.study_material_desc}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }}><Typography color={'white'} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2} onClick={() => handleDelete(row?.id)} style={{ cursor: "pointer" }}><Typography color={'white'} >Delete</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2} onClick={() => handleDelete(row?.id1)} style={{ cursor: "pointer" }}><Typography color={'white'} >Delete</Typography></Box>
                     </Box>
                   </TableCell>
 

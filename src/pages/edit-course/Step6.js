@@ -37,7 +37,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     return Array.from({ length: maxLength }, (_, i) => ({
       image_titles: input.image_titles[i] || "",
       image_descriptions: input.image_descriptions[i] || "",
-      id: Math.floor(Math.random() * 1000000).toString()
+      id1: Math.floor(Math.random() * 1000000).toString()
     }));
   }
   function transformData2(input) {
@@ -47,7 +47,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       market_short_video: input.market_short_video[i] || "",
       market_short_title: input.market_short_title[i] || "",
       market_short_desc: input.market_short_desc[i] || "",
-      id: Math.floor(Math.random() * 1000000).toString()
+      id1: Math.floor(Math.random() * 1000000).toString()
     }));
   }
   function transformData3(input) {
@@ -57,7 +57,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       market_brochure_link: input.market_brochure_link[i] || "",
       market_brochure_title: input.market_brochure_title[i] || "",
       market_brochure_desc: input.market_brochure_desc[i] || "",
-      id: Math.floor(Math.random() * 1000000).toString()
+      id1: Math.floor(Math.random() * 1000000).toString()
     }));
   }
 
@@ -107,7 +107,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd = () => {
-    setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
+    setTableData([...tableData, { ...formData, id1: Math.floor(Math.random() * 1000000).toString() }])
     setFormData({})
   }
 
@@ -116,15 +116,15 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     setFormData(row)
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = (id1) => {
     let data = [...tableData]
-    let newData = data?.filter(v => v?.id != id)
+    let newData = data?.filter(v => v?.id1 != id1)
     setTableData(newData)
   }
 
   const handleUpdate = () => {
     let data = [...tableData]
-    let newData = data?.map(v => v?.id == editData?.id ? formData : v)
+    let newData = data?.map(v => v?.id1 == editData?.id1 ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
@@ -145,7 +145,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd2 = () => {
-    setTableData2([...tableData2, { ...formData2, id: Math.floor(Math.random() * 1000000).toString() }])
+    setTableData2([...tableData2, { ...formData2, id1: Math.floor(Math.random() * 1000000).toString() }])
     setFormData2({})
   }
 
@@ -154,15 +154,15 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     setFormData2(row)
   }
 
-  const handleDelete2 = (id) => {
+  const handleDelete2 = (id1) => {
     let data = [...tableData2]
-    let newData = data?.filter(v => v?.id != id)
+    let newData = data?.filter(v => v?.id1 != id1)
     setTableData2(newData)
   }
 
   const handleUpdate2 = () => {
     let data = [...tableData2]
-    let newData = data?.map(v => v?.id == editData2?.id ? formData2 : v)
+    let newData = data?.map(v => v?.id1 == editData2?.id1 ? formData2 : v)
     setTableData2(newData)
     setEditData2({})
     setFormData2({})
@@ -183,7 +183,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd3 = () => {
-    setTableData3([...tableData3, { ...formData3, id: Math.floor(Math.random() * 1000000).toString() }])
+    setTableData3([...tableData3, { ...formData3, id1: Math.floor(Math.random() * 1000000).toString() }])
     setFormData3({})
   }
 
@@ -192,15 +192,15 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     setFormData3(row)
   }
 
-  const handleDelete3 = (id) => {
+  const handleDelete3 = (id1) => {
     let data = [...tableData3]
-    let newData = data?.filter(v => v?.id != id)
+    let newData = data?.filter(v => v?.id1 != id1)
     setTableData3(newData)
   }
 
   const handleUpdate3 = () => {
     let data = [...tableData3]
-    let newData = data?.map(v => v?.id == editData3?.id ? formData3 : v)
+    let newData = data?.map(v => v?.id1 == editData3?.id1 ? formData3 : v)
     setTableData3(newData)
     setEditData3({})
     setFormData3({})
@@ -229,7 +229,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData?.length > 0 && <Box overflow={"hidden"} mb={3}>
-        <TableContainer component={Box} id="step4" style={{
+        <TableContainer component={Box} id1="step4" style={{
           // maxHeight: '600px ', // Fixed height for vertical scroll
           maxWidth: '100%', // Optional: Limit the width if necessary
           overflowX: 'auto', // Enable horizontal scrolling only inside the table container
@@ -252,18 +252,18 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             </TableHead>
 
             <TableBody>
-              {tableData?.map((row, id) => (
+              {tableData?.map((row, id1) => (
                 <TableRow
                   hover
-                  key={id}
+                  key={id1}
                   style={{ textAlign: "left" }}>
-                  <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{id1 + 1}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.image_titles}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.image_descriptions}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(row?.id)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(row?.id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
                   </TableCell>
 
@@ -293,7 +293,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       {/* <Title title={"Upload Marketing Videos"} />
       <HiddenInput
         type="file"
-        id="file-upload"
+        id1="file-upload"
         onChange={handleFileUpload}
       />
       <label htmlFor="file-upload" style={{width : "500px", display : "block", marginBottom : "30px"}}>
@@ -325,7 +325,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd2} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData2?.length > 0 && <Box overflow={"hidden"} mb={3}>
-        <TableContainer component={Box} id="step4" style={{
+        <TableContainer component={Box} id1="step4" style={{
           // maxHeight: '600px ', // Fixed height for vertical scroll
           maxWidth: '100%', // Optional: Limit the width if necessary
           overflowX: 'auto', // Enable horizontal scrolling only inside the table container
@@ -348,18 +348,18 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             </TableHead>
 
             <TableBody>
-              {tableData2?.map((row, id) => (
+              {tableData2?.map((row, id1) => (
                 <TableRow
                   hover
-                  key={id}
+                  key={id1}
                   style={{ textAlign: "left" }}>
-                  <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{id1 + 1}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.market_short_title}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.market_short_video}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit2(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete2(row?.id)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete2(row?.id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
                   </TableCell>
 
@@ -406,7 +406,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd3} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData3?.length > 0 && <Box overflow={"hidden"}>
-        <TableContainer component={Box} id="step4" style={{
+        <TableContainer component={Box} id1="step4" style={{
           // maxHeight: '600px ', // Fixed height for vertical scroll
           maxWidth: '100%', // Optional: Limit the width if necessary
           overflowX: 'auto', // Enable horizontal scrolling only inside the table container
@@ -429,18 +429,18 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             </TableHead>
 
             <TableBody>
-              {tableData3?.map((row, id) => (
+              {tableData3?.map((row, id1) => (
                 <TableRow
                   hover
-                  key={id}
+                  key={id1}
                   style={{ textAlign: "left" }}>
-                  <TableCell style={{ borderRight: "none" }} align="left">{id + 1}</TableCell>
+                  <TableCell style={{ borderRight: "none" }} align="left">{id1 + 1}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.market_brochure_title}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.market_brochure_desc}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
                       <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit3(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete3(row?.id)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete3(row?.id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
                   </TableCell>
 
