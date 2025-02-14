@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import Cookies from "js-cookie";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 const IconWrapper = styled('div')(({ theme }) => ({
   textAlign: 'center',
@@ -51,8 +52,12 @@ const Step2 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
+      if(!formData?.offer_poster || !formData?.gst_amount || !formData?.gst_name || !formData?.gst_number || !formData?.academy_address || !formData?.company_marketing_fee || !formData?.tutor_percentage || !formData?.slotting_fee || !formData?.course_amount || !formData?.market_price){
+        toast.error("Please fill all the fields")
+      }else{
       setFormDataMain({ ...formDataMain, ...formData,marketing_fee_type :'Percentage' })
       setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {

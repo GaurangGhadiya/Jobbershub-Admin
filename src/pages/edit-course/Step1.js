@@ -11,6 +11,7 @@ import Image from 'next/image';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import axios from 'axios';
 import Cookies from "js-cookie";
+import toast from 'react-hot-toast';
 
 
 const IconWrapper = styled('div')(({ theme }) => ({
@@ -95,8 +96,14 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
-      setFormDataMain({ ...formDataMain, ...formData })
-      setStep(step + 1)
+      if(!formData?.photo || !formData?.sub_category_id || !formData?.courses_name || !formData?.tutor_name || !formData?.course_validity || !formData?.language || !formData?.total_chapter || !formData?.description){
+        toast.error("Please fill all the fields")
+
+      }else{
+
+        setFormDataMain({ ...formDataMain, ...formData })
+        setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {
