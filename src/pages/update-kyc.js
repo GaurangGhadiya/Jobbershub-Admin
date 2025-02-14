@@ -1,363 +1,387 @@
-"use client"
-import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import api from "../../utils/api";
-import withAuth from "../../utils/withAuth";
-import { callAlert } from "../../redux/actions/alert";
-import Layout from "@/components/Dashboard/layout";
-import { Grid,Paper,TableContainer, FormControl, InputLabel, Select, MenuItem,Button,Link } from "@mui/material";
-import { Typography,Divider,Box,TextField} from "@mui/material";
-import { useRouter } from 'next/router';
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
-import { DataEncrypt, DataDecrypt } from '../../utils/encryption';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { styled } from '@mui/material/styles';
+import Layout from '@/components/Layout/Layout'
+import TextFieldComponent from '@/components/TextFieldComponent'
+import Title from '@/components/Title'
+import { Box, Grid, styled, Typography } from '@mui/material'
+import Image from 'next/image'
+import React, { useState } from 'react'
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import toast from 'react-hot-toast'
+import Cookies from "js-cookie";
+import objectToFormData from '../../utils/JsonToFormData'
+import axios from 'axios'
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
+import dayjs from 'dayjs'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { useRouter } from 'next/router'
 
-function TransactionHistory(props) {
-    const VisuallyHiddenInput = styled('input')({
-        clip: 'rect(0 0 0 0)',
-        clipPath: 'inset(50%)',
-        height: 10,
-        overflow: 'hidden',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        whiteSpace: 'nowrap',
-        width: 10,
-      });
-    const [showServiceTrans, setShowServiceTrans] = useState({});
-    const dispatch = useDispatch();
-    const router = useRouter();
-    const { id,kyc_id } = router.query;
 
-    const [pan, setPan] = useState('');
-    const [aadhar_number, setaadhar_number] = useState('');
-    const [aadhar_name, setaadhar_name] = useState('');
-    const [account_number, setaccount_number] = useState('');
-    const [status, setstatus] = useState('');
-    const [account_holder, setaccount_holder] = useState('');
-    const [ifsc_code, setifsc_code] = useState('');
-    const [nominee_name, setnominee_name] = useState('');
-    const [nominee_relation, setnominee_relation] = useState('');
-    const [address, setaddress] = useState('');
-    const [bank_name, setbank_name] = useState('');
+const IconWrapper = styled('div')(({ theme }) => ({
+    textAlign: 'center',
+    width: '100%',
+    height: '100%',
+    border: "2px dotted #FF9F59",
+    cursor: 'pointer',
+    // paddingTop: "30px"
+    display: "flex",
+    alignItems : "center",
+    justifyContent: "center",
+    flexDirection: "column"
+}));
 
-    const [panImage, setPanImage] = useState('');
-    const [aadhaarFImage, setAadhaarFImage] = useState('');
-    const [aadhaarBImage, setAadhaarBImage] = useState('');
-    const [passbookImage, setPassbookImage] = useState('');
+const HiddenInput = styled('input')({
+    display: 'none',
+});
 
-    const [selectedPanFile, setSelectedPanFile] = useState(null);
-    const [selectedAadharFFile, setSelectedAadharFFile] = useState(null);
-    const [selectedAadharBFile, setSelectedAadharBFile] = useState(null);
-    const [selectedPassbookFile, setSelectedPassbookFile] = useState(null);
-    
-    let rows;
 
-    if (showServiceTrans && showServiceTrans.length > 0) {
-        rows = [
-            ...showServiceTrans
-        ];
-    } else {
-        rows = [];
+const UpdateKYC = () => {
+    const router = useRouter()
+    const [viewData, setViewData] = React.useState({})
+    const [loading, setLoading] = useState(false)
+
+    const handleChange = (e) => {
+        console.log(e)
+        if (e.target.type == "file") {
+            const { name } = e.target
+            console.log('name', name)
+            const file = event.target.files[0];
+            if (file) {
+                setViewData({ ...viewData, [name]: file })
+            }
+        } else {
+            const { name, value } = e.target
+
+            setViewData({ ...viewData, [name]: value })
+        }
     }
 
-    const handlePanFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedPanFile(file);
-    };
-    const handleAadharFFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedAadharFFile(file);
-    };
-    const handleAadharBFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedAadharBFile(file);
-    };
-    const handlePassbookFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedPassbookFile(file);
-    };
+    console.log('viewData', viewData)
 
-    const handleLinkClick = (img) => {
-        window.open(`${process.env.NEXT_PUBLIC_API_BASE_URL}${img}`, '_blank', 'noopener,noreferrer');
-      };
+    const onUpdateKYC =async () => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/seller/7375d0556b4fdfc776b111b0e396a13cd2a59bb9`, objectToFormData({...viewData, seller_id : Cookies.get('uid')})).then(async (res) => {
+            console.log('api response', res?.data?.data)
+            setLoading(false)
+            setViewData({})
+router.push("/seller")
+            toast.success(res?.data?.message || 'Course Added Successfully')
 
-    useEffect(() => {
-       
-        const all_parameters = {
-            "user_id": id
-        }
-        const encryptedData = DataEncrypt(JSON.stringify(all_parameters));
-
-        const getTnx = async () => {
-          const reqData = {
-            encReq: encryptedData
-          };
-          try {
-            const response = await api.post('/api/users/get-kyc', reqData);
-            if (response.status === 200) {
-                const decryptedObject = DataDecrypt(response.data);
-              
-                setPan(decryptedObject.data.pan_number);
-                setaadhar_number(decryptedObject.data.aadhar_number);
-                setaccount_number(decryptedObject.data.account_number);
-                setaccount_holder(decryptedObject.data.account_holder);
-                setifsc_code(decryptedObject.data.ifsc_code);
-                setaadhar_name(decryptedObject.data.name_as_on_aadhar)
-                //setnominee_name(decryptedObject.data.nominee_name);
-                setstatus(decryptedObject.data.status);
-                //setnominee_relation(decryptedObject.data.nominee_relation);
-                setaddress(decryptedObject.data.address);
-                setbank_name(decryptedObject.data.bank_name);
-                setPanImage(decryptedObject.data.panImage)
-                setAadhaarFImage(decryptedObject.data.aadharImage)
-                setAadhaarBImage(decryptedObject.data.aadharBackImage)
-                setPassbookImage(decryptedObject.data.checkbookImage)
-           
-            }
-          } catch (error) {
-            if (error?.response?.data?.error) {
-              dispatch(callAlert({ message: error.response.data.error, type: 'FAILED' }));
-            } else {
-              dispatch(callAlert({ message: error.message, type: 'FAILED' }));
-            }
-          }
-        };
-    
-        if (id) {
-          getTnx();
-        }
-      }, [id, dispatch]);
-
-    const handleSubmit = async () => {
-        // alert(status);
-        
-            // const formData = new FormData();
-            // formData.append('img', selectedFile);
-            // formData.append('title', title);
-            // formData.append('categoryId',transactionType);
-
-            const formData ={
-                'kyc_id': kyc_id,
-                'user_id':id,
-                'pan':pan,
-                'aadhar_number':aadhar_number,
-                'account_number':account_number,
-                'account_holder':account_holder,
-                'ifsc_code':ifsc_code,
-                'nominee_name':nominee_name,
-                'nominee_relation':nominee_relation,
-                'address':address,
-                'bank_name': bank_name,
-                'name_as_on_aadhar': aadhar_name,
-                'panImage': selectedPanFile,
-                'aadharImage': selectedAadharFFile,
-                'aadharBackImage': selectedAadharBFile,
-                'chequeBookImage': selectedPassbookFile,
-            }
-
-        try {
-            const response = await api.post("/api/users/update-kyc", formData,{
-
-                headers:{'content-type': 'multipart/form-data'}
-              
-              
-              });
-            
-            if (response) {
-                window.history.back();
-                alert('Updated successfully');
-            } 
-
-        } catch (error) {
-            console.error('Error updating :', error);
-        }
-        
-        };
-          
-        // const priorityhandleChange = (event) => {
-        //     setpriority(event.target.value);
-        // };
-    
-        const statushandleChange = (event) => {
-            setstatus(event.target.value);
-        };
-
-
+        }).catch(e => {
+            setLoading(false)
+            toast.error(e.response?.data?.error || 'Something went wrong')
+            console.log('erro', e)
+        })
+    }
     return (
-
         <Layout>
-            <Grid
-                container
-                spacing={4}
-                sx={{ padding: 2 }}
-            >
-            
-            <Grid item={true} xs={12}   >
-              <TableContainer component={Paper} >
-                <Box display={'inline-block'} justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '40%', verticalAlign: 'top'}} >
-                    <Typography variant="h5"  sx={{ padding: 2 }}>KYC [Update] </Typography>
+            <Box p={2} style={{ backgroundColor: "#fff" }}>
+                <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+                    <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={"100%"}>
+                        <Typography color={'#464646'} fontSize={"18px"} fontWeight={600}>Update Your KYC</Typography>
+                    </Box>
                 </Box>
-                </TableContainer>
-            </Grid>
-            
-            
-                <Grid item={true} xs={12}   >
-                    <TableContainer component={Paper} >
-                        <Box justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '50%', verticalAlign: 'top', padding: '0 10px'}} >
-                            
-                            <TextField required  fullWidth label="Aadhar Full Name" variant="outlined" display={'inline-block'}
-                            value={aadhar_name} onChange={(e) => setaadhar_name(e.target.value)}  />
-                        </Box>
-                        <br/>
-                        <Box justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '50%', verticalAlign: 'top', padding: '0 10px'}} >
-                            
-                            <TextField required  fullWidth label="Aadhar Number" variant="outlined" display={'inline-block'}
-                            value={aadhar_number} onChange={(e) => setaadhar_number(e.target.value)}  />
-                        </Box>
-                        <br/>
 
-                        <Box justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '50%', verticalAlign: 'top', padding: '0 10px'}} >
-                            
-                            <TextField required  fullWidth label="Pan Number" variant="outlined" display={'inline-block'}
-                            value={pan}   onChange={(e) => setPan(e.target.value)} />
-                        </Box>
-                        
-                        <br/>
-                        <Box justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '50%', verticalAlign: 'top', padding: '0 10px'}} >
-                            
-                            <TextField required  fullWidth label="Account Number" variant="outlined" display={'inline-block'}
-                            value={account_number} onChange={(e) => setaccount_number(e.target.value)}  />
-                        </Box>
-                        <br/>
-                        <Box justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '50%', verticalAlign: 'top', padding: '0 10px'}} >
-                            
-                            <TextField required  fullWidth label="Account Holder" variant="outlined" display={'inline-block'}
-                            value={account_holder} onChange={(e) => setaccount_holder(e.target.value)}  />
-                        </Box>
-                        <br/>
-                        <Box justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '50%', verticalAlign: 'top', padding: '0 10px'}} >
-                            
-                            <TextField required  fullWidth label=" Ifsc Code" variant="outlined" display={'inline-block'}
-                            value={ifsc_code} onChange={(e) => setifsc_code(e.target.value)}  />
-                        </Box>
-                        <br/>
-                        {/* <Box justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '50%', verticalAlign: 'top', padding: '0 10px'}} >
-                            
-                            <TextField required  fullWidth label="Nominee Name" variant="outlined" display={'inline-block'}
-                            value={nominee_name} onChange={(e) => setnominee_name(e.target.value)}  />
-                        </Box> */}
+                <>
+                    {/* <Typography color={'#464646'} fontSize={"16px"} mt={2}>Personal KYC Detail</Typography> */}
+                    <Grid container spacing={2} mt={0} p={2}>
+                        <Grid item sx={12} sm={3} boxShadow={'0px 2px 10px 0px #00000040'} borderRadius={"6px"}>
+                            <Typography color={'#464646'} fontSize={"16px"} >Identity information</Typography>
+                            <Grid container spacing={2} mt={0} pr={2} pb={2}>
+                                <Grid sm={12} item>
+                                    <Title title={"Pan Card "} />
+                                    <TextFieldComponent
+                                        name="pan_number"
+                                        value={viewData?.pan_number || ""}
+                                        onChange={handleChange}
 
-                        <Box justifyContent={'space-between'} alignItems={'right'} mt={1} mb={1} style={{width: '50%', verticalAlign: 'top', padding: '0 10px'}} >
-                            
-                            <TextField required  fullWidth label="Bank Name" variant="outlined" display={'inline-block'}
-                            value={bank_name} onChange={(e) => setbank_name(e.target.value)}  />
-                        </Box>
-                        <br/>
-                        
-                        <Box justifyContent={'space-between'} alignItems={'right'} mt={3} ml={2} mb={0} style={{width: '50%', verticalAlign: 'top'}} >
-                        
-                        <TextareaAutosize  fullWidth
-                                label="Address" 
-                                minRows={1}
-                                size="normal"
-                                variant="outlined"
-                                placeholder="Address" 
-                                style={{height: '90px', width:'968px', border: '1px solid #ced4da', borderRadius: '4px', padding: '10px' }}
-                                value={address}
-                                onChange={(e) => setaddress(e.target.value)}
-                        /> 
-                        </Box>
+                                        placeholder=''
+                                    />
+                                </Grid>
+                                <Grid sm={12} item>
+                                    <Title title={"Aadhar Card"} />
+                                    <TextFieldComponent
+                                        name="aadhar_number"
+                                        value={viewData?.aadhar_number || ""}
+                                        onChange={handleChange}
 
-                        <br />
-                        
-                        <Box display="inline-block" justifyContent="space-between" alignItems="right" mt={3} ml={2} mb={2} sx={{ width: '70%',      verticalAlign: 'top' }}>
-                                
-                                <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                                Pan Image
-                                <VisuallyHiddenInput type="file" onChange={(event) => handlePanFileChange(event)} />
-                                </Button>
-                                {selectedPanFile && (
-                                <Typography variant="body2" sx={{ marginTop: 1, width: 'auto', display: 'inline-block', marginLeft: '10px' }}>
-                                    {selectedPanFile.name}
-                                </Typography>
-                                )}
-                                {panImage && (
-                                    <Link href="#" onClick={() => handleLinkClick(panImage)} ml={2}>View</Link>
-                                )}
-                                
-                        </Box>
+                                        placeholder=''
+                                    />
+                                </Grid>
+                                <Grid sm={12} item>
+                                    <Title title={"Name As Per Aadhar Card"} />
+                                    <TextFieldComponent
+                                        name="name_as_on_aadhar"
+                                        value={viewData?.name_as_on_aadhar || ""}
+                                        onChange={handleChange}
 
-                        <Box display="inline-block" justifyContent="space-between" alignItems="right" mt={3} ml={2} mb={2} sx={{ width: '70%',      verticalAlign: 'top' }}>
-                                
-                                <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                                AADHAR(Front)
-                                <VisuallyHiddenInput type="file" onChange={(event) => handleAadharFFileChange(event)} />
-                                </Button>
-                                {selectedAadharFFile && (
-                                <Typography variant="body2" sx={{ marginTop: 1, width: 'auto', display: 'inline-block', marginLeft: '10px' }}>
-                                    {selectedAadharFFile.name}
-                                </Typography>
-                                )}
-                                {aadhaarFImage && (
-                                    <Link href="#" onClick={() => handleLinkClick(aadhaarFImage)} ml={2}>View</Link>
-                                )}
-                                
-                        </Box>
+                                        placeholder=''
+                                    />
+                                </Grid>
+                            </Grid>
 
-                        <Box display="inline-block" justifyContent="space-between" alignItems="right" mt={3} ml={2} mb={2} sx={{ width: '70%',      verticalAlign: 'top' }}>
-                                
-                                <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                                AADHAR(Back)
-                                <VisuallyHiddenInput type="file" onChange={(event) => handleAadharBFileChange(event)} />
-                                </Button>
-                                {selectedAadharBFile && (
-                                <Typography variant="body2" sx={{ marginTop: 1, width: 'auto', display: 'inline-block', marginLeft: '10px' }}>
-                                    {selectedAadharBFile.name}
-                                </Typography>
-                                )}
-                                {aadhaarBImage && (
-                                    <Link href="#" onClick={() => handleLinkClick(aadhaarBImage)} ml={2}>View</Link>
-                                )}
-                                
-                        </Box>
 
-                        <Box display="inline-block" justifyContent="space-between" alignItems="right" mt={3} ml={2} mb={2} sx={{ width: '70%',      verticalAlign: 'top' }}>
-                                
-                                <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                                PASSBOOK
-                                <VisuallyHiddenInput type="file" onChange={(event) => handlePassbookFileChange(event)} />
-                                </Button>
-                                {selectedPassbookFile && (
-                                <Typography variant="body2" sx={{ marginTop: 1, width: 'auto', display: 'inline-block', marginLeft: '10px' }}>
-                                    {selectedPassbookFile.name}
-                                </Typography>
-                                )}
-
-                                {passbookImage && (
-                                    <Link href="#" onClick={() => handleLinkClick(passbookImage)} ml={2}>View</Link>
-                                )}
-                                
-                        </Box>
-                        
-
-                        <br /><br />
-                        <Grid item>
-                            <Box display="flex" justifyContent="flex-first" mr={2}  mt={1} ml={2} mb={1} >
-                            <Button variant="contained" color="success" size="medium" onClick={handleSubmit}>
-                                Update
-                            </Button>
-                            </Box>   
                         </Grid>
-                        <br /><br /><br /><br /><br />
-                    </TableContainer>
-                </Grid>
-            </Grid>
+                        <Grid item sx={12} sm={0.3}></Grid>
+                        <Grid item sx={12} sm={8.7} boxShadow={'0px 2px 10px 0px #00000040'} borderRadius={"6px"}>
+                            <Typography color={'#464646'} fontSize={"16px"} >Bank information</Typography>
+                            <Box>
+                                <Grid container spacing={2} mt={0} pr={2} pb={2}>
+                                    <Grid sm={4} item>
+                                        <Title title={"Account Holder Name "} />
+                                        <TextFieldComponent
+                                            name="account_holder"
+                                            value={viewData?.account_holder || ""}
+                                            onChange={handleChange}
+
+                                            placeholder=''
+                                        />
+                                    </Grid>
+                                    <Grid sm={4} item >
+                                        <Title title={"Account Number"} />
+                                        <TextFieldComponent
+                                            name="account_number"
+                                            value={viewData?.account_number || ""}
+                                            onChange={handleChange}
+
+                                            placeholder=''
+                                        />
+                                    </Grid>
+                                    <Grid sm={4} item >
+                                        <Title title={"Account Type"} />
+                                        <TextFieldComponent
+                                            name="account_type"
+                                            value={viewData?.account_type || ""}
+                                            onChange={handleChange}
+
+                                            placeholder=''
+                                        />
+                                    </Grid>
+                                    <Grid sm={4} item >
+                                        <Title title={"IFSC Code"} />
+                                        <TextFieldComponent
+                                            name="ifsc_code"
+                                            value={viewData?.ifsc_code || ""}
+                                            onChange={handleChange}
+
+                                            placeholder=''
+                                        />
+                                    </Grid>
+                                    <Grid sm={4} item >
+                                        <Title title={"Bank Name"} />
+                                        <TextFieldComponent
+                                            name="bank_name"
+                                            value={viewData?.bank_name || ""}
+                                            onChange={handleChange}
+
+                                            placeholder=''
+                                        />
+                                    </Grid>
+                                    <Grid sm={4} item >
+                                        <Title title={"Bank Branch"} />
+                                        <TextFieldComponent
+                                            name="bank_branch"
+                                            value={viewData?.bank_branch || ""}
+                                            onChange={handleChange}
+
+                                            placeholder=''
+                                        />
+                                    </Grid>
+                                    <Grid sm={4} item>
+                                    <Title title={"Birth Date"} />
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DesktopDatePicker format='DD-MM-YYYY'
+                                      slotProps={{
+                                        textField: {
+                                          sx: { 
+                                            borderRadius : "10px", // Adjust border radius
+                                            width: "100%",  // Adjust width
+                                            height: "40px",  // Adjust height (use inside inputProps)
+                                            "& .MuiInputBase-root": { height: "40px", borderRadius : "10px" }, 
+                                            "& input": { height: "40px", padding: "10px" , borderRadius : "10px" }, 
+                                          },
+                                        },
+                                      }}
+                                 value={viewData?.date_of_birth ? dayjs(viewData?.date_of_birth) :dayjs('2025-01-01')}
+                                onChange={(newValue) => setViewData({ ...viewData, date_of_birth : dayjs(newValue).format("YYYY-MM-DD")})}
+                                />
+                                </LocalizationProvider>
+                                </Grid>
+                                    <Grid sm={8} item>
+                                    <Title title={"Address"} />
+                                    <TextFieldComponent
+                                        name="address"
+                                        value={viewData?.address  || ""}
+                                        onChange={handleChange}
+
+                                        placeholder=''
+                                    />
+                                </Grid>
+                                </Grid>
+                            </Box>
+                        </Grid>        </Grid>
+
+
+
+                    <Grid container spacing={2} mt={0} p={2}>
+                        <Grid item sx={12} sm={12} boxShadow={'0px 2px 10px 0px #00000040'} borderRadius={"6px"} >
+                            <Box display={"flex"} mb={2}>
+                                <Box width={"25%"}>
+
+                                    <Typography color={'#464646'} fontSize={"16px"} >Pan Card Image</Typography>
+                                    <Box
+                                        backgroundColor={'#F7F5DD'}
+                                        borderRadius={"6px"}
+                                        height={226}
+                                        width={"90%"}
+                                        display="flex"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                    >
+                                        <HiddenInput
+                                            type="file"
+                                            id="file-upload"
+                                            name='panImage'
+                                            onChange={handleChange}
+                                        /> 
+                                          <label htmlFor="file-upload" style={{ width: "100%",height : "100%", display: "block", position: "relative" }}>
+                                            {!viewData?.panImage ? <IconWrapper>
+                                                <Image src="/Button.png" width={50} height={50} />
+                                                <Typography color={"#FF9F59"} fontSize={"14px"} fontWeight={300} mt={1}>choose image to upload</Typography>
+                                            </IconWrapper> :
+                                                <IconWrapper >
+                                                    {viewData?.panImage instanceof File && <Image src={URL.createObjectURL(viewData?.panImage)} width={250} height={145} style={{ height: "100%",width :"100%", marginTop: "0px", padding: "5px" }} />}
+                                                    <Box position="absolute" top={80} left={"20%"} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
+                                                        <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
+                                                        <Typography color={"#FF9F59"}>Chnage image</Typography>
+
+                                                    </Box>
+                                                </IconWrapper>}
+                                        </label>
+                                        {/* <Image
+                                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.panimage}`}
+                                            height={100}
+                                            width={100}
+                                            style={{ objectFit: "contain", height: "100%", width: "100%" }}
+                                        /> */}
+                                    </Box>
+
+                                </Box>
+                                <Box width={"25%"}>
+
+                                    <Typography color={'#464646'} fontSize={"16px"} >Aadhar Card Image</Typography>
+                                    <Box
+                                        backgroundColor={'#F7F5DD'}
+                                        borderRadius={"6px"}
+                                        height={226}
+                                        width={"90%"}
+                                        display="flex"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                    >
+                                       <HiddenInput
+                                            type="file"
+                                            id="file-upload2"
+                                            name='aadharImage'
+                                            onChange={handleChange}
+                                        /> 
+                                          <label htmlFor="file-upload2" style={{ width: "100%",height : "100%", display: "block", position: "relative" }}>
+                                            {!viewData?.aadharImage ? <IconWrapper>
+                                                <Image src="/Button.png" width={50} height={50} />
+                                                <Typography color={"#FF9F59"} fontSize={"14px"} fontWeight={300} mt={1}>choose image to upload</Typography>
+                                            </IconWrapper> :
+                                                <IconWrapper >
+                                                    {viewData?.aadharImage instanceof File && <Image src={URL.createObjectURL(viewData?.aadharImage)} width={250} height={145} style={{ height: "100%",width :"100%", marginTop: "0px", padding: "5px" }} />}
+                                                    <Box position="absolute" top={80} left={"20%"} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
+                                                        <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
+                                                        <Typography color={"#FF9F59"}>Chnage image</Typography>
+
+                                                    </Box>
+                                                </IconWrapper>}
+                                        </label>
+                                    </Box>
+
+                                </Box>
+                                <Box width={"25%"}>
+
+                                    <Typography color={'#464646'} fontSize={"16px"} >Aadhar Card back Image</Typography>
+                                    {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.checkbookimage}`} height={100} width={100} /> */}
+                                    <Box
+                                        backgroundColor={'#F7F5DD'}
+                                        borderRadius={"6px"}
+                                        height={226}
+                                        width={"90%"}
+                                        display="flex"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                    >
+                                      <HiddenInput
+                                            type="file"
+                                            id="file-upload3"
+                                            name='aadharBackImage'
+                                            onChange={handleChange}
+                                        /> 
+                                          <label htmlFor="file-upload3" style={{ width: "100%",height : "100%", display: "block", position: "relative" }}>
+                                            {!viewData?.aadharBackImage ? <IconWrapper>
+                                                <Image src="/Button.png" width={50} height={50} />
+                                                <Typography color={"#FF9F59"} fontSize={"14px"} fontWeight={300} mt={1}>choose image to upload</Typography>
+                                            </IconWrapper> :
+                                                <IconWrapper >
+                                                    {viewData?.aadharBackImage instanceof File && <Image src={URL.createObjectURL(viewData?.aadharBackImage)} width={250} height={145} style={{ height: "100%",width :"100%", marginTop: "0px", padding: "5px" }} />}
+                                                    <Box position="absolute" top={80} left={"20%"} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
+                                                        <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
+                                                        <Typography color={"#FF9F59"}>Chnage image</Typography>
+
+                                                    </Box>
+                                                </IconWrapper>}
+                                        </label>
+                                    </Box>
+                                </Box>
+                                <Box width={"25%"}>
+
+                                    <Typography color={'#464646'} fontSize={"16px"} >Bank Passbook Image</Typography>
+                                    {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.checkbookimage}`} height={100} width={100} /> */}
+                                    <Box
+                                        backgroundColor={'#F7F5DD'}
+                                        borderRadius={"6px"}
+                                        height={226}
+                                        width={"90%"}
+                                        display="flex"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                    >
+                                      <HiddenInput
+                                            type="file"
+                                            id="file-upload4"
+                                            name='chequeBookImage'
+                                            onChange={handleChange}
+                                        /> 
+                                          <label htmlFor="file-upload4" style={{ width: "100%",height : "100%", display: "block", position: "relative" }}>
+                                            {!viewData?.chequeBookImage ? <IconWrapper>
+                                                <Image src="/Button.png" width={50} height={50} />
+                                                <Typography color={"#FF9F59"} fontSize={"14px"} fontWeight={300} mt={1}>choose image to upload</Typography>
+                                            </IconWrapper> :
+                                                <IconWrapper >
+                                                    {viewData?.chequeBookImage instanceof File && <Image src={URL.createObjectURL(viewData?.chequeBookImage)} width={250} height={145} style={{ height: "100%",width :"100%", marginTop: "0px", padding: "5px" }} />}
+                                                    <Box position="absolute" top={80} left={"20%"} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
+                                                        <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
+                                                        <Typography color={"#FF9F59"}>Chnage image</Typography>
+
+                                                    </Box>
+                                                </IconWrapper>}
+                                        </label>
+                                    </Box>
+                                </Box>
+                            </Box>
+
+                        </Grid>
+                    </Grid>
+                </>
+                <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={"100%"} my={1}>
+                    <Box backgroundColor="#FE9204" borderRadius={"6px"} px={1} py={0.5} mx={2} style={{ cursor: "pointer" }} onClick={onUpdateKYC}>
+                        <Typography color={"white"} fontSize={16}>Update KYC</Typography>
+                    </Box>
+                </Box>
+            </Box>
         </Layout>
-
-
-    );
+    )
 }
-export default withAuth(TransactionHistory);
 
+export default UpdateKYC

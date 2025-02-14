@@ -97,7 +97,8 @@ function Layout(props) {
 
         setCurrentMenu(localStorage.getItem('currentMenu')?localStorage.getItem('currentMenu'):1);
 
-        const getMenus = JSON.parse(localStorage.getItem('menu'));
+        // const getMenus = localStorage.getItem('menu') ? JSON.parse(localStorage.getItem('menu')) : [];
+        const getMenus =  [];
         const menuMap = new Map();
         const newMenuArray = [];
 

@@ -50,6 +50,7 @@ import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { Message } from '@mui/icons-material';
 import MessageModal from '../Modals/MessageModal';
 import Cookies from "js-cookie";
+import { useRouter } from 'next/router';
 
 const drawerWidth = 320;
 const menu = [
@@ -290,6 +291,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Layout({ children }) {
   const theme = useTheme();
+  const router = useRouter()
   const [open, setOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [openMessageModal, setOpenMessageModal] = React.useState(false)
@@ -324,7 +326,7 @@ export default function Layout({ children }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const settings = ["Change Password", "Feedback to CEO", "Send Anonymous Feedback", "Reward & Recognitions", "Company Vision & Mission", "Company Milestone Calander", "Logout"];
+  const settings = ["Update KYC","Change Password", "Feedback to CEO", "Send Anonymous Feedback", "Reward & Recognitions", "Company Vision & Mission", "Company Milestone Calander", "Logout"];
   const handleFullScreen = () => {
     const element = document.documentElement; // Use the entire document or a specific element
     if (element.requestFullscreen) {
@@ -416,9 +418,9 @@ export default function Layout({ children }) {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                   >
-                    {settings.map((setting) => (
-                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                        <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                    {settings.map((setting, i) => (
+                      <MenuItem key={setting} onClick={() => {i == 0 ? router.push("/update-kyc") : handleCloseUserMenu()}}>
+                        <Typography sx={{ textAlign: 'center' }} >{setting}</Typography>
                       </MenuItem>
                     ))}
                   </Menu>
