@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import UploadIcon from '@mui/icons-material/CloudUpload';
 import Title from '@/components/Title';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 const IconWrapper = styled('div')(({ theme }) => ({
   textAlign: 'center',
@@ -36,10 +37,14 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
-      // setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnail : tableData?.map(v => v?.recorded_courses_thumbnail) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
-      setFormDataMain({ ...formDataMain, recorded_courses_obj : tableData})
-   
-      setStep(step + 1)
+      if(tableData?.length == 0){
+        toast.error("Please add atleast one course details")
+      }else{
+
+        // setFormDataMain({ ...formDataMain, recorded_courses_name : tableData?.map(v => v?.recorded_courses_name), recorded_courses_timeduration : tableData?.map(v => v?.recorded_courses_timeduration), recorded_courses_chapter : tableData?.map(v => v?.recorded_courses_chapter),recorded_courses_thumbnail : tableData?.map(v => v?.recorded_courses_thumbnail) , recorded_courses_video : tableData?.map(v => v?.recorded_courses_video)})
+        setFormDataMain({ ...formDataMain, recorded_courses_obj : tableData})
+        setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {
@@ -68,8 +73,13 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd = () => {
-    setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
-    setFormData({})
+    if(!formData?.recorded_courses_name|| !formData?.recorded_courses_timeduration|| !formData?.recorded_courses_chapter|| !formData?.recorded_courses_thumbnail|| !formData?.recorded_courses_video ){
+      toast.error("Please fill all the fields")
+    }else{
+
+      setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
+      setFormData({})
+    }
   }
 
   const handleEdit = (row) => {
@@ -84,11 +94,15 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   const handleUpdate = () => {
+    if(!formData?.recorded_courses_name|| !formData?.recorded_courses_timeduration|| !formData?.recorded_courses_chapter|| !formData?.recorded_courses_thumbnail|| !formData?.recorded_courses_video ){
+      toast.error("Please fill all the fields")
+    }else{
     let data = [...tableData]
     let newData = data?.map(v => v?.id == editData?.id ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
+    }
   }
   return (
     <>    <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>Recorded Course Videos</Typography>

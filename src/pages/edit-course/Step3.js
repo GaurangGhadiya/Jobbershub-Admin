@@ -10,6 +10,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { convertTimeToAmPm, formatDateslesh } from '../../../utils/formatDate';
+import toast from 'react-hot-toast';
 const Step3 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const route = useRouter()
   const [formData, setFormData] = useState({})
@@ -71,6 +72,9 @@ console.log('couponObject', couponObject,formDataMain)
     if (step == 8) {
 
     } else {
+      if(Object.keys(formData).length == 0){
+        toast.error("Please select atleast one coupon")
+      }else{
         // setFormDataMain({ ...formDataMain, coupon_id: "2"})
 
         const finalArray = courseList
@@ -84,6 +88,7 @@ console.log('couponObject', couponObject,formDataMain)
             // setFormDataMain({ ...formDataMain, coupon_id: Object.keys(formData), coupon_amount: selectedDiscounts })
             setFormDataMain({ ...formDataMain, coupon_obj : finalArray })
             setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {

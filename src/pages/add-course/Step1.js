@@ -222,6 +222,7 @@ const [sellerList, setSellerList] = useState([])
             value={formData?.total_chapter}
             onChange={handleChange}
             placeholder=''
+            type='number'
           />
          
         </Grid>

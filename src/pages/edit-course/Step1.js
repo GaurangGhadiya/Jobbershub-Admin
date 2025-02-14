@@ -229,6 +229,7 @@ const Step1 = ({ formDataMain, setFormDataMain, step, setStep }) => {
             value={formData?.total_chapter}
             onChange={handleChange}
             placeholder=''
+            type='number'
           />
 
         </Grid>

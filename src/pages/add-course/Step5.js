@@ -2,6 +2,7 @@ import TextFieldComponent from '@/components/TextFieldComponent'
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Step5 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const route = useRouter()
@@ -18,9 +19,14 @@ const Step5 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
-      // setFormDataMain({ ...formDataMain, courses_title: tableData?.map(v => v?.courses_title), courses_description: tableData?.map(v => v?.courses_description) })
-      setFormDataMain({ ...formDataMain, courses_description_obj : tableData})
-      setStep(step + 1)
+      if(tableData?.length == 0){
+        toast.error("Please add atleast one course details")
+      }else{
+
+        // setFormDataMain({ ...formDataMain, courses_title: tableData?.map(v => v?.courses_title), courses_description: tableData?.map(v => v?.courses_description) })
+        setFormDataMain({ ...formDataMain, courses_description_obj : tableData})
+        setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {
@@ -49,8 +55,13 @@ const Step5 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd = () => {
-    setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
-    setFormData({})
+    if(!formData?.courses_title || !formData?.courses_description){
+      toast.error("Please add title and description")
+    }else{
+
+      setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
+      setFormData({})
+    }
   }
 
   const handleEdit = (row) => {
@@ -65,11 +76,15 @@ const Step5 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   const handleUpdate = () => {
+    if(!formData?.courses_title || !formData?.courses_description){
+      toast.error("Please add title and description")
+    }else{
     let data = [...tableData]
     let newData = data?.map(v => v?.id == editData?.id ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
+    }
   }
   return (
     <>    <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>Create Details</Typography>

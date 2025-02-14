@@ -7,6 +7,7 @@ import TextFieldComponent from '@/components/TextFieldComponent';
 import { useRouter } from 'next/router';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 const IconWrapper = styled('div')(({ theme }) => ({
   textAlign: 'center',
@@ -37,9 +38,14 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
-      // setFormDataMain({ ...formDataMain, thumbnail: tableData?.map(v => v?.thumbnail), intro_video_link: tableData?.map(v => v?.intro_video_link) })
-      setFormDataMain({ ...formDataMain, intro_video_obj : tableData})
-      setStep(step + 1)
+      if(tableData?.length == 0){
+        toast.error("Please add atleast one thumbnail and video link")
+      }else{
+
+        // setFormDataMain({ ...formDataMain, thumbnail: tableData?.map(v => v?.thumbnail), intro_video_link: tableData?.map(v => v?.intro_video_link) })
+        setFormDataMain({ ...formDataMain, intro_video_obj : tableData})
+        setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {
@@ -68,8 +74,13 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd = () => {
-    setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
-    setFormData({})
+    if(!formData?.thumbnail || !formData?.intro_video_link){
+      toast.error("Please add thumbnail and video link")
+    }else{
+
+      setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
+      setFormData({})
+    }
   }
 
   const handleEdit = (row) => {
@@ -84,11 +95,15 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   const handleUpdate = () => {
+    if(!formData?.thumbnail || !formData?.intro_video_link){
+      toast.error("Please add thumbnail and video link")
+    }else{
     let data = [...tableData]
     let newData = data?.map(v => v?.id == editData?.id ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
+    }
   }
   return (
     <>

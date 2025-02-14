@@ -338,6 +338,20 @@ export default function Layout({ children }) {
     }
   };
 
+  const clearAllCookies = async() => {
+    const cookies =await Cookies.get(); // Get all cookies as an object
+    Object.keys(cookies).forEach(async(cookie) => {
+     await Cookies.remove(cookie, { path: '/' }); // Remove each cookie
+    });
+  };
+  
+
+  const logout = () => {
+
+clearAllCookies();
+    router.push("/login")
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -419,7 +433,12 @@ export default function Layout({ children }) {
                     onClose={handleCloseUserMenu}
                   >
                     {settings.map((setting, i) => (
-                      <MenuItem key={setting} onClick={() => {i == 0 ? router.push("/update-kyc") : handleCloseUserMenu()}}>
+                      <MenuItem key={setting} onClick={() =>
+                       {i == 0 ? router.push("/update-kyc")
+                         : i == 7 ? logout()
+                         : handleCloseUserMenu()}
+                       
+                       }>
                         <Typography sx={{ textAlign: 'center' }} >{setting}</Typography>
                       </MenuItem>
                     ))}

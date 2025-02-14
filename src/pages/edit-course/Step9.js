@@ -2,6 +2,7 @@ import TextFieldComponent from '@/components/TextFieldComponent'
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => {
   const route = useRouter()
@@ -29,9 +30,12 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
 
   const handleNext = () => {
     if (step == 8) {
+      if(tableData?.length == 0){
+        toast.error("Please add atleast one study material")
+      }else{
       setFormDataMain({ ...formDataMain, study_material_obj : tableData})
       finalSubmit({ ...formDataMain,  study_material_obj : tableData})
-
+      }
     } else {
       setFormDataMain({ ...formDataMain,  study_material_obj : tableData})
       setStep(step + 1)
@@ -51,8 +55,12 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
   }
 
   const handleAdd = () => {
+    if(!formData?.study_material_title || !formData?.study_material_desc){
+      toast.error("Please add title and description")
+    }else{
     setTableData([...tableData, { ...formData, id1: Math.floor(Math.random() * 1000000).toString() }])
     setFormData({})
+    }
   }
 
   const handleEdit = (row) => {
@@ -67,11 +75,15 @@ const Step9 = ({ formDataMain, setFormDataMain, step, setStep ,finalSubmit}) => 
   }
 
   const handleUpdate = () => {
+    if(!formData?.study_material_title || !formData?.study_material_desc){
+      toast.error("Please add title and description")
+    }else{
     let data = [...tableData]
     let newData = data?.map(v => v?.id1 == editData?.id1 ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
+    }
   }
 
   return (

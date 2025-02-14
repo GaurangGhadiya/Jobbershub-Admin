@@ -2,6 +2,7 @@ import TextFieldComponent from '@/components/TextFieldComponent'
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Step7 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const route = useRouter()
@@ -18,10 +19,14 @@ const Step7 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
-      // setFormDataMain({ ...formDataMain, faq_ans : tableData?.map(v => v?.faq_ans), faq_ques: tableData?.map(v => v?.faq_ques)})
-      setFormDataMain({ ...formDataMain, faq_obj : tableData})
-   
-      setStep(step + 1)
+      if(tableData?.length == 0){
+        toast.error("Please add atleast one FAQ")
+      }else{
+
+        // setFormDataMain({ ...formDataMain, faq_ans : tableData?.map(v => v?.faq_ans), faq_ques: tableData?.map(v => v?.faq_ques)})
+        setFormDataMain({ ...formDataMain, faq_obj : tableData})
+        setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {
@@ -38,8 +43,13 @@ const Step7 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   const handleAdd = () => {
-    setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
-    setFormData({})
+    if(!formData?.faq_ans || !formData?.faq_ques){
+      toast.error("Please add question and answer")
+    }else{
+
+      setTableData([...tableData, { ...formData, id: Math.floor(Math.random() * 1000000).toString() }])
+      setFormData({})
+    }
   }
 
   const handleEdit = (row) => {
@@ -54,11 +64,16 @@ const Step7 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   const handleUpdate = () => {
-    let data = [...tableData]
-    let newData = data?.map(v => v?.id == editData?.id ? formData : v)
-    setTableData(newData)
-    setEditData({})
-    setFormData({})
+    if(!formData?.faq_ans || !formData?.faq_ques){
+      toast.error("Please add question and answer")
+    }else{
+      
+      let data = [...tableData]
+      let newData = data?.map(v => v?.id == editData?.id ? formData : v)
+      setTableData(newData)
+      setEditData({})
+      setFormData({})
+    }
   }
   return (
     <>    <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>FAQ</Typography>

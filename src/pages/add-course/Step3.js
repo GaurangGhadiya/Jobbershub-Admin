@@ -10,6 +10,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { convertTimeToAmPm, formatDateslesh } from '../../../utils/formatDate';
+import toast from 'react-hot-toast';
 const Step3 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   const route = useRouter()
   const [formData, setFormData] = useState({})
@@ -59,19 +60,24 @@ const Step3 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
-      // setFormDataMain({ ...formDataMain, coupon_id: "2"})
+      if(Object.keys(formData).length == 0){
+        toast.error("Please select atleast one coupon")
+      }else{
 
-      const finalArray = courseList
-  .filter(course => formData[course.id]) // Keep only matching ids
-  .map(course => ({ coupon_id : course.id, coupon_amount : course.discount_val })); // Transform to required format
-
-      // const selectedDiscounts = courseList
-      //   .filter(course => formData[course.id])
-      //   .map(course => course.discount_val);
-      // console.log("courseList", courseList, formData, selectedDiscounts)
-      // setFormDataMain({ ...formDataMain, coupon_id: Object.keys(formData), coupon_amount: selectedDiscounts })
-      setFormDataMain({ ...formDataMain, coupon_obj : finalArray })
-      setStep(step + 1)
+        // setFormDataMain({ ...formDataMain, coupon_id: "2"})
+  
+        const finalArray = courseList
+    .filter(course => formData[course.id]) // Keep only matching ids
+    .map(course => ({ coupon_id : course.id, coupon_amount : course.discount_val })); // Transform to required format
+  
+        // const selectedDiscounts = courseList
+        //   .filter(course => formData[course.id])
+        //   .map(course => course.discount_val);
+        // console.log("courseList", courseList, formData, selectedDiscounts)
+        // setFormDataMain({ ...formDataMain, coupon_id: Object.keys(formData), coupon_amount: selectedDiscounts })
+        setFormDataMain({ ...formDataMain, coupon_obj : finalArray })
+        setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import UploadIcon from '@mui/icons-material/CloudUpload';
 import Title from '@/components/Title';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 
 const IconWrapper = styled('div')(({ theme }) => ({
@@ -78,9 +79,13 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     if (step == 8) {
 
     } else {
+      if(tableData?.length == 0 || tableData2?.length == 0 || tableData3?.length == 0){
+        toast.error("Please add atleast one marketing images, videos and brochures")
+      }else{
       // setFormDataMain({ ...formDataMain, image_titles: tableData?.map(v => v?.image_titles), image_descriptions: tableData?.map(v => v?.image_descriptions), market_short_video: tableData2?.map(v => v?.market_short_video), market_short_title: tableData2?.map(v => v?.market_short_title), market_short_desc: tableData2?.map(v => v?.market_short_desc), market_brochure_link: tableData3?.map(v => v?.market_brochure_link), market_brochure_title: tableData3?.map(v => v?.market_brochure_title), market_brochure_desc: tableData3?.map(v => v?.market_brochure_desc) })
       setFormDataMain({ ...formDataMain, marketing_images_obj : tableData, marketing_short_obj : tableData2, marketing_brochure_obj : tableData3})
       setStep(step + 1)
+      }
     }
   }
   const handleBack = () => {
@@ -107,8 +112,12 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd = () => {
+    if(!formData?.image_titles  || !formData?.image_descriptions ){
+      toast.error("Please add title and description")
+    } else{
     setTableData([...tableData, { ...formData, id1: Math.floor(Math.random() * 1000000).toString() }])
     setFormData({})
+    }
   }
 
   const handleEdit = (row) => {
@@ -123,11 +132,15 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   const handleUpdate = () => {
+    if(!formData?.image_titles  || !formData?.image_descriptions ){
+      toast.error("Please add title and description")
+    } else{
     let data = [...tableData]
     let newData = data?.map(v => v?.id1 == editData?.id1 ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
+    }
   }
   const handleChange2 = (e) => {
     console.log(e)
@@ -145,8 +158,12 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd2 = () => {
+    if(!formData2?.market_short_video || !formData2?.market_short_title || !formData2?.market_short_desc){
+      toast.error("Please add video link, title and description")
+    }else{
     setTableData2([...tableData2, { ...formData2, id1: Math.floor(Math.random() * 1000000).toString() }])
     setFormData2({})
+    }
   }
 
   const handleEdit2 = (row) => {
@@ -161,11 +178,15 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   const handleUpdate2 = () => {
+    if(!formData2?.market_short_video || !formData2?.market_short_title || !formData2?.market_short_desc){
+      toast.error("Please add video link, title and description")
+    }else{
     let data = [...tableData2]
     let newData = data?.map(v => v?.id1 == editData2?.id1 ? formData2 : v)
     setTableData2(newData)
     setEditData2({})
     setFormData2({})
+    }
   }
   const handleChange3 = (e) => {
     console.log(e)
@@ -183,8 +204,12 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd3 = () => {
+    if(!formData3?.market_brochure_link || !formData3?.market_brochure_title || !formData3?.market_brochure_desc){
+      toast.error("Please add video link, title and description")
+    }else{
     setTableData3([...tableData3, { ...formData3, id1: Math.floor(Math.random() * 1000000).toString() }])
     setFormData3({})
+    }
   }
 
   const handleEdit3 = (row) => {
@@ -199,11 +224,15 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
   }
 
   const handleUpdate3 = () => {
+    if(!formData3?.market_brochure_link || !formData3?.market_brochure_title || !formData3?.market_brochure_desc){
+      toast.error("Please add video link, title and description")
+    }else{
     let data = [...tableData3]
     let newData = data?.map(v => v?.id1 == editData3?.id1 ? formData3 : v)
     setTableData3(newData)
     setEditData3({})
     setFormData3({})
+    }
   }
   return (
     <>    <Typography color={"#FF8C38"} fontSize={16} fontWeight={600} mb={2}>1.Marketing Images</Typography>
