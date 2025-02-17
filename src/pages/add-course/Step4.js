@@ -125,7 +125,7 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                 {formData?.thumbnail instanceof File && <Image src={URL.createObjectURL(formData?.thumbnail)} width={250} height={145} style={{ height: "145px", marginTop: "-30px", padding: "5px" }} />}
                 <Box position="absolute" top={40} left={33} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
                   <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
-                  <Typography color={"#FF9F59"}>Chnage image</Typography>
+                  <Typography color={"#FF9F59"}>Change image</Typography>
 
                 </Box>
               </IconWrapper>}

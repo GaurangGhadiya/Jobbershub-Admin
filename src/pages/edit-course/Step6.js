@@ -120,14 +120,14 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     }
   }
 
-  const handleEdit = (row) => {
-    setEditData(row)
+  const handleEdit = (row, id1) => {
+    setEditData(id1)
     setFormData(row)
   }
 
   const handleDelete = (id1) => {
     let data = [...tableData]
-    let newData = data?.filter(v => v?.id1 != id1)
+    let newData = data?.filter((v,i) => i != id1)
     setTableData(newData)
   }
 
@@ -136,7 +136,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       toast.error("Please add title and description")
     } else{
     let data = [...tableData]
-    let newData = data?.map(v => v?.id1 == editData?.id1 ? formData : v)
+    let newData = data?.map((v,i) => i == editData ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
@@ -166,14 +166,14 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     }
   }
 
-  const handleEdit2 = (row) => {
-    setEditData2(row)
+  const handleEdit2 = (row,id1) => {
+    setEditData2(id1)
     setFormData2(row)
   }
 
   const handleDelete2 = (id1) => {
     let data = [...tableData2]
-    let newData = data?.filter(v => v?.id1 != id1)
+    let newData = data?.filter((v,i) => i != id1)
     setTableData2(newData)
   }
 
@@ -182,7 +182,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       toast.error("Please add video link, title and description")
     }else{
     let data = [...tableData2]
-    let newData = data?.map(v => v?.id1 == editData2?.id1 ? formData2 : v)
+    let newData = data?.map((v,i) => i == editData2 ? formData2 : v)
     setTableData2(newData)
     setEditData2({})
     setFormData2({})
@@ -212,14 +212,14 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     }
   }
 
-  const handleEdit3 = (row) => {
-    setEditData3(row)
+  const handleEdit3 = (row,id1) => {
+    setEditData3(id1)
     setFormData3(row)
   }
 
   const handleDelete3 = (id1) => {
     let data = [...tableData3]
-    let newData = data?.filter(v => v?.id1 != id1)
+    let newData = data?.filter((v,i) => i != id1)
     setTableData3(newData)
   }
 
@@ -228,7 +228,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       toast.error("Please add video link, title and description")
     }else{
     let data = [...tableData3]
-    let newData = data?.map(v => v?.id1 == editData3?.id1 ? formData3 : v)
+    let newData = data?.map((v,i) => i == editData3 ? formData3 : v)
     setTableData3(newData)
     setEditData3({})
     setFormData3({})
@@ -254,7 +254,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
         placeholder='Description'
       />
 
-      {editData?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
+      {(typeof editData == "number")? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData?.length > 0 && <Box overflow={"hidden"} mb={3}>
@@ -291,8 +291,8 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.image_descriptions}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
-                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(row?.id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row, id1)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
                   </TableCell>
 
@@ -350,7 +350,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
         placeholder='Description'
       />
 
-      {editData2?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate2} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
+      {(typeof editData2 == "number") ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate2} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd2} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData2?.length > 0 && <Box overflow={"hidden"} mb={3}>
@@ -387,8 +387,8 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.market_short_video}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
-                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit2(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete2(row?.id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit2(row,id1)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete2(id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
                   </TableCell>
 
@@ -431,7 +431,7 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
         placeholder='Description'
       />
 
-      {editData3?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate3} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
+      {(typeof editData3 == "number") ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate3} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd3} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData3?.length > 0 && <Box overflow={"hidden"}>
@@ -468,8 +468,8 @@ const Step6 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.market_brochure_desc}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
-                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit3(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete3(row?.id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit3(row,id1)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete3(id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
                   </TableCell>
 

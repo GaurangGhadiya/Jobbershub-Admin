@@ -250,7 +250,7 @@ router.push("/seller")
                                                     {viewData?.panImage instanceof File && <Image src={URL.createObjectURL(viewData?.panImage)} width={250} height={145} style={{ height: "100%",width :"100%", marginTop: "0px", padding: "5px" }} />}
                                                     <Box position="absolute" top={80} left={"20%"} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
                                                         <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
-                                                        <Typography color={"#FF9F59"}>Chnage image</Typography>
+                                                        <Typography color={"#FF9F59"}>Change image</Typography>
 
                                                     </Box>
                                                 </IconWrapper>}
@@ -291,7 +291,7 @@ router.push("/seller")
                                                     {viewData?.aadharImage instanceof File && <Image src={URL.createObjectURL(viewData?.aadharImage)} width={250} height={145} style={{ height: "100%",width :"100%", marginTop: "0px", padding: "5px" }} />}
                                                     <Box position="absolute" top={80} left={"20%"} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
                                                         <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
-                                                        <Typography color={"#FF9F59"}>Chnage image</Typography>
+                                                        <Typography color={"#FF9F59"}>Change image</Typography>
 
                                                     </Box>
                                                 </IconWrapper>}
@@ -327,7 +327,7 @@ router.push("/seller")
                                                     {viewData?.aadharBackImage instanceof File && <Image src={URL.createObjectURL(viewData?.aadharBackImage)} width={250} height={145} style={{ height: "100%",width :"100%", marginTop: "0px", padding: "5px" }} />}
                                                     <Box position="absolute" top={80} left={"20%"} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
                                                         <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
-                                                        <Typography color={"#FF9F59"}>Chnage image</Typography>
+                                                        <Typography color={"#FF9F59"}>Change image</Typography>
 
                                                     </Box>
                                                 </IconWrapper>}
@@ -362,7 +362,7 @@ router.push("/seller")
                                                     {viewData?.chequeBookImage instanceof File && <Image src={URL.createObjectURL(viewData?.chequeBookImage)} width={250} height={145} style={{ height: "100%",width :"100%", marginTop: "0px", padding: "5px" }} />}
                                                     <Box position="absolute" top={80} left={"20%"} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
                                                         <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
-                                                        <Typography color={"#FF9F59"}>Chnage image</Typography>
+                                                        <Typography color={"#FF9F59"}>Change image</Typography>
 
                                                     </Box>
                                                 </IconWrapper>}

@@ -91,7 +91,7 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
   console.log('tableData', tableData)
   const handleAdd = () => {
-    if(!formData?.recorded_courses_name|| !formData?.recorded_courses_timeduration|| !formData?.recorded_courses_chapter|| !formData?.recorded_courses_thumbnail|| !formData?.recorded_courses_video ){
+    if(!formData?.recorded_courses_name|| !formData?.recorded_courses_timeduration|| !formData?.recorded_courses_chapter|| !formData?.recorded_courses_thumbnails|| !formData?.recorded_courses_video ){
       toast.error("Please fill all the fields")
     }else{
     setTableData([...tableData, { ...formData, id1: Math.floor(Math.random() * 1000000).toString() }])
@@ -99,23 +99,24 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     }
   }
 
-  const handleEdit = (row) => {
-    setEditData(row)
+  const handleEdit = (row,id) => {
+    setEditData(id)
     setFormData(row)
   }
 
   const handleDelete = (id1) => {
     let data = [...tableData]
-    let newData = data?.filter(v => v?.id1 != id1)
+    let newData = data?.filter((v,i) => i != id1)
     setTableData(newData)
   }
 
   const handleUpdate = () => {
-    if(!formData?.recorded_courses_name|| !formData?.recorded_courses_timeduration|| !formData?.recorded_courses_chapter|| !formData?.recorded_courses_thumbnail|| !formData?.recorded_courses_video ){
+    console.log('formData', formData)
+    if(!formData?.recorded_courses_name|| !formData?.recorded_courses_timeduration|| !formData?.recorded_courses_chapter|| !formData?.recorded_courses_thumbnails|| !formData?.recorded_courses_video ){
       toast.error("Please fill all the fields")
     }else{
     let data = [...tableData]
-    let newData = data?.map(v => v?.id1 == editData?.id1 ? formData : v)
+    let newData = data?.map((v,i) => i == editData ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
@@ -178,7 +179,7 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
               <IconWrapper >
                                 { <Image src={formData?.recorded_courses_thumbnails instanceof File  ? URL.createObjectURL(formData?.recorded_courses_thumbnails) : formData?.recorded_courses_thumbnails ? process.env.NEXT_PUBLIC_PHOTO_BASE_URL+"/course/"+formData?.recorded_courses_thumbnails : null} width={250} height={145} style={{ height: "145px", marginTop: "-30px", padding: "5px" }} />}
                 
-                {/* {formData?.recorded_courses_thumbnails instanceof File && <img src={URL.createObjectURL(formData?.recorded_courses_thumbnails) } width={"250px"} style={{ height: "150px", marginTop: "-30px" }} />} */}
+                {/* {formData?.ss instanceof File && <img src={URL.createObjectURL(formData?.recorded_courses_thumbnails) } width={"250px"} style={{ height: "150px", marginTop: "-30px" }} />} */}
                 <Box position="absolute" top={50} left={100}>
                   <UploadIcon style={{ fontSize: '50px', color: 'FF9F59' }} /><br />
 
@@ -206,7 +207,7 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
 
       </Grid>
 
-      {editData?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
+      {(typeof editData == "number") ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData?.length > 0 && <Box overflow={"hidden"}>
@@ -249,8 +250,8 @@ const Step8 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   {/* <TableCell style={{ borderRight: "none" }} align="left">{row?.recorded_courses_video}</TableCell> */}
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
-                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(row?.id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row, id1)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
                   </TableCell>
 

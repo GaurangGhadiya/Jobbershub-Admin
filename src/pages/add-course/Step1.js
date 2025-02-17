@@ -128,7 +128,7 @@ const [sellerList, setSellerList] = useState([])
             {formData?.photo && <img src={URL.createObjectURL(formData?.photo)} width={"250px"} style={{ height: "145px", marginTop: "-30px", padding : "5px" }} />}
             <Box position="absolute" top={40} left={33}  backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
               <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
-              <Typography color={"#FF9F59"}>Chnage image</Typography>
+              <Typography color={"#FF9F59"}>Change image</Typography>
 
             </Box>
           </IconWrapper>}

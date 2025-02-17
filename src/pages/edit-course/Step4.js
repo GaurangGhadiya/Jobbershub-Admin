@@ -93,14 +93,14 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
     }
   }
 
-  const handleEdit = (row) => {
-    setEditData(row)
+  const handleEdit = (row, id1) => {
+    setEditData(id1)
     setFormData(row)
   }
 
   const handleDelete = (id1) => {
     let data = [...tableData]
-    let newData = data?.filter(v => v?.id1 != id1)
+    let newData = data?.filter((v,i) => i != id1)
     setTableData(newData)
   }
 
@@ -109,12 +109,13 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
       toast.error("Please add thumbnail and video link")
     }else{
     let data = [...tableData]
-    let newData = data?.map(v => v?.id1 == editData?.id1 ? formData : v)
+    let newData = data?.map((v,i) => i == editData ? formData : v)
     setTableData(newData)
     setEditData({})
     setFormData({})
     }
   }
+  console.log("editData",editData)
   return (
     <>
       <Grid container spacing={2}>
@@ -135,7 +136,7 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                 { <Image src={formData?.thumbnail instanceof File  ? URL.createObjectURL(formData?.thumbnail) : formData?.thumbnail ? process.env.NEXT_PUBLIC_PHOTO_BASE_URL+"/course/"+formData?.thumbnail : null} width={250} height={145} style={{ height: "145px", marginTop: "-30px", padding: "5px" }} />}
                 <Box position="absolute" top={40} left={33} backgroundColor="white" borderRadius={"4px"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={2}>
                   <FileUploadIcon style={{ fontSize: '30px', color: '#FF9F59' }} />
-                  <Typography color={"#FF9F59"}>Chnage image</Typography>
+                  <Typography color={"#FF9F59"}>Change image</Typography>
 
                 </Box>
               </IconWrapper>}
@@ -168,7 +169,7 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
         onChange={handleChange}
         placeholder='Introductory Video Link'
       />
-      {editData?.id ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
+      {(typeof editData == "number") ? <Box backgroundColor={"#FF8C38"} width={"100px"} my={3} style={{ cursor: "pointer" }} onClick={handleUpdate} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Update</Typography></Box> :
         <Box backgroundColor={"#FF8C38"} width={"80px"} my={3} style={{ cursor: "pointer" }} onClick={handleAdd} borderRadius={"10px"}><Typography fontSize={"16px"} color={"white"} px={3} py={1}>Add</Typography></Box>}
 
       {tableData?.length > 0 && <Box overflow={"hidden"}>
@@ -205,8 +206,8 @@ const Step4 = ({ formDataMain, setFormDataMain, step, setStep }) => {
                   <TableCell style={{ borderRight: "none" }} align="left">{row?.intro_video_link}</TableCell>
                   <TableCell style={{ borderRight: "none" }} align="left">
                     <Box display={"flex"}>
-                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
-                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(row?.id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
+                      <Box backgroundColor="#D1732D" px={2} py={1} borderRadius={"4px"}><Typography color={'white'} onClick={() => handleEdit(row,id1)} style={{ cursor: "pointer" }} >Edit</Typography></Box>
+                      <Box backgroundColor="#B73E38 " px={2} py={1} borderRadius={"4px"} ml={2}><Typography color={'white'} onClick={() => handleDelete(id1)} style={{ cursor: "pointer" }}>Delete</Typography></Box>
                     </Box>
                   </TableCell>
 
