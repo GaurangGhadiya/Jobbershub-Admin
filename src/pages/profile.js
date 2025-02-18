@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux";
 
 import api from "../../utils/api";
 import { callAlert } from "../../redux/actions/alert";
-import Layout from "@/components/Dashboard/layout";
+// import Layout from "@/components/Dashboard/layout";
 import EmployeeProfile from "../components/userManagement/profile";
 import { useRouter } from "next/router"; 
 import Cookies from "js-cookie";
+import Layout from "@/components/Layout/Layout";
 
 
 const Profile = () => {

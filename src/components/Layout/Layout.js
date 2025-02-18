@@ -21,7 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import Image from 'next/image';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import CropFreeIcon from '@mui/icons-material/CropFree';
-import { Avatar, Input, Menu, MenuItem } from '@mui/material';
+import { Avatar, Badge, CircularProgress, Collapse, Input, Menu, MenuItem, Popover } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import WebAssetOutlinedIcon from '@mui/icons-material/WebAssetOutlined';
@@ -51,165 +51,191 @@ import { Message } from '@mui/icons-material';
 import MessageModal from '../Modals/MessageModal';
 import Cookies from "js-cookie";
 import { useRouter } from 'next/router';
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import usePollingData from './pollingApi';
 
 const drawerWidth = 320;
 const menu = [
   {
-    name : "All Affiliates Dashboard",
-    icon : <AttractionsOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "All Affiliates Dashboard",
+    icon: <AttractionsOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Feedback Report",
-    icon : <ThumbUpOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Feedback Report",
+    icon: <ThumbUpOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Website Settings",
-    icon : <WebAssetOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Website Settings",
+    icon: <WebAssetOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Revenue Dashboard",
-    icon : <CachedOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Revenue Dashboard",
+    icon: <CachedOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Product Dashboard",
-    icon : <EventNoteOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Product Dashboard",
+    icon: <EventNoteOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "SmartPe Add Money Request",
-    icon : <CurrencyRupeeOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "SmartPe Add Money Request",
+    icon: <CurrencyRupeeOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "SmartPe Recharge Finance",
-    icon : <AccountBalanceWalletOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "SmartPe Recharge Finance",
+    icon: <AccountBalanceWalletOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Contact Inquires",
-    icon : <PermContactCalendarOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Contact Inquires",
+    icon: <PermContactCalendarOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Customer Support Dashboard",
-    icon : <SupportAgentOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Customer Support Dashboard",
+    icon: <SupportAgentOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Activation Dashboard",
-    icon : <GridViewOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Activation Dashboard",
+    icon: <GridViewOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "User Management ",
-    icon : <PersonOutlineOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "User Management ",
+    icon: <PersonOutlineOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Demat Account KYC Preformats",
-    icon : <CurrencyRupeeOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Demat Account KYC Preformats",
+    icon: <CurrencyRupeeOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Demat Onboarding Cross Selling",
-    icon : <CurrencyRupeeOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Demat Onboarding Cross Selling",
+    icon: <CurrencyRupeeOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Course Dashboard",
-    icon : <AutoStoriesOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Course Dashboard",
+    icon: <AutoStoriesOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Bank Account Dashboard",
-    icon : <AccountBalanceOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Bank Account Dashboard",
+    icon: <AccountBalanceOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Wealth Dashboard",
-    icon : <TempleHinduOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Wealth Dashboard",
+    icon: <TempleHinduOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Loans Dashboard",
-    icon : <AccountBalanceOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Loans Dashboard",
+    icon: <AccountBalanceOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Insurance Dashboard",
-    icon : <TollOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Insurance Dashboard",
+    icon: <TollOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Credit Card Dashboard",
-    icon : <CreditCardOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Credit Card Dashboard",
+    icon: <CreditCardOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "E-Seva Dashboard",
-    icon : <LanguageOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "E-Seva Dashboard",
+    icon: <LanguageOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Product Management ",
-    icon : <EventNoteOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Product Management ",
+    icon: <EventNoteOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Meeting Management",
-    icon : <PeopleAltOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Meeting Management",
+    icon: <PeopleAltOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Coupon Management",
-    icon : <ConfirmationNumberOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Coupon Management",
+    icon: <ConfirmationNumberOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Recording Video Managment",
-    icon : <VoicemailOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Recording Video Managment",
+    icon: <VoicemailOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Notification Managment",
-    icon : <NotificationsNoneOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Notification Managment",
+    icon: <NotificationsNoneOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Affiliate Link Management",
-    icon : <AttractionsOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Affiliate Link Management",
+    icon: <AttractionsOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "TDS Report Management",
-    icon : <AssignmentOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "TDS Report Management",
+    icon: <AssignmentOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Withdrawal Requests Managment",
-    icon : <CreditCardOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Withdrawal Requests Managment",
+    icon: <CreditCardOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Banners Managment",
-    icon : <WebAssetOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Banners Managment",
+    icon: <WebAssetOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Marketing Content Managment",
-    icon : <VolumeUpOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Marketing Content Managment",
+    icon: <VolumeUpOutlinedIcon style={{ color: "#525252" }} />
+
   },
   {
-    name : "Success Story Managment",
-    icon : <NoteAltOutlinedIcon style={{color : "#525252"}}/>
-   
+    name: "Success Story Managment",
+    icon: <NoteAltOutlinedIcon style={{ color: "#525252" }} />
+
   },
 ]
+
+function buildMenuHierarchy(menuList) {
+  const menuMap = new Map();
+
+  // Step 1: Initialize menu items in a map
+  menuList.forEach(item => {
+    menuMap.set(item.id, { ...item, submenu: [] });
+  });
+
+  // Step 2: Build hierarchy
+  const rootMenu = [];
+
+  menuList.forEach(item => {
+    if (item.parent_id === 0) {
+      // Root level menu items
+      rootMenu.push(menuMap.get(item.id));
+    } else if (menuMap.has(item.parent_id)) {
+      // Assign to parent's submenu
+      menuMap.get(item.parent_id).submenu.push(menuMap.get(item.id));
+    }
+  });
+
+  return rootMenu;
+}
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -296,12 +322,68 @@ export default function Layout({ children }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [openMessageModal, setOpenMessageModal] = React.useState(false)
   const [userName, setUserName] = React.useState("")
+  const [menulist, setMenulist] = React.useState([])
+  const [openMenus, setOpenMenus] = React.useState({});
+  const [totalNotification, setTotalNotification] = React.useState(0);
+  const [anchor1El, setAnchor1El] = React.useState(null);
+  const [addMoney, setAddMoney] = React.useState(0);
+  const [product, setProduct] = React.useState(0);
 
+
+  console.log("router", router)
 
   React.useEffect(() => {
     Cookies.get('name') && setUserName(Cookies.get('name'))
+    if (localStorage.getItem('menu')) {
+      const hierarchicalMenu = buildMenuHierarchy(JSON.parse(localStorage.getItem('menu')));
+      setMenulist(JSON.parse(JSON.stringify(hierarchicalMenu, null, 2)))
+    }
   }, [])
-  
+
+  console.log("menulist", menulist)
+
+  const handleClick = (event) => {
+    setAnchor1El(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchor1El(null);
+  };
+
+  const handleRedirect = (path) => {
+    router.push(path);
+    handleClose();
+  };
+
+  const playSound = () => {
+    const sound = new Audio('/notification.mp3');
+    sound.play();
+  };
+
+  const adminNotificationUrl = "/api/notification/get-admin-notification";
+  const { data, loading, error } = usePollingData(adminNotificationUrl, 60000);
+  React.useEffect(() => {
+    if (data) {
+      setTotalNotification(data.data.totalNotification);
+      setAddMoney(data.data.getPendingAddmoney);
+      setProduct(data.data.getPendingProduct);
+      if (parseInt(data.data.totalNotification) > 0) {
+        playSound();
+      }
+    }
+  }, [data]);
+
+  const handleToggle = (item) => {
+    if (item?.menu_url != "#") {
+      // Navigate to the menu_url if it exists
+      // router.push("/"+item.menu_url);
+    } else {
+      // Toggle submenu if there's no URL
+      setOpenMenus((prev) => ({
+        ...prev,
+        [item.id]: !prev[item.id],
+      }));
+    }
+  };
 
 
   const handleMessageModalOpen = () => {
@@ -317,6 +399,7 @@ export default function Layout({ children }) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+    setOpenMenus({})
   };
 
   const handleCloseUserMenu = () => {
@@ -326,7 +409,7 @@ export default function Layout({ children }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const settings = ["Update KYC","Change Password", "Feedback to CEO", "Send Anonymous Feedback", "Reward & Recognitions", "Company Vision & Mission", "Company Milestone Calander", "Logout"];
+  const settings = ["Update KYC", "Change Password", "Feedback to CEO", "Send Anonymous Feedback", "Reward & Recognitions", "Company Vision & Mission", "Company Milestone Calander", "Logout"];
   const handleFullScreen = () => {
     const element = document.documentElement; // Use the entire document or a specific element
     if (element.requestFullscreen) {
@@ -338,18 +421,97 @@ export default function Layout({ children }) {
     }
   };
 
-  const clearAllCookies = async() => {
-    const cookies =await Cookies.get(); // Get all cookies as an object
-    Object.keys(cookies).forEach(async(cookie) => {
-     await Cookies.remove(cookie, { path: '/' }); // Remove each cookie
+  const clearAllCookies = async () => {
+    const cookies = await Cookies.get(); // Get all cookies as an object
+    Object.keys(cookies).forEach(async (cookie) => {
+      await Cookies.remove(cookie, { path: '/' }); // Remove each cookie
     });
   };
-  
+
 
   const logout = () => {
 
-clearAllCookies();
+    clearAllCookies();
     router.push("/login")
+  }
+
+  const renderMenu = (menulist) => {
+    return menulist?.map((item, index) => (
+      <div key={item?.id}>
+        <ListItem disablePadding sx={{ display: 'block', margin: "5px 0" }}>
+          <ListItemButton
+            onClick={() => handleToggle(item)}
+            sx={[
+              {
+                minHeight: 38,
+                px: 1.5,
+                // background: 'linear-gradient(90deg, #FB9905 0%, #FD6D09 100%)',
+                borderRadius: '8px',
+
+              },
+              open
+                ? {
+                  justifyContent: 'initial',
+                  width: '95%',
+                  marginLeft: "7px"
+
+                }
+                : {
+                  justifyContent: 'center',
+                  width: '90%',
+                  marginLeft: "2px"
+
+                },
+            ]}
+
+          >
+            <ListItemIcon
+              sx={[
+                {
+                  minWidth: 0,
+                  justifyContent: 'center',
+                },
+                open
+                  ? {
+                    mr: 2,
+                  }
+                  : {
+                    mr: 'auto',
+                  },
+              ]}
+            >
+              {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+              {/* {text?.icon} */}
+              <AttractionsOutlinedIcon style={{ color: "#525252" }} />
+              {/* <Image src={text?.icon} height={15} width={15} /> */}
+            </ListItemIcon>
+            <ListItemText
+              primary={item?.menu_name}
+              color='#2B2B2B'
+              fontWeight={300}
+              primaryTypographyProps={{
+                sx: { fontSize: '13px', color: "#2B2B2B" }, // Style for primary text
+              }}
+              sx={[
+                open
+                  ? {
+                    opacity: 1,
+                  }
+                  : {
+                    opacity: 0,
+                  },
+              ]}
+            />
+            {open && (item.submenu.length > 0 ? (openMenus[item.id] ? <ExpandLess /> : <ExpandMore />) : null)}
+          </ListItemButton>
+        </ListItem>
+        {item?.submenu?.length > 0 && (
+          <Collapse in={openMenus[item.id]} timeout="auto" unmountOnExit>
+            <List sx={{ pl: 4 }}>{renderMenu(item?.submenu)}</List>
+          </Collapse>
+        )}
+      </div>
+    ))
   }
 
   return (
@@ -373,12 +535,12 @@ clearAllCookies();
           </IconButton>
           <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} width={"100%"}>
             <Box display={"flex"} justifyContent={"start"} alignItems={"center"}  >
-              <Typography color={"#505050"} fontSize={"15px"} style={{ cursor: "pointer" }}>My Profile</Typography>
-              <Typography color={"#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3}>My KRA</Typography>
-              <Typography color={"#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3}>My KPI</Typography>
-              <Typography color={"#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3}>My SOP</Typography>
+              <Typography color={router.pathname?.includes("profile") ? "#ED6A0F" : "#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} onClick={() => router.push("/profile")}>My Profile</Typography>
+              <Typography color={router.pathname?.includes("KRA") ? "#ED6A0F" : "#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3} onClick={() => router.push("/KRA")}>My KRA</Typography>
+              <Typography color={router.pathname?.includes("KPI") ? "#ED6A0F" : "#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3} onClick={() => router.push("/KPI")}>My KPI</Typography>
+              <Typography color={router.pathname?.includes("SOP") ? "#ED6A0F" : "#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3} onClick={() => router.push("/SOP")}>My SOP</Typography>
               <Typography color={"#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3}>My Tasks</Typography>
-              <Typography color={"#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3}>My Checklist</Typography>
+              <Typography color={router.pathname?.includes("employee_checklist") ? "#ED6A0F" : "#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3} onClick={() => router.push("/employee_checklist")}>My Checklist</Typography>
               <Typography color={"#505050"} fontSize={"15px"} style={{ cursor: "pointer" }} ml={3}>Goals</Typography>
             </Box>
             <Box display={"flex"} justifyContent={"flex-end"} alignItems={"center"} >
@@ -398,14 +560,75 @@ clearAllCookies();
                 <Typography fontWeight={400} color={"#2A3B4B"} fontSize={"12px"}>External</Typography>
                 <Box border={"1px solid #E34242"} borderRadius={"27px"} ml={2} py={"1px"} px={1}><Typography fontWeight={700} color={"#E34242"} fontSize={"12px"}>60</Typography></Box>
               </Box>
-              <Box position={"relative"}>
+              <>
+                <Badge
+                  badgeContent={totalNotification}
+                  color="primary"
+                  onClick={handleClick}
+                  style={{ cursor: "pointer" }}
+                >
+                  <NotificationsNoneIcon style={{ color: "#555454", fontSize: "30px" }} />
+                </Badge>
+                <Popover
+                  id="notification-popover"
+                  open={Boolean(anchor1El) ? 'notification-popover' : undefined}
+                  anchorEl={anchor1El}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                  }}
+                >
+                  <Box sx={{ width: '400px' }}>
+                    {loading ? (
+                      <CircularProgress />
+                    ) : totalNotification === 0 ? (
+                      <Box p={2}><Typography fontSize={16}>No Notifications</Typography></Box>
+                    ) : (
+                      <List>
+                        <ListItem onClick={() => handleRedirect('/add-money-request')}>
+                          <ListItemText
+                            primary={
+                              <React.Fragment>
+                                <Typography component="span" sx={{ fontWeight: "bold", color: "black" }}>
+                                  {addMoney} Request
+                                </Typography>
+                                <Typography component="span"> - Add money Request</Typography>
+                              </React.Fragment>
+                            }
+                            secondary={`Click here to view pending requests`}
+                          />
+                        </ListItem>
+                        <ListItem onClick={() => handleRedirect('/payment-request')}>
+                          <ListItemText
+                            primary={
+                              <React.Fragment>
+                                <Typography component="span" sx={{ fontWeight: "bold", color: "black" }}>
+                                  {product} Request
+                                </Typography>
+                                <Typography component="span"> - Product Purchase request</Typography>
+                              </React.Fragment>
+                            }
+                            secondary={`Click here to view pending requests`}
+                          />
+                        </ListItem>
+                      </List>
+                    )}
+                  </Box>
+                </Popover>
+              </>
+              {/* <Box position={"relative"}>
                 <Box backgroundColor={"#D20000"} borderRadius={50} display={"flex"} justifyContent={"center"} alignItems={"center"} height={18} width={18} position={"absolute"} top={0} right={0}>
                   <Typography fontWeight={700} fontSize={12} color={"white"}>6</Typography>
                 </Box>
                 <NotificationsNoneIcon style={{ color: "#555454", fontSize: "30px" }} />
-              </Box>
+              </Box> */}
               <Box mx={3} >
-                <CropFreeIcon style={{ color: "#555454", fontSize: "28px", cursor: "pointer" }} onClick={handleFullScreen}/>
+                <CropFreeIcon style={{ color: "#555454", fontSize: "28px", cursor: "pointer" }} onClick={handleFullScreen} />
               </Box>
               <Box display={"flex"} justifyContent={"flex-start"} alignItems={"center"}>
                 <Box mr={1}>
@@ -433,12 +656,13 @@ clearAllCookies();
                     onClose={handleCloseUserMenu}
                   >
                     {settings.map((setting, i) => (
-                      <MenuItem key={setting} onClick={() =>
-                       {i == 0 ? router.push("/update-kyc")
-                         : i == 7 ? logout()
-                         : handleCloseUserMenu()}
-                       
-                       }>
+                      <MenuItem key={setting} onClick={() => {
+                        i == 0 ? router.push("/update-kyc")
+                          : i == 7 ? logout()
+                            : handleCloseUserMenu()
+                      }
+
+                      }>
                         <Typography sx={{ textAlign: 'center' }} >{setting}</Typography>
                       </MenuItem>
                     ))}
@@ -450,14 +674,14 @@ clearAllCookies();
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
-     
+
         <DrawerHeader>
           <Box>
-          <IconButton onClick={handleDrawerClose} style={{display : "none"}}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
+            <IconButton onClick={handleDrawerClose} style={{ display: "none" }}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
           </Box>
-        <Box >
+          <Box >
             <Image src={"/logo.png"} height={40} width={150} />
 
           </Box>
@@ -465,78 +689,22 @@ clearAllCookies();
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
-        {/* <Divider /> */}
-        {open &&<Box border={"1px solid #D0D0D0"} backgroundColor={"#F5F6FA"} borderRadius={"100px"} color={"#F5F6FA"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} pr={1} pl={2} mx={2} mt={1} >
+        <Divider mt={2} />
+        {/* {open &&<Box border={"1px solid #D0D0D0"} backgroundColor={"#F5F6FA"} borderRadius={"100px"} color={"#F5F6FA"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} pr={1} pl={2} mx={2} mt={1} >
           <input style={{ border: "none", outline: "none", backgroundColor: "#F5F6FA", width: "90%", fontSize: "15px", margin: "7px 0" }} placeholder='Search...' />
           <SearchIcon style={{ color: "black" }} />
 
-        </Box>}
+        </Box>} */}
         <List>
-          {menu?.map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={[
-                  {
-                    minHeight: 48,
-                    px: 2.5,
-                  },
-                  open
-                    ? {
-                      justifyContent: 'initial',
-                    }
-                    : {
-                      justifyContent: 'center',
-                    },
-                ]}
-                
-              >
-                <ListItemIcon
-                  sx={[
-                    {
-                      minWidth: 0,
-                      justifyContent: 'center',
-                    },
-                    open
-                      ? {
-                        mr: 2,
-                      }
-                      : {
-                        mr: 'auto',
-                      },
-                  ]}
-                >
-                  {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-                  {text?.icon}
-                  {/* <Image src={text?.icon} height={15} width={15} /> */}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text?.name}
-                  color='#2B2B2B'
-                  fontWeight={300}
-                  primaryTypographyProps={{
-                    sx: { fontSize: '13px' ,color : "#2B2B2B"}, // Style for primary text
-                  }}
-                  sx={[
-                    open
-                      ? {
-                        opacity: 1,
-                      }
-                      : {
-                        opacity: 0,
-                      },
-                  ]}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {renderMenu(menulist)}
         </List>
-      
+
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, width: `calc(100% - 320px)`, }}>
         <DrawerHeader />
-        {children}
+        <Box p={2}>{children}</Box>
       </Box>
-      <MessageModal openMessageModal={openMessageModal} handleMessageModalClose={handleMessageModalClose}/>
+      <MessageModal openMessageModal={openMessageModal} handleMessageModalClose={handleMessageModalClose} />
     </Box>
   );
 }

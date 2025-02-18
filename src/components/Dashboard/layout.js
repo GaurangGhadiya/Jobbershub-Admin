@@ -158,6 +158,7 @@ function Layout(props) {
         Cookies.remove('uid');
         router.push('/login');
     };
+    
 
     const renderTopMenu = (topMenuArray) => {
         return (

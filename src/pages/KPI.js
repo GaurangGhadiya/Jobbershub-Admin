@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import api from "../../utils/api";
 import { callAlert } from "../../redux/actions/alert";
-import Layout from "@/components/Dashboard/layout";
+// import Layout from "@/components/Dashboard/layout";
 import { useRouter } from "next/router"; 
 import { Typography, Paper, Box } from "@mui/material";
 
 import HtmlContent from "@/components/userManagement/HtmlContent"; 
+import Layout from "@/components/Layout/Layout";
 
 const KPI = () => {
   const [showKPI, setShowKPI] = useState({});

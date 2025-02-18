@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import api from "../../utils/api";
 import { callAlert } from "../../redux/actions/alert";
-import Layout from "@/components/Dashboard/layout";
+// import Layout from "@/components/Dashboard/layout";
 
 import { useRouter } from "next/router"; 
 import { Typography, Paper, Box, List, ListItem, Checkbox, FormControlLabel } from "@mui/material";
+import Layout from "@/components/Layout/Layout";
 
 const Checklist = () => {
   const [checklist, setChecklist] = useState([]);  

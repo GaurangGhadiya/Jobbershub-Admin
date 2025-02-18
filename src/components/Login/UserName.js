@@ -65,7 +65,7 @@ const UserName = ({ handleChange }) => {
                     localStorage.setItem('mobile', responseData.mobile);
                     localStorage.setItem('employee_role', responseData.role_name);
                     localStorage.setItem('employee_id', responseData.employee_id);
-                    localStorage.setItem('menu', JSON.stringify(response.data.employeeMenu));
+                    localStorage.setItem('menu', JSON.stringify(response.data.employeeMenu)); 
                     
                     sendOtp();
                     
