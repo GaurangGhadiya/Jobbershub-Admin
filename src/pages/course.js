@@ -171,7 +171,12 @@ const Course = () => {
     };
 
     useEffect(() => {
-        Cookies.get('uid') && setSeller_id(Cookies.get('uid'))
+        if(router?.query?.id){
+            setSeller_id(router?.query?.id)
+        }else{
+
+            Cookies.get('uid') && setSeller_id(Cookies.get('uid'))
+        }
     }, [router])
 
     const getTableData = async () => {

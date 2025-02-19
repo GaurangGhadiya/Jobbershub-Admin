@@ -164,15 +164,19 @@ const AdminCourseList = () => {
     const [seller_id, setSeller_id] = useState("")
     const [deleteModal, setDeleteModal] = useState(false)
     const [approveModal, setApproveModal] = useState(false)
+    const [appRemoveModal, setAppRemoveModal] = useState(false)
+    const [activeInactiveModal, setActiveInactiveModal] = useState(false)
     const [deleteId, setDeleteId] = useState("")
     const [approveId, setApproveId] = useState("")
+    const [appRemoveId, setAppRemoveId] = useState("")
     const [openRequestModal, setOpenRequestModal] = useState(false)
 
     const [pinnedTableRow, setpinnedTableRow] = useState([])
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event) => {
+    const handleClick = (event,i) => {
+        setAppRemoveId(i?.id)
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
@@ -226,6 +230,20 @@ const AdminCourseList = () => {
     const closeApproveModal = () => {
         setApproveModal(false);
     };
+    const openAppRemoveModal = () => {
+        setAppRemoveModal(true);
+    };
+
+    const closeAppRemoveModal = () => {
+        setAppRemoveModal(false);
+    };
+    const openActiveInactiveModal = () => {
+        setActiveInactiveModal(true);
+    };
+
+    const closeActiveInactiveModal = () => {
+        setActiveInactiveModal(false);
+    };
 
     useEffect(() => {
         Cookies.get('uid') && setSeller_id(Cookies.get('uid'))
@@ -234,7 +252,7 @@ const AdminCourseList = () => {
     const getTableData = async () => {
         try {
             setLoading(true)
-            let body = { ...filterData, seller_id: "", status: 1 }
+            let body = { ...filterData, seller_id: "", status: "" }
 
             await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-course-leads`, body).then(res => {
                 console.log('api response', res?.data?.data)
@@ -340,7 +358,52 @@ const AdminCourseList = () => {
         })
 
     }
+    const handleAppemoveCourse = async () => {
 
+        setLoading(true)
+        let body = {
+            id: appRemoveId, is_app_removed : !tableData?.find(v => v?.id == appRemoveId)?.is_app_removed, updated_by: seller_id
+        }
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+            console.log('api response', res)
+            setLoading(false)
+            closeAppRemoveModal()
+            setAppRemoveId("")
+            toast.success(res?.data?.message || "Status Updated Successful.")
+            getTableData()
+
+        }).catch(e => {
+            setLoading(false)
+            closeAppRemoveModal()
+            toast.error(typeof e?.response?.data?.message == "string" ? e?.response?.data?.message : "Something want wrong")
+            console.log('e', e)
+        })
+
+    }
+    const handleActiveInactiveCourse = async () => {
+
+        setLoading(true)
+        let body = {
+            id: appRemoveId, is_active : !tableData?.find(v => v?.id == appRemoveId)?.is_active, updated_by: seller_id
+        }
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+            console.log('api response', res)
+            setLoading(false)
+            closeActiveInactiveModal()
+            setAppRemoveId("")
+            toast.success(res?.data?.message || "Status Updated Successful.")
+            getTableData()
+
+        }).catch(e => {
+            setLoading(false)
+            closeActiveInactiveModal()
+            toast.error(typeof e?.response?.data?.message == "string" ? e?.response?.data?.message : "Something want wrong")
+            console.log('e', e)
+        })
+
+    }
+
+    console.log('tableData', tableData)
     return (
         <Layout>
             <Box p={2} style={{ backgroundColor: "#f5f5f5" }}>
@@ -348,13 +411,16 @@ const AdminCourseList = () => {
                 <Box backgroundColor="#FFE9DD" className="topborder" px={3} py={1} color={"white"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                     <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
                         <Typography fontSize={20} color={"#000000"} fontWeight={900} mr={7}>All Courses</Typography>
-                        <Box display={"flex"} justifyContent={"center"} alignItems={"center"} onClick={handleOpenRequestModal} style={{ cursor: "pointer" }}>
+                        <Box display={"flex"} justifyContent={"center"} alignItems={"center"} 
+                        // onClick={handleOpenRequestModal} 
+                        onClick={() => window.open("/course-request", '_blank')} 
+                        style={{ cursor: "pointer" }}>
                             <Typography fontSize={14} color={"#000000"} fontWeight={900}>Course request</Typography>
                             <Box position={"relative"}>
                                 {/* <Box backgroundColor={"#D20000"} borderRadius={50} display={"flex"} justifyContent={"center"} alignItems={"center"} height={15} width={15} position={"absolute"} top={0} right={0}>
                                     <Typography fontWeight={700} fontSize={10} color={"white"}>6</Typography>
                                 </Box> */}
-                                <NotificationsNoneIcon style={{ color: "black", fontSize: "26px" }} />
+                                {/* <NotificationsNoneIcon style={{ color: "black", fontSize: "26px" }} /> */}
                             </Box>
                         </Box>
                     </Box>
@@ -431,8 +497,8 @@ const AdminCourseList = () => {
                                     <TableCell style={{ position: 'sticky', left: 0, backgroundColor: '#fff', zIndex: 10, width: 55, textAlign: 'center' }}>#</TableCell>
                                     {afterSubmitSelectedRow?.RegistrationDateTime && <TableCell style={{ position: 'sticky', left: 55, backgroundColor: '#fff', zIndex: 10, width: 130 }}>Created</TableCell>}
                                     {afterSubmitSelectedRow?.AuthorizationDateTime && <TableCell style={{ position: 'sticky', left: 185, backgroundColor: '#fff', zIndex: 10, width: 130 }}>Creator</TableCell>}
-                                    {afterSubmitSelectedRow?.AffiliateID && <TableCell style={{ position: 'sticky', left: 315, backgroundColor: '#fff', zIndex: 10, width: 130 }}>Status</TableCell>}
-                                    {afterSubmitSelectedRow?.AffiliateName && <TableCell style={{ position: 'sticky', left: 445, backgroundColor: '#fff', zIndex: 10, width: 180, boxShadow: "10px 10px 24px -8px rgb(42 57 78 / 16%)" }}>Approved By</TableCell>}
+                                    {afterSubmitSelectedRow?.AffiliateID && <TableCell style={{ position: 'sticky', left: 315, backgroundColor: '#fff', zIndex: 10, width: 130 }}>Request</TableCell>}
+                                    {afterSubmitSelectedRow?.AffiliateName && <TableCell style={{ position: 'sticky', left: 445, backgroundColor: '#fff', zIndex: 10, width: 180, boxShadow: "10px 10px 24px -8px rgb(42 57 78 / 16%)" }}>Action By</TableCell>}
 
 
                                     {afterSubmitSelectedRow?.State && <TableCell width={150} >Category</TableCell>}
@@ -445,7 +511,8 @@ const AdminCourseList = () => {
                                     {afterSubmitSelectedRow?.AffiliateRank && <TableCell width={150}>Slotting Fee</TableCell>}
                                     {afterSubmitSelectedRow?.AffiliateType && <TableCell width={150}>Company Net Profit</TableCell>}
                                     {afterSubmitSelectedRow?.AffiliateMobileNo && <TableCell width={150}>Rating</TableCell>}
-                                    {/* {afterSubmitSelectedRow?.EmailID && <TableCell width={150}>Request</TableCell>} */}
+                                    {afterSubmitSelectedRow?.EmailID && <TableCell width={150}>Status</TableCell>}
+                                    {afterSubmitSelectedRow?.EmailID && <TableCell width={150}>App Remove</TableCell>}
                                     {afterSubmitSelectedRow?.SponsorRank && <TableCell width={200}>Action</TableCell>}
 
                                 </TableRow>
@@ -472,22 +539,23 @@ const AdminCourseList = () => {
                                         {afterSubmitSelectedRow?.AffiliateRank && <TableCell align="left">{row?.slotting_fee}</TableCell>}
                                         {afterSubmitSelectedRow?.AffiliateType && <TableCell align="left">{row?.company_netprofit}</TableCell>}
                                         {afterSubmitSelectedRow?.AffiliateMobileNo && <TableCell align="left">{row?.rating}</TableCell>}
-                                        {/* {afterSubmitSelectedRow?.EmailID && <TableCell align="left">{row.age}</TableCell>} */}
+                                        {afterSubmitSelectedRow?.EmailID && <TableCell align="left">{row?.is_active ? "Active" : "Inactive"}</TableCell>}
+                                        {afterSubmitSelectedRow?.EmailID && <TableCell align="left">{row?.is_app_removed ? "Yes" : "No"}</TableCell>}
                                         {afterSubmitSelectedRow?.SponsorRank && <TableCell align="left">
                                             <Box display={"flex"} justifyContent={"start"} alignItems={"center"}>
                                                 <Box style={{ cursor: "pointer" }} backgroundColor="#D1732D" borderRadius={"4px"} px={1} py={0.5}><Typography color={"white"} fontSize={12} onClick={() => router.push(`/edit-course?id=${row?.id}`)}>EDIT</Typography></Box>
                                                 <Box style={{ cursor: "pointer" }} mx={1} backgroundColor="#B73E38" borderRadius={"4px"} px={1} py={0.5} onClick={() => { openDeleteModal(); setDeleteId(row?.id) }}><Typography color={"white"} fontSize={12}>DELETE</Typography></Box>
 
-                                                {/* <IconButton
+                                                <IconButton
                                                     id="basic-button"
                                                     aria-controls={open ? 'basic-menu' : undefined}
                                                     aria-haspopup="true"
                                                     aria-expanded={open ? 'true' : undefined}
-                                                    onClick={handleClick}
+                                                    onClick={(e) => handleClick(e,row)}
                                                 >
 
                                                     <MoreHorizIcon />
-                                                </IconButton> */}
+                                                </IconButton>
                                                 <Menu
                                                     id="basic-menu"
                                                     anchorEl={anchorEl}
@@ -497,7 +565,8 @@ const AdminCourseList = () => {
                                                         'aria-labelledby': 'basic-button',
                                                     }}
                                                 >
-                                                    <MenuItem onClick={handleClose}>Live / Inactive</MenuItem>
+                                                    <MenuItem onClick={() => { openActiveInactiveModal();  handleClose() }}>{tableData?.find(v => v?.id == appRemoveId)?.is_active ? "Inactive"  : "Active"}</MenuItem>
+                                                    <MenuItem  onClick={() => { openAppRemoveModal();  handleClose() }}>App Remove</MenuItem>
                                                     {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
                                                     {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
                                                 </Menu>
@@ -565,6 +634,44 @@ const AdminCourseList = () => {
                     <DialogActions>
                         <Box style={{ cursor: "pointer" }} mx={1} backgroundColor="#B73E38" borderRadius={"4px"} px={2} py={0.7} onClick={closeDeleteModal}><Typography color={"white"} fontSize={14}>No</Typography></Box>
                         <Box style={{ cursor: "pointer" }} backgroundColor="green" borderRadius={"4px"} px={2} py={0.7} onClick={handleDeleteCourse}><Typography color={"white"} fontSize={14}>Yes</Typography></Box>
+                    </DialogActions>
+                </Dialog>
+                <Dialog
+                    open={appRemoveModal}
+                    onClose={closeAppRemoveModal}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Remove Course From App"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure you want to remove this course from app?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Box style={{ cursor: "pointer" }} mx={1} backgroundColor="#B73E38" borderRadius={"4px"} px={2} py={0.7} onClick={closeAppRemoveModal}><Typography color={"white"} fontSize={14}>No</Typography></Box>
+                        <Box style={{ cursor: "pointer" }} backgroundColor="green" borderRadius={"4px"} px={2} py={0.7} onClick={handleAppemoveCourse}><Typography color={"white"} fontSize={14}>Yes</Typography></Box>
+                    </DialogActions>
+                </Dialog>
+                <Dialog
+                    open={activeInactiveModal}
+                    onClose={closeActiveInactiveModal}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                    {tableData?.find(v => v?.id == appRemoveId)?.is_active ? "Inactive Course"  : "Active Course"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure you want to {tableData?.find(v => v?.id == appRemoveId)?.is_active ? "Inactive"  : "Active"} this course?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Box style={{ cursor: "pointer" }} mx={1} backgroundColor="#B73E38" borderRadius={"4px"} px={2} py={0.7} onClick={closeActiveInactiveModal}><Typography color={"white"} fontSize={14}>No</Typography></Box>
+                        <Box style={{ cursor: "pointer" }} backgroundColor="green" borderRadius={"4px"} px={2} py={0.7} onClick={handleActiveInactiveCourse}><Typography color={"white"} fontSize={14}>Yes</Typography></Box>
                     </DialogActions>
                 </Dialog>
 

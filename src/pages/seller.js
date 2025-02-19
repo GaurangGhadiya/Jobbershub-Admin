@@ -264,7 +264,7 @@ const StickyTable = () => {
         }
 
     }
-
+console.log('tableData', tableData)
     return (
         <Layout>
             <Box p={2} style={{ backgroundColor: "#f5f5f5" }}>
@@ -370,7 +370,7 @@ const StickyTable = () => {
                                             {i + 1}
                                         </TableCell>
                                         {afterSubmitSelectedRow?.RegistrationDateTime && <TableCell align="left" style={{ position: 'sticky', left: 55, backgroundColor: '#fff', zIndex: 9 }}>{formatDateWithTime(row?.created_on)}</TableCell>}
-                                        {afterSubmitSelectedRow?.AuthorizationDateTime && <TableCell align="left" style={{ position: 'sticky', left: 185, backgroundColor: '#fff', zIndex: 9 }}>{row?.name}</TableCell>}
+                                        {afterSubmitSelectedRow?.AuthorizationDateTime && <TableCell align="left" style={{ position: 'sticky', left: 185, backgroundColor: '#fff', zIndex: 9, color:"blue", cursor  : "pointer" }} onClick={() => window.open(`/course?id=${row?.id}`, "_blank")}>{row?.name}</TableCell>}
                                         {afterSubmitSelectedRow?.AffiliateID && <TableCell align="left" style={{ position: 'sticky', left: 315, backgroundColor: '#fff', zIndex: 9 }}>{row?.seller_type}</TableCell>}
                                         {afterSubmitSelectedRow?.AffiliateName && <TableCell align="left" style={{ position: 'sticky', left: 445, backgroundColor: '#fff', zIndex: 9, boxShadow: "10px 10px 24px -8px rgb(42 57 78 / 16%)" }}>{row?.mobileno}</TableCell>}
                                         {afterSubmitSelectedRow?.State && <TableCell align="left">{row?.email}</TableCell>}
