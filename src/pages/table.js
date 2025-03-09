@@ -369,7 +369,7 @@ const StickyTable = () => {
 
         }
         setLoading(true)
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/user-summary-dashboard`,data).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/report/user-summary-dashboard`,data).then(res => {
             console.log('api response', res)
             setCountData(res?.data)
             setLoading(false)
@@ -383,7 +383,7 @@ const StickyTable = () => {
 
     const getCount = async () => {
         setLoading(true)
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/user-summary-dashboard`, {}).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/report/user-summary-dashboard`, {}).then(res => {
             console.log('api response', res)
             setCountData(res?.data)
             setLoading(false)
@@ -441,7 +441,7 @@ const StickyTable = () => {
 
                 body = defaultData
             }
-            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/new-user-summary`, body).then(res => {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/report/new-user-summary`, body).then(res => {
                 console.log('api response', res?.data?.data)
                 setTableData(res?.data?.data)
                 setTotlaPage(res?.data?.totalPages)

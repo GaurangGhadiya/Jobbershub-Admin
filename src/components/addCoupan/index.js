@@ -53,7 +53,7 @@ export default function AddCoupan({ open, handleClose , getCourse}) {
         console.log('formData', formData)
         let formatTime = {...formData, start_time : formData?.start_time?.format("HH:mm"), end_time : formData?.end_time?.format("HH:mm")}
       console.log("formatTime",formatTime)
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/add-course-coupon`, formatTime).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/add-course-coupon`, formatTime).then(res => {
             console.log('api response', res)
             setStep("1")
             getCourse()

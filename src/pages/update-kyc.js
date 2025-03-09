@@ -256,7 +256,7 @@ router.push("/seller")
                                                 </IconWrapper>}
                                         </label>
                                         {/* <Image
-                                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.panimage}`}
+                                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${viewData?.panimage}`}
                                             height={100}
                                             width={100}
                                             style={{ objectFit: "contain", height: "100%", width: "100%" }}
@@ -302,7 +302,7 @@ router.push("/seller")
                                 <Box width={"25%"}>
 
                                     <Typography color={'#464646'} fontSize={"16px"} >Aadhar Card back Image</Typography>
-                                    {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.checkbookimage}`} height={100} width={100} /> */}
+                                    {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${viewData?.checkbookimage}`} height={100} width={100} /> */}
                                     <Box
                                         backgroundColor={'#F7F5DD'}
                                         borderRadius={"6px"}
@@ -337,7 +337,7 @@ router.push("/seller")
                                 <Box width={"25%"}>
 
                                     <Typography color={'#464646'} fontSize={"16px"} >Bank Passbook Image</Typography>
-                                    {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.checkbookimage}`} height={100} width={100} /> */}
+                                    {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${viewData?.checkbookimage}`} height={100} width={100} /> */}
                                     <Box
                                         backgroundColor={'#F7F5DD'}
                                         borderRadius={"6px"}

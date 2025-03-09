@@ -58,7 +58,7 @@ const AddCourse = () => {
 
     const getDataById = async () => {
         setLoading(true)
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-courses-data`, { course_id: route?.query?.id }).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/get-courses-data`, { course_id: route?.query?.id }).then(res => {
             console.log('getDataById response ', res?.data)
             setFormData({ ...formData, ...res?.data?.CourseData, ...res?.data })
             setLoading(false)

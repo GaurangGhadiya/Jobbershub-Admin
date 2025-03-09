@@ -158,7 +158,7 @@ const StickyTable = () => {
 
     const getCount = async () => {
         setLoading(true)
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/user-summary-dashboard`).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/report/user-summary-dashboard`).then(res => {
             console.log('api response', res)
             setCountData(res?.data)
             setLoading(false)
@@ -203,7 +203,7 @@ const StickyTable = () => {
             setLoading(true)
             let body = { ...filterData, seller_id: "" }
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/seller/f2f3d8116dc55526be8ab4b97bffc6bb57f28c80`, body).then(res => {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/seller/f2f3d8116dc55526be8ab4b97bffc6bb57f28c80`, body).then(res => {
                 console.log('api response', res?.data?.data)
                 setTableData(res?.data?.data)
                 setTotlaPage(res?.data?.totalPages)
@@ -239,7 +239,7 @@ const StickyTable = () => {
             let body = { id : clickId, status : modalValue?.status || "", 
                 remarks :modalValue?.remarks || "",updated_by : seller_id ||"" }
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/seller/837acaf2d75a3244bb9d28974a623e10c7b7c5e4`, body).then(res => {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/seller/837acaf2d75a3244bb9d28974a623e10c7b7c5e4`, body).then(res => {
                 console.log('api response', res?.data)
                 getTableData()
                 setLoading(false)

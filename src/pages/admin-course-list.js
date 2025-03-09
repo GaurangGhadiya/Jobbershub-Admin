@@ -188,7 +188,7 @@ const AdminCourseList = () => {
             setLoading(true)
         let body = { ...filterData, seller_id: "", status: 0 }
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-course-leads`, body).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/get-course-leads`, body).then(res => {
             console.log('api response', res?.data?.data)
             setOpenRequestModal(true);
 
@@ -254,7 +254,7 @@ const AdminCourseList = () => {
             setLoading(true)
             let body = { ...filterData, seller_id: "", status: "" }
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-course-leads`, body).then(res => {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/get-course-leads`, body).then(res => {
                 console.log('api response', res?.data?.data)
                 setTableData(res?.data?.data)
                 setTotlaPage(res?.data?.totalPages)
@@ -280,7 +280,7 @@ const AdminCourseList = () => {
     }, [filterData?.page, filterData?.pagesize, seller_id])
     const getCount = async () => {
         setLoading(true)
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-seller-dashboard`, { seller_id: seller_id }).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/get-seller-dashboard`, { seller_id: seller_id }).then(res => {
             console.log('api response', res)
             setCountData(res?.data)
             setLoading(false)
@@ -320,7 +320,7 @@ const AdminCourseList = () => {
         let body = {
             id: approveId, status: 1, remarks: "", updated_by: seller_id
         }
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-course-status`, body).then(res => {
             console.log('api response', res)
             setLoading(false)
             closeApproveModal()
@@ -342,7 +342,7 @@ const AdminCourseList = () => {
         let body = {
             id: deleteId, status: 3, remarks: "", updated_by: seller_id
         }
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-course-status`, body).then(res => {
             console.log('api response', res)
             setLoading(false)
             closeDeleteModal()
@@ -364,7 +364,7 @@ const AdminCourseList = () => {
         let body = {
             id: appRemoveId, is_app_removed : !tableData?.find(v => v?.id == appRemoveId)?.is_app_removed, updated_by: seller_id
         }
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-course-status`, body).then(res => {
             console.log('api response', res)
             setLoading(false)
             closeAppRemoveModal()
@@ -386,7 +386,7 @@ const AdminCourseList = () => {
         let body = {
             id: appRemoveId, is_active : !tableData?.find(v => v?.id == appRemoveId)?.is_active, updated_by: seller_id
         }
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-course-status`, body).then(res => {
             console.log('api response', res)
             setLoading(false)
             closeActiveInactiveModal()

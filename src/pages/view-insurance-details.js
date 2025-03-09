@@ -225,7 +225,7 @@ function TransactionHistory(props) {
                                                 <TableCell style={{width:'30%', wordBreak: 'break-all'}}>{capitalizeFirstLetter(filename.replace(/([a-z])([A-Z])/g, '$1 $2'))}</TableCell>
                                                 <TableCell style={{width:'5%'}}>:</TableCell>
                                                 <TableCell style={{width:'65%'}}>
-                                                    <Link href={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${image}`}>
+                                                    <Link href={`${process.env.NEXT_PUBLIC_API_BASE_URL}${image}`}>
                                                         <a>
                                                             <Button variant="contained" size="small" color="success" style={{ fontWeight: 'bold' }}>View</Button>
                                                         </a>

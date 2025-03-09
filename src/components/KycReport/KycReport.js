@@ -146,7 +146,7 @@ const KycTransactions = ({ showServiceTrans }) => {
 
       
       const handleLinkClick = (img) => {
-        window.open(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${img}`, '_blank', 'noopener,noreferrer');
+        window.open(`${process.env.NEXT_PUBLIC_API_BASE_URL}${img}`, '_blank', 'noopener,noreferrer');
       };
     
 

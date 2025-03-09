@@ -42,7 +42,7 @@ const [sellerList, setSellerList] = useState([])
   
 
   const getSellerList = async () => {
-    await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/seller/get-active-seller`).then(res => {
+    await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/seller/get-active-seller`).then(res => {
       console.log('api response', res)
       setSellerList(res?.data?.data)
       // setCountData(res?.data)
@@ -55,7 +55,7 @@ const [sellerList, setSellerList] = useState([])
   })
   }
   const getSubCategory = async () => {
-    await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-course-sub-category`, {
+    await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/get-course-sub-category`, {
       category_id : formDataMain?.category_id
     }).then(res => {
       console.log('api response', res)

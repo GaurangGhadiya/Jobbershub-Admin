@@ -37,7 +37,7 @@ const CourseRequest = () => {
         let body = {
             id: approveId, status: 1, remarks: "", updated_by: seller_id
         }
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-course-status`, body).then(res => {
             console.log('api response', res)
             setLoading(false)
             closeApproveModal()
@@ -59,7 +59,7 @@ const CourseRequest = () => {
         let body = {
             id: deleteId, status: 3, remarks: "", updated_by: seller_id
         }
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-course-status`, body).then(res => {
             console.log('api response', res)
             setLoading(false)
             closeDeleteModal()
@@ -81,7 +81,7 @@ const CourseRequest = () => {
         let body = {
             id: rejectId, status: 2, remarks: "", updated_by: seller_id
         }
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/update-course-status`, body).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/update-course-status`, body).then(res => {
             console.log('api response', res)
             setLoading(false)
             closeRejectModal()
@@ -102,7 +102,7 @@ const CourseRequest = () => {
             setLoading(true)
             let body = { ...filterData, seller_id: "", status: 0 }
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-course-leads`, body).then(res => {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/get-course-leads`, body).then(res => {
                 console.log('api response', res?.data?.data)
 
                 setModalTableData(res?.data?.data)

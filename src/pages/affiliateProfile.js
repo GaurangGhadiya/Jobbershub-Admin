@@ -19,7 +19,7 @@ const AffiliateProfile = () => {
         try {
             setLoading(true)
         
-            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/user-affiliate-dashboard`,{user_id : id}).then(res => {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/report/user-affiliate-dashboard`,{user_id : id}).then(res => {
                 console.log('api response', res?.data?.data)
                 setUserData( res?.data?.data)
                

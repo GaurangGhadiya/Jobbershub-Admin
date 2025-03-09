@@ -16,7 +16,7 @@ const PendingList = () => {
         try {
             setLoading(true)
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/report/user-pending-leads`, { user_id: id, page: page }).then(res => {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/report/user-pending-leads`, { user_id: id, page: page }).then(res => {
                 console.log('api response', res?.data?.data)
                 setUserData(res?.data?.data)
 

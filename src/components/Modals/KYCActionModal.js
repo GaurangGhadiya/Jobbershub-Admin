@@ -41,7 +41,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
     // actionData?.user_id
     if(actionData?.user_id){
 
-      axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/get-user-kyc`, { user_id: actionData?.user_id }).then(res => {
+      axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/users/get-user-kyc`, { user_id: actionData?.user_id }).then(res => {
         console.log('api response', res)
         setViewData(res?.data?.data)
         setNomineeData(res?.data?.nominee)
@@ -242,7 +242,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                     alignItems="center"
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.panimage}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${viewData?.panimage}`}
                       height={100}
                       width={100}
                       style={{ objectFit: "contain", height: "100%", width: "100%" }}
@@ -263,7 +263,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                     alignItems="center"
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.aadharimage}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${viewData?.aadharimage}`}
                       height={100}
                       width={100}
                       style={{ objectFit: "contain", height: "100%", width: "100%" }}
@@ -274,7 +274,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                 <Box width={"33%"}>
 
                   <Typography color={'#464646'} fontSize={"16px"} >Bank Passbook Image</Typography>
-                  {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.checkbookimage}`} height={100} width={100} /> */}
+                  {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${viewData?.checkbookimage}`} height={100} width={100} /> */}
                   <Box
                     backgroundColor={'#F7F5DD'}
                     borderRadius={"6px"}
@@ -285,7 +285,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                     alignItems="center"
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.checkbookimage}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${viewData?.checkbookimage}`}
                       height={100}
                       width={100}
                       style={{ objectFit: "contain", height: "100%", width: "100%" }}
@@ -421,7 +421,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       alignItems="center"
                     >
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${v?.panimage}`}
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${v?.panimage}`}
                         height={100}
                         width={100}
                         style={{ objectFit: "contain", height: "100%", width: "100%" }}
@@ -442,7 +442,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       alignItems="center"
                     >
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${v?.aadharimage}`}
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${v?.aadharimage}`}
                         height={100}
                         width={100}
                         style={{ objectFit: "contain", height: "100%", width: "100%" }}
@@ -453,7 +453,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                   <Box width={"33%"}>
 
                     <Typography color={'#464646'} fontSize={"16px"} >Bank Passbook Image</Typography>
-                    {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${viewData?.checkbookimage}`} height={100} width={100} /> */}
+                    {/* <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${viewData?.checkbookimage}`} height={100} width={100} /> */}
                     <Box
                       backgroundColor={'#F7F5DD'}
                       borderRadius={"6px"}
@@ -464,7 +464,7 @@ export default function KYCActionModal({ kycModal, KycClose, actionData, handleB
                       alignItems="center"
                     >
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${v?.checkbookimage}`}
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${v?.checkbookimage}`}
                         height={100}
                         width={100}
                         style={{ objectFit: "contain", height: "100%", width: "100%" }}

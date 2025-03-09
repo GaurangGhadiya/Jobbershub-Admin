@@ -111,7 +111,7 @@ console.log('couponObject', couponObject,formDataMain)
   }
 
   const getCourse = async () => {
-    await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/course/get-course-coupon`).then(res => {
+    await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/course/get-course-coupon`).then(res => {
       let data = [...res?.data?.data]
       let newData = data.map((v, i) => ({ ...v, isOpen: false }))
       setCourseList(newData)

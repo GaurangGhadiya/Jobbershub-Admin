@@ -16,7 +16,7 @@ const UplineList = () => {
             try {
                 setLoading(true)
             
-                await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refferal-report/user-referrals`,{user_id : id, page : page}).then(res => {
+                await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/refferal-report/user-referrals`,{user_id : id, page : page}).then(res => {
                     console.log('api response', res?.data?.data)
                     setUserData( res?.data?.data)
                    
