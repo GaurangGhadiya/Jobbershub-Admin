@@ -1095,8 +1095,8 @@ const StickyTable = () => {
                                         <TableCell style={{ borderRight: "none" }} align="left">{row?.wallet_balance?.toFixed(2)}</TableCell>
                                         {/* {afterSubmitSelectedRow?.SmartPeWalletBalance && <TableCell style={{ borderRight: "none" }} align="left">{row?.wallet_balance}</TableCell>} */}
                                         {afterSubmitSelectedRow?.TotalEarning && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_earning?.toFixed(2)}</TableCell>}
-                                        {afterSubmitSelectedRow?.MainActiveIncome && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_main_active_income}</TableCell>}
-                                        {afterSubmitSelectedRow?.MainPassiveIncome && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_main_passive_income}</TableCell>}
+                                        {afterSubmitSelectedRow?.MainActiveIncome && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_main_active_income?.toFixed(2)}</TableCell>}
+                                        {afterSubmitSelectedRow?.MainPassiveIncome && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_main_passive_income?.toFixed(2)}</TableCell>}
                                         {afterSubmitSelectedRow?.RewardIncome && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_reward?.toFixed(2)}</TableCell>}
                                         {afterSubmitSelectedRow?.SalaryIncome && <TableCell style={{ borderRight: "none" }} align="left">{row?.salary_fund?.toFixed(2)}</TableCell>}
                                         {afterSubmitSelectedRow?.RoyaltyIncome && <TableCell style={{ borderRight: "none" }} align="left">{row?.total_royality}</TableCell>}

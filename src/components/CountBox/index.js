@@ -2,10 +2,10 @@ import { Box, Grid, Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
-const CountBox = ({ title, count, color, icon , cc=0}) => {
+const CountBox = ({ title, count, color, icon , cc=0, onClick=()=> {}}) => {
     return (
         <>
-            <Grid item sx={12} md={2.4}>
+            <Grid item sx={12} md={2.4} onClick={onClick} style={{cursor : "pointer"}}>
                 <Box border={"1px solid #D8D8D8"} backgroundColor={"white"} borderRadius={"10px"}  p={2}>
                     <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                         <Box>
