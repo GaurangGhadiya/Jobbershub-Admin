@@ -216,21 +216,28 @@ const menu = [
 function buildMenuHierarchy(menuList) {
   const menuMap = new Map();
 
-  // Step 1: Initialize menu items in a map
-  menuList.forEach(item => {
+  menuList.forEach((item) => {
     menuMap.set(item.id, { ...item, submenu: [] });
   });
 
-  // Step 2: Build hierarchy
   const rootMenu = [];
 
-  menuList.forEach(item => {
+  menuList.forEach((item) => {
     if (item.parent_id === 0) {
-      // Root level menu items
-      rootMenu.push(menuMap.get(item.id));
+      rootMenu.push(menuMap.get(item.id)); // Root level menu
     } else if (menuMap.has(item.parent_id)) {
-      // Assign to parent's submenu
-      menuMap.get(item.parent_id).submenu.push(menuMap.get(item.id));
+      menuMap.get(item.parent_id).submenu.push(menuMap.get(item.id)); // Add to submenu
+    }
+  });
+
+  menuList.forEach((item) => {
+    if (item.sub_parent_id !== 0 && menuMap.has(item.sub_parent_id)) {
+      const parent = menuMap.get(item.parent_id);
+      if (parent) {
+        parent.submenu = parent.submenu.filter((sub) => sub.id !== item.id);
+      }
+
+      menuMap.get(item.sub_parent_id).submenu.push(menuMap.get(item.id));
     }
   });
 
@@ -375,7 +382,7 @@ export default function Layout({ children }) {
   const handleToggle = (item) => {
     if (item?.menu_url != "#") {
       // Navigate to the menu_url if it exists
-      // router.push("/"+item.menu_url);
+       router.push("/"+item.menu_url);
     } else {
       // Toggle submenu if there's no URL
       setOpenMenus((prev) => ({
@@ -436,83 +443,65 @@ export default function Layout({ children }) {
   }
 
   const renderMenu = (menulist) => {
-    return menulist?.map((item, index) => (
-      <div key={item?.id}>
-        <ListItem disablePadding sx={{ display: 'block', margin: "5px 0" }}>
-          <ListItemButton
-            onClick={() => handleToggle(item)}
-            sx={[
-              {
-                minHeight: 38,
-                px: 1.5,
-                // background: 'linear-gradient(90deg, #FB9905 0%, #FD6D09 100%)',
-                borderRadius: '8px',
-
-              },
-              open
-                ? {
-                  justifyContent: 'initial',
-                  width: '95%',
-                  marginLeft: "7px"
-
-                }
-                : {
-                  justifyContent: 'center',
-                  width: '90%',
-                  marginLeft: "2px"
-
-                },
-            ]}
-
-          >
-            <ListItemIcon
+    return menulist?.map((item) => {
+      return (
+        <div key={item?.id}>
+          <ListItem disablePadding sx={{ display: "block", margin: "5px 0" }}>
+            <ListItemButton
+              onClick={() => handleToggle(item)}
               sx={[
                 {
-                  minWidth: 0,
-                  justifyContent: 'center',
+                  minHeight: 38,
+                  px: 1.5,
+                  borderRadius: "8px",
+                  paddingLeft: item.sub_parent_id !== 0 ? "20px" : "auto", 
                 },
                 open
                   ? {
-                    mr: 2,
-                  }
+                      justifyContent: "initial",
+                      width: "95%",
+                      marginLeft: "7px",
+                    }
                   : {
-                    mr: 'auto',
-                  },
+                      justifyContent: "center",
+                      width: "90%",
+                      marginLeft: "2px",
+                    },
               ]}
             >
-              {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-              {/* {text?.icon} */}
-              <AttractionsOutlinedIcon style={{ color: "#525252" }} />
-              {/* <Image src={text?.icon} height={15} width={15} /> */}
-            </ListItemIcon>
-            <ListItemText
-              primary={item?.menu_name}
-              color='#2B2B2B'
-              fontWeight={300}
-              primaryTypographyProps={{
-                sx: { fontSize: '13px', color: "#2B2B2B" }, // Style for primary text
-              }}
-              sx={[
-                open
-                  ? {
-                    opacity: 1,
-                  }
-                  : {
-                    opacity: 0,
-                  },
-              ]}
-            />
-            {open && (item.submenu.length > 0 ? (openMenus[item.id] ? <ExpandLess /> : <ExpandMore />) : null)}
-          </ListItemButton>
-        </ListItem>
-        {item?.submenu?.length > 0 && (
-          <Collapse in={openMenus[item.id]} timeout="auto" unmountOnExit>
-            <List sx={{ pl: 4 }}>{renderMenu(item?.submenu)}</List>
-          </Collapse>
-        )}
-      </div>
-    ))
-  }
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  justifyContent: "center",
+                  mr: open ? 2 : "auto",
+                }}
+              >
+                <AttractionsOutlinedIcon style={{ color: "#525252" }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={item?.menu_name}
+                primaryTypographyProps={{
+                  sx: { fontSize: "13px", color: "#2B2B2B" },
+                }}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+              {open &&
+                (item.submenu.length > 0
+                  ? openMenus[item.id]
+                    ? <ExpandLess />
+                    : <ExpandMore />
+                  : null)}
+            </ListItemButton>
+          </ListItem>
+          {item?.submenu?.length > 0 && (
+            <Collapse in={openMenus[item.id]} timeout="auto" unmountOnExit>
+              <List sx={{ pl: 4 }}>{renderMenu(item?.submenu)}</List>
+            </Collapse>
+          )}
+        </div>
+      );
+    });
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
